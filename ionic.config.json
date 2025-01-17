@@ -1,0 +1,7 @@
+{
+  "name": "WattBook_Frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
