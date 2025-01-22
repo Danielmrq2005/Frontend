@@ -1,0 +1,46 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+
+  h2 {
+    font-weight: 600;
+    margin: 20px 0;
+  }
+
+  .icon {
+    font-size: 72px;
+    color: #000;
+  }
+
+  ion-item {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .login-button {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .signup-link {
+    text-align: center;
+    margin-top: 20px;
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    a {
+      font-size: 14px;
+      color: #007bff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+}

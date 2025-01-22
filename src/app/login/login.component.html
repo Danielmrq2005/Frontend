@@ -5,19 +5,33 @@
 
     <ion-item lines="none">
       <ion-label position="floating">Usuario</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input
+        type="text"
+        [(ngModel)]="username"
+        clear-input>
+      </ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input
+        type="password"
+        [(ngModel)]="password"
+        clear-input>
+      </ion-input>
     </ion-item>
 
-    <ion-button expand="block" class="login-button" color="primary">Acceder</ion-button>
+    <ion-button
+      expand="block"
+      class="login-button"
+      color="primary"
+      (click)="handleLogin()">
+      Acceder
+    </ion-button>
 
     <div class="signup-link">
       <p>¿Todavía no tienes una cuenta?</p>
-      <a href="#">CREA UNA NUEVA HOY</a>
+      <a href="Registro">CREA UNA NUEVA HOY</a>
     </div>
   </div>
 </ion-content>
