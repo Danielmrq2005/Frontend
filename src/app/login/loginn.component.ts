@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     try {
       const response = await this.http
-        .post('http://localhost:8081/auth/login', loginData, {headers: headers, observe: 'response'})
+        .post('http://localhost:8080/auth/login', loginData, {headers: headers, observe: 'response'})
         .toPromise();
 
       if (response?.status === 200) {

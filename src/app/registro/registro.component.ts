@@ -3,7 +3,7 @@ import { IonicModule } from "@ionic/angular";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Genero } from './genero.enum';
-import {KeyValuePipe} from "@angular/common";
+import {CommonModule, KeyValuePipe} from "@angular/common";
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +14,8 @@ import {KeyValuePipe} from "@angular/common";
     IonicModule,
     HttpClientModule,
     FormsModule,
-    KeyValuePipe
+    KeyValuePipe,
+    CommonModule
   ]
 })
 export class RegistroComponent implements OnInit {
@@ -55,10 +56,10 @@ export class RegistroComponent implements OnInit {
 
     try {
       const response = await this.http
-        .post('http://localhost:8081/auth/registro/perfil', registroData, { observe: 'response' })
+        .post('http://localhost:8080/auth/registro/perfil', registroData, { observe: 'response' })
         .toPromise();
 
-      if (response?.status === 201) {
+      if (response?.status === 200) {
         alert('Registro exitoso');
       } else {
         this.showError('Registro fallido');
