@@ -4,41 +4,56 @@
 
     <ion-item lines="none">
       <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="nombre"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Apellidos</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="apellidos"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Nom Usuario</ion-label>
-      <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)]="username"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Correo</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Confirmar</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="confirmPassword"></ion-input>
     </ion-item>
 
+    <ion-item lines="none">
+      <ion-label position="floating">Género</ion-label>
+      <ion-select [(ngModel)]="genero">
+        <ion-select-option *ngFor="let genero of generos | keyvalue" [value]="genero.value">{{ genero.key }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="floating">Imagen</ion-label>
+      <ion-input type="text" [(ngModel)]="imagen"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input type="text" [(ngModel)]="descripcion"></ion-input>
+    </ion-item>
 
     <div class="signup-link">
-      <a href="Login">¿Ya tienes una cuenta?</a>
-      <p>Inicia Sesion</p>
+      <a href="login">¿Ya tienes una cuenta?</a>
+      <p>Inicia Sesión</p>
     </div>
   </div>
 
-  <ion-button expand="block" class="login-button" color="primary">Crear</ion-button>
-
+  <ion-button expand="block" class="login-button" color="primary" (click)="handleRegister()">Crear</ion-button>
 </ion-content>

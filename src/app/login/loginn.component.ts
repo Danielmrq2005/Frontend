@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule and HttpClient
+import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http'; // Import HttpClientModule and HttpClient
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -18,34 +18,47 @@ export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   async handleLogin() {
     const loginData = {
-      nombreUsuario: this.username,
-      contraseña: this.password,
+      username: this.username,
+      password: this.password,
     };
+
+    console.log('Login Data:', loginData);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
 
     try {
       const response = await this.http
-        .post('http://localhost:8080/auth/login', loginData, { observe: 'response' })
+        .post('http://localhost:8081/auth/login', loginData, {headers: headers, observe: 'response'})
         .toPromise();
 
       if (response?.status === 200) {
         alert('Login exitoso');
+      } else {
+        this.showError('Login fallido');
       }
     } catch (error: any) {
-      const errorMessage = error.error?.mensaje || 'Ocurrió un error';
-      const container = document.querySelector('.login-container') as HTMLElement;
+      this.showError(error.error?.mensaje || 'Ocurrió un error');
+    }
+  }
 
-      if (container) {
-        const errorElement = document.createElement('p');
-        errorElement.textContent = errorMessage;
-        errorElement.style.color = 'red';
-        container.appendChild(errorElement);
-      }
+  private showError(message: string) {
+    const container = document.querySelector('.login-container') as HTMLElement;
+
+    if (container) {
+      const errorElement = document.createElement('p');
+      errorElement.textContent = message;
+      errorElement.style.color = 'red';
+      container.appendChild(errorElement);
     }
   }
 }
