@@ -11,11 +11,11 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'Login',
-    loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
+    path: 'login',
+    loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'Registro',
+    path: 'registro',
     loadComponent: () => import('./registro/registro.component').then((m) => m.RegistroComponent),
   },
 ];
