@@ -3,7 +3,7 @@ import { IonicModule } from "@ionic/angular";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Genero } from './genero.enum';
-import {KeyValuePipe} from "@angular/common"; // Asegúrate de importar el enum correctamente
+import {KeyValuePipe} from "@angular/common";
 
 @Component({
   selector: 'app-registro',
