@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./detalles-libro/detalles-libro.component').then((m) => m.DetallesLibroComponent),
   },
   {
+    path: 'publicaciones',
+    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
