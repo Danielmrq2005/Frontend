@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {DetallesLibroComponent} from "./detalles-libro/detalles-libro.component";
 
 export const routes: Routes = [
   {
