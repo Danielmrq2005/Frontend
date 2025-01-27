@@ -34,6 +34,7 @@ export class PublicacionesComponent implements OnInit {
     this.libroService.listarlibros().subscribe(
       (libros: Libro[]) => {
         this.libros = libros;
+        console.log('Libros obtenidos', libros);
       },
       (error) => {
         console.error('Error al obtener libros', error);
