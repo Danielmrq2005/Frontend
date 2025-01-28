@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import {HttpClientModule, HttpClient, HttpHeaders} from '@angular/common/http'; // Import HttpClientModule and HttpClient
-import { FormsModule } from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Login} from "../modelos/Login";
+import {LoginService} from "../services/login.service";
+import {Router} from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-login',
@@ -9,56 +14,49 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./loginn.component.scss'],
   standalone: true,
   imports: [
-    IonicModule,
-    FormsModule,
-    HttpClientModule // Add HttpClientModule here
+    IonicModule, CommonModule, FormsModule, ReactiveFormsModule,HttpClientModule
   ]
 })
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
+  login: Login = new Login();
+  loginForm: FormGroup;
+  loginViewFlag: boolean = true;
 
-  constructor(private http: HttpClient) {
+
+  constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      username: [this.login.username, Validators.required],
+      password: [this.login.password, Validators.required],
+    });
+
   }
 
   ngOnInit() {
   }
 
-  async handleLogin() {
-    const loginData = {
-      username: this.username,
-      password: this.password,
-    };
+  doLogin(): void {
 
-    console.log('Login Data:', loginData);
+    if (this.loginForm.valid) {
+      this.login = {...this.login, ...this.loginForm.value};
+      this.loginService.loguear(this.login).subscribe({
+        next: (respuesta) => {
+          const token = respuesta.token;
+          sessionStorage.setItem("authToken", token);
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+          this.loginService.setAuthState(true);
 
-    try {
-      const response = await this.http
-        .post('http://localhost:8080/auth/login', loginData, {headers: headers, observe: 'response'})
-        .toPromise();
+        },
+        error: (e) => console.error(e),
+        complete: () => this.router.navigate([''])
+      })
 
-      if (response?.status === 200) {
-        alert('Login exitoso');
-      } else {
-        this.showError('Login fallido');
-      }
-    } catch (error: any) {
-      this.showError(error.error?.mensaje || 'Ocurrió un error');
+
+    } else {
+      console.log('Formulario inválido. Por favor verifica los datos.');
     }
+
   }
 
-  private showError(message: string) {
-    const container = document.querySelector('.login-container') as HTMLElement;
-
-    if (container) {
-      const errorElement = document.createElement('p');
-      errorElement.textContent = message;
-      errorElement.style.color = 'red';
-      container.appendChild(errorElement);
-    }
-  }
 }

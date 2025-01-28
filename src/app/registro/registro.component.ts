@@ -56,7 +56,7 @@ export class RegistroComponent implements OnInit {
 
     try {
       const response = await this.http
-        .post('http://localhost:8080/auth/registro/perfil', registroData, { observe: 'response' })
+        .post('http://localhost:8081/auth/registro/perfil', registroData, { observe: 'response' })
         .toPromise();
 
       if (response?.status === 200) {

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="loginViewFlag">
   <div class="login-container">
     <ion-icon name="person-circle-outline" class="icon"></ion-icon>
     <h2>Inicio de sesión</h2>
@@ -25,7 +25,7 @@
       expand="block"
       class="login-button"
       color="primary"
-      (click)="handleLogin()">
+      (click)="doLogin()">
       Acceder
     </ion-button>
 
