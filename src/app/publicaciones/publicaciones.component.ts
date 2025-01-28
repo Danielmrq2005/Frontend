@@ -6,6 +6,7 @@ import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-publicaciones',
@@ -22,8 +23,11 @@ import { LibroService } from '../Services/LibroService';
 export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
 
-  constructor(private libroService: LibroService) {
+  constructor(private libroService: LibroService, private router: Router) {
     addIcons({ add });
+  }
+  verDetallesLibro(libroId: number) {
+    this.router.navigate(['detallesLibro', libroId]);
   }
 
   ngOnInit() {
