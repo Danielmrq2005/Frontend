@@ -41,21 +41,22 @@
       <img  [src]="libro.imagen" alt="{{ libro.nombre }}" style="width: 100%;height: 70% " (click)="verDetallesLibro(libro.id)" />
       <ion-card-header>
         <ion-card-title>{{libro.nombre}}</ion-card-title>
-        <ion-card-subtitle>{{libro.autorId}}</ion-card-subtitle>
+        <ion-card-subtitle>{{libro.username}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <div class="reaction-container">
           <div class="reaction">
+            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" (click)="votar(libro.id,true)" >
             <p style="color: white">{{libro.likes}}</p>
-            <img src="assets/icons8-me-gusta-24.png" alt="Like Icon">
           </div>
           <div class="reaction">
+            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(libro.id,false)" >
             <p style="color: white">{{libro.dislikes}}</p>
-            <img src="assets/icons8-pulgar-hacia-abajo-24%20(1).png" alt="Dislike Icon">
           </div>
           <div class="reaction">
             <p>12</p>
-            <img src="assets/icons8-comentarios-48.png" alt="Comment Icon">
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+            <p style="color: white">23</p>
           </div>
         </div>
       </ion-card-content>
