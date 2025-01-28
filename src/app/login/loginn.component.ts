@@ -15,7 +15,8 @@ import {HttpClientModule} from "@angular/common/http";
   standalone: true,
   imports: [
     IonicModule, CommonModule, FormsModule, ReactiveFormsModule,HttpClientModule
-  ]
+  ],
+  providers:[LoginService]
 })
 export class LoginComponent implements OnInit {
   username: string = '';
