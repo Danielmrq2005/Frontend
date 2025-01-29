@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  doLogin(): void {
+   doLogin(): void {
 
     if (this.loginForm.valid) {
       this.login = {...this.login, ...this.loginForm.value};
