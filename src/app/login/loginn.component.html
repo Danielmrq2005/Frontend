@@ -1,23 +1,30 @@
-<ion-content>
+
+<ion-content *ngIf="loginViewFlag">
+
+
   <div class="login-container">
     <ion-icon name="person-circle-outline" class="icon"></ion-icon>
     <h2>Inicio de sesión</h2>
+    <form [formGroup]="loginForm" id="login">
 
     <ion-item lines="none">
       <ion-label position="floating">Usuario</ion-label>
       <ion-input
-        type="text"
-        [(ngModel)]="username"
-        clear-input>
+        id="username"
+        placeholder="Nombre de usuario"
+        fill="outline"
+        formControlName="username">
       </ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input
+        id="password"
+        placeholder="Contraseña"
         type="password"
-        [(ngModel)]="password"
-        clear-input>
+        fill="outline"
+        formControlName="password">
       </ion-input>
     </ion-item>
 
@@ -25,13 +32,14 @@
       expand="block"
       class="login-button"
       color="primary"
-      (click)="handleLogin()">
+      (click)="doLogin()">
       Acceder
     </ion-button>
+    </form>
 
     <div class="signup-link">
       <p>¿Todavía no tienes una cuenta?</p>
-      <a href="Registro">CREA UNA NUEVA HOY</a>
+      <a href="registro">CREA UNA NUEVA HOY</a>
     </div>
   </div>
 </ion-content>
