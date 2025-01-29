@@ -27,9 +27,8 @@ import {Router} from "@angular/router";
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   registro: Registro = new Registro();
-  generos = Object.values(Genero);
+  generos= Object.values(Genero);
   loginViewFlag: boolean = true;
-
 
   constructor(private registroService: RegistroService, private fb: FormBuilder,private router: Router) {
     this.registroForm = this.fb.group({

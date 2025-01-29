@@ -1,6 +1,7 @@
 <ion-content *ngIf="loginViewFlag">
   <div class="login-container">
     <ion-icon name="person-circle-outline" class="icon"></ion-icon>
+    <img src="assets/images/libro.png" alt="Libro Icono" class="icon">
     <form [formGroup]="registroForm" id="registro">
 
     <ion-item lines="none">
@@ -39,12 +40,12 @@
                    formControlName="password"></ion-input>
     </ion-item>
 
-    <ion-item lines="none">
-      <ion-label position="floating">Género</ion-label>
-      <ion-select formControlName="genero">
-        <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Género</ion-label>
+        <ion-select formControlName="genero">
+          <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
     <ion-item lines="none">
       <ion-label position="floating">Imagen</ion-label>

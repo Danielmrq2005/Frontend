@@ -6,7 +6,11 @@ import {LoginService} from "../services/login.service";
 import {Router} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
-
+import {addIcons} from "ionicons";
+import {
+  personOutline, keyOutline, textOutline, mailOutline,
+  idCard, idCardOutline, text, personCircle, personCircleOutline
+} from "ionicons/icons";
 
 @Component({
   selector: 'app-login',
@@ -30,8 +34,14 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: [this.login.username, Validators.required],
       password: [this.login.password, Validators.required],
+
+
     });
 
+    addIcons({
+      personOutline, keyOutline, textOutline, mailOutline,
+      idCard, idCardOutline, text, personCircle, personCircleOutline
+    });
   }
 
   ngOnInit() {
