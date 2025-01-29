@@ -13,7 +13,9 @@ export class ComentariosService {
   constructor(private http: HttpClient) {
   }
 
-  obtenerComentarios(): Observable<Comentario[]> {
-    return this.http.get<Comentario[]>(this.apiUrl);
+  obtenerComentarios(libroId: number): Observable<Comentario[]> {
+    const url = `${this.apiUrl}/libro/${libroId}`;
+    return this.http.get<Comentario[]>(url);
   }
+
 }

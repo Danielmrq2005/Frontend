@@ -25,6 +25,7 @@ export class DetallesLibroComponent  implements OnInit {
 
   ngOnInit() {
     const libroId = this.route.snapshot.params['id'];
+
     if (libroId) {
       this.libroService.getLibro(+libroId).subscribe(
         (libro: Libro) => {
@@ -35,7 +36,18 @@ export class DetallesLibroComponent  implements OnInit {
           console.error('Error al obtener libro', error);
         }
       );
+
+      this.comentariosService.obtenerComentarios(+libroId).subscribe(
+        (comentarios: Comentario[]) => {
+          this.comentarios = comentarios;
+          console.log('Comentarios obtenidos', comentarios);
+        },
+        (error) => {
+          console.error('Error al obtener comentarios', error);
+        }
+      );
     }
   }
+
 
 }
