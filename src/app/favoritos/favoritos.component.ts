@@ -37,10 +37,9 @@ export class FavoritosComponent implements OnInit {
               imagen: libro.libroId.imagen || 'No image available'
             };
           });
-          console.log('Mapped libros favoritos:', this.librosFavoritos);
         },
         error => {
-          console.error('Error fetching libros favoritos', error);
+          console.error('Error fetching libros favoritos:', error);
         }
       );
   }
@@ -60,16 +59,15 @@ export class FavoritosComponent implements OnInit {
                     apellido: user.apellido,
                     imagen: user.imagen
                   });
-                  console.log('Added autor favorito:', user);
                 },
                 error => {
-                  console.error('Error fetching user details', error);
+                  console.error('Error fetching autor favorito:', error);
                 }
               );
           });
         },
         error => {
-          console.error('Error fetching autores favoritos', error);
+          console.error('Error fetching autores favoritos:', error);
         }
       );
   }
