@@ -1,0 +1,51 @@
+<ion-content id="main-content" class="custom-background">
+  <div class="estilo_cartas">
+    <ion-card style="--background: #12294D" class="tamaño_carta">
+      <img [src]="libro?.imagen" alt="{{ libro?.nombre }}" style="width: 100%;height: 70%"/>
+      <ion-card-header>
+        <ion-card-title>{{ libro?.nombre }}</ion-card-title>
+        <ion-card-subtitle>{{ libro?.username }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="reaction-container">
+          <div class="reaction">
+            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon">
+            <p style="color: white">{{ libro?.likes }}</p>
+          </div>
+          <div class="reaction">
+            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon">
+            <p style="color: white">{{ libro?.dislikes }}</p>
+          </div>
+          <div class="reaction">
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+            <p style="color: white">{{ comentarios?.length || 0 }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="comentarios-container">
+    <h3 class="titulo-comentarios">Comentarios</h3>
+    <!-- Cantidad de comentarios -->
+    <p style="color: white">{{ comentarios.length }}</p>
+
+    <ion-list *ngIf="comentarios.length > 0; else noComentarios">
+      <ion-item *ngFor="let comentario of comentarios">
+        <ion-avatar slot="start">
+          <img src="assets/default-avatar.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ comentario.username }}</h2>
+          <p>{{ comentario.comentario }}</p>
+          <small>{{ comentario.fecha | date:'short' }}</small>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noComentarios>
+      <p class="no-comentarios">No hay comentarios aún. ¡Sé el primero en comentar!</p>
+    </ng-template>
+
+  </div>
+</ion-content>

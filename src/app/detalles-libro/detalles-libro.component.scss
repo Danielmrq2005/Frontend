@@ -1,0 +1,56 @@
+.custom-background {
+  --background: white;
+}
+
+.estilo_cartas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+}
+.mobile-menu {
+  display: none;
+}
+
+.desktop-menu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  .mobile-menu {
+    display: block;
+  }
+}
+
+.tamaño_carta {
+  width: 300px;
+  height: 450px;
+  border-radius: 40px;
+}
+
+.reaction-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reaction {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reaction p {
+  margin: 0;
+}
+
+.reaction img {
+  width: 24px;
+  height: 24px;
+}

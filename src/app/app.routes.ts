@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {DetallesLibroComponent} from "./detalles-libro/detalles-libro.component";
 import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
@@ -8,6 +9,10 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+  },
+  {
+    path: 'detallesLibro/:id',
+    loadComponent: () => import('./detalles-libro/detalles-libro.component').then((m) => m.DetallesLibroComponent),
   },
   {
     path: '',

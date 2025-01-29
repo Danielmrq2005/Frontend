@@ -30,4 +30,13 @@ export class LibroService {
 
     return this.http.post(`${this.apiUrl}/votar/${libroId}`, {}, {params});
   }
+  getLibro(libroId: number): Observable<Libro> {
+    return this.http.get<Libro>(`${this.apiUrl}/${libroId}`);
+  }
+  obtenerTop4Libros(): Observable<Libro[]> {
+    return this.http.get<Libro[]>('http://localhost:8080/votos/top4');
+  }
+
+
+
 }
