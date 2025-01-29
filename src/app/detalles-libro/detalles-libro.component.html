@@ -1,8 +1,30 @@
+<ion-content id="main-content" class="custom-background">
+  <div class="estilo_cartas">
+    <ion-card style="--background: #12294D" class="tamaño_carta">
+      <img  [src]="libro?.imagen" alt="{{ libro?.nombre }}" style="width: 100%;height: 70% "/>
+      <ion-card-header>
+        <ion-card-title>{{libro?.nombre}}</ion-card-title>
+        <ion-card-subtitle>{{libro?.username}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="reaction-container">
+          <div class="reaction">
+            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" >
+            <p style="color: white">{{libro?.likes}}</p>
+          </div>
+          <div class="reaction">
+            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon"  >
+            <p style="color: white">{{libro?.dislikes}}</p>
+          </div>
+          <div class="reaction">
+            <p>12</p>
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+            <p style="color: white">23</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-<ion-content>
-      <ion-title size="large">
-        <ion-text id="tit">{{ libro?.nombre }}</ion-text>
-      </ion-title>
-    <img src="assets/icon/Libro.jpg">
-    <ion-text id="descrip">lekhqkehdlkHDJKHEWJKBDJKBWEKJBDKLBJEWLBDKJBEWKJBDKEJWBDKBWEJKBDKJWBEDBEWJKBDKBEW</ion-text>
+
 </ion-content>

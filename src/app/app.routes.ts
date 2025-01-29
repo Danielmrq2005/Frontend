@@ -19,4 +19,16 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'publicaciones',
+    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+  },
+
+  {
+    path: 'crear_libro',
+    loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
+  },
+
+
+
 ];
