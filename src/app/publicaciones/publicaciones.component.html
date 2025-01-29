@@ -1,13 +1,135 @@
-<div class="publicaciones-container">
-  <div class="card">
-    <div class="card-header">
-      <h2>Título de la Publicación</h2>
+<ion-header>
+  <ion-toolbar style="--background: #12294D; color: white;">
+    <div class="desktop-menu">
+      <ion-buttons slot="start">
+        <ion-button>Inicio</ion-button>
+        <ion-button>Seguidos</ion-button>
+        <ion-button>Publicaciones</ion-button>
+        <ion-button>Chats</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button href="perfil">Perfil</ion-button>
+      </ion-buttons>
     </div>
-    <div class="card-body">
-      <p>Este es un ejemplo de una publicación. Aquí puedes agregar el contenido de la publicación.</p>
-    </div>
-    <div class="card-footer">
-      <button class="btn">Leer más</button>
-    </div>
+
+    <ion-buttons slot="start" class="mobile-menu">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu content-id="main-content" side="start" menu-id="mobile-menu">
+  <ion-header>
+    <ion-toolbar style="color: white;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button>Inicio</ion-item>
+      <ion-item button>Seguidos</ion-item>
+      <ion-item button>Publicaciones</ion-item>
+      <ion-item button>Chats</ion-item>
+      <ion-item button>Perfil</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="custom-background">
+  <div class="estilo_cartas">
+    <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let libro of libros">
+      <img  [src]="libro.imagen" alt="{{ libro.nombre }}" style="width: 100%;height: 70% "  />
+      <ion-card-header>
+        <ion-card-title>{{libro.nombre}}</ion-card-title>
+        <ion-card-subtitle>{{libro.generos}}</ion-card-subtitle>
+        <ion-card-subtitle>{{libro.username}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="reaction-container">
+          <div class="reaction">
+            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" (click)="votar(libro.id,true)" >
+            <p style="color: white">{{libro.likes}}</p>
+          </div>
+          <div class="reaction">
+            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(libro.id,false)" >
+            <p style="color: white">{{libro.dislikes}}</p>
+          </div>
+          <div class="reaction">
+            <p>12</p>
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+            <p style="color: white">23</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
-</div>
+
+
+</ion-content>
+
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button href="crear_libro">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<style>
+  .custom-background {
+    --background: white;
+  }
+
+  .estilo_cartas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+  }
+</style>
+<style>
+  .mobile-menu {
+    display: none;
+  }
+
+  .desktop-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+
+  .tamaño_carta {
+    width: 300px;
+    height: 500px;
+    border-radius: 40px;
+  }
+
+  .reaction-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .reaction {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .reaction p {
+    margin: 0;
+  }
+
+  .reaction img {
+    width: 24px;
+    height: 24px;
+  }
+
+</style>
