@@ -5,6 +5,8 @@ import {ActivatedRoute} from "@angular/router";
 import {LibroService} from "../Services/LibroService";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {Comentario} from "../Models/Comentario";
+import {ComentariosService} from "../Services/ComentarioService";
 
 @Component({
   selector: 'app-detalles-libro',
@@ -12,12 +14,14 @@ import {HttpClientModule} from "@angular/common/http";
   styleUrls: ['./detalles-libro.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, HttpClientModule],
-  providers: [LibroService],
+  providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent  implements OnInit {
   libro: Libro | undefined;
+  comentarios: Comentario[] = [];
+  loading = true;
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService) { }
 
   ngOnInit() {
     const libroId = this.route.snapshot.params['id'];
