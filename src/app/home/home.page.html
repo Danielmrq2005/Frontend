@@ -1,8 +1,42 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Libros Más Populares 📚🔥</ion-title>
+  <ion-toolbar style="--background: #12294D; color: white;">
+    <div class="desktop-menu">
+      <ion-buttons slot="start">
+        <ion-button routerLink="/home">Inicio</ion-button>
+        <ion-button>Seguidos</ion-button>
+        <ion-button routerLink="/publicaciones">Publicaciones</ion-button>
+        <ion-button>Chats</ion-button>
+        <ion-button routerLink="/libros-favoritos">Libros favoritos</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button href="perfil">Perfil</ion-button>
+      </ion-buttons>
+    </div>
+
+    <ion-buttons slot="start" class="mobile-menu">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<ion-menu content-id="main-content" side="start" menu-id="mobile-menu">
+  <ion-header>
+    <ion-toolbar style="color: white;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button>Inicio</ion-item>
+      <ion-item button>Seguidos</ion-item>
+      <ion-item button>Publicaciones</ion-item>
+      <ion-item button>Chats</ion-item>
+      <ion-item button>Libros favoritos</ion-item>
+      <ion-item button>Perfil</ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
 <ion-content>
   <ion-grid>

@@ -14,12 +14,13 @@ import {LibroService} from "../Services/LibroService";
 import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule, HttpClientModule, CommonModule],
+  imports: [IonicModule, HttpClientModule, CommonModule, RouterLink],
   standalone: true,
   providers: [LibroService],
 })

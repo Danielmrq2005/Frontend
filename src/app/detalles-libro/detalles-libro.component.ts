@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {IonicModule} from "@ionic/angular";
 import {Libro} from "../Models/Libro";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {LibroService} from "../Services/LibroService";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import {Comentario} from "../Models/Comentario";
 import {ComentariosService} from "../Services/ComentarioService";
+import {home} from "ionicons/icons";
 
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',
   styleUrls: ['./detalles-libro.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule],
+    imports: [IonicModule, CommonModule, HttpClientModule, RouterLink],
   providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent  implements OnInit {
@@ -50,4 +51,5 @@ export class DetallesLibroComponent  implements OnInit {
   }
 
 
+  protected readonly home = home;
 }

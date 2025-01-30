@@ -54,3 +54,61 @@
   width: 24px;
   height: 24px;
 }
+.comentarios-container {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.titulo-comentarios {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.no-comentarios {
+  color: #ccc;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+ion-item {
+  --background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 0;
+}
+
+ion-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+ion-label h2 {
+  color: #000000;
+  font-size: 1rem;
+  margin: 0;
+}
+
+ion-label p {
+  color: #000000;
+  font-size: 0.8rem;
+  margin: 4px 0;
+}
+
+ion-label small {
+  color: #aaa;
+  font-size: 0.7rem;
+}
+ion-label {
+  background-color: #f6f7f9;
+}
+ion-list {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 10px;
+}
+

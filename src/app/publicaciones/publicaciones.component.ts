@@ -6,7 +6,7 @@ import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-publicaciones',
@@ -16,7 +16,8 @@ import {Router} from "@angular/router";
   imports: [
     IonicModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   providers: [LibroService],
 })

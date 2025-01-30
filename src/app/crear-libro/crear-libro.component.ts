@@ -8,6 +8,7 @@ import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import {UsuarioService} from "../Services/UsuarioService";
 import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-crea-libro',
@@ -18,7 +19,8 @@ import {FormsModule} from "@angular/forms";
     IonicModule,
     HttpClientModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   providers: [LibroService,UsuarioService],
 })
