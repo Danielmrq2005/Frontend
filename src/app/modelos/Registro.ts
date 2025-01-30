@@ -1,7 +1,6 @@
 import {Genero} from "../registro/genero.enum";
 
 export class Registro{
-
   nombre?:string;
   apellidos?:string;
   username?:string;
