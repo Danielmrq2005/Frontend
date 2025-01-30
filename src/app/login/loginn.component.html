@@ -3,38 +3,38 @@
 
 
   <div class="login-container">
-    <ion-icon name="person-circle-outline" class="icon"></ion-icon>
+    <img src="assets/images/libro.png" alt="Libro Icono" class="icon">
     <h2>Inicio de sesión</h2>
     <form [formGroup]="loginForm" id="login">
 
-    <ion-item lines="none">
-      <ion-label position="floating">Usuario</ion-label>
-      <ion-input
-        id="username"
-        placeholder="Nombre de usuario"
-        fill="outline"
-        formControlName="username">
-      </ion-input>
-    </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input
+          id="username"
+          placeholder="Nombre de usuario"
+          fill="outline"
+          formControlName="username">
+        </ion-input>
+      </ion-item>
 
-    <ion-item lines="none">
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input
-        id="password"
-        placeholder="Contraseña"
-        type="password"
-        fill="outline"
-        formControlName="password">
-      </ion-input>
-    </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input
+          id="password"
+          placeholder="Contraseña"
+          type="password"
+          fill="outline"
+          formControlName="password">
+        </ion-input>
+      </ion-item>
 
-    <ion-button
-      expand="block"
-      class="login-button"
-      color="primary"
-      (click)="doLogin()">
-      Acceder
-    </ion-button>
+      <ion-button
+        expand="block"
+        class="login-button"
+        color="primary"
+        (click)="doLogin()">
+        Acceder
+      </ion-button>
     </form>
 
     <div class="signup-link">
@@ -43,3 +43,5 @@
     </div>
   </div>
 </ion-content>
+
+
