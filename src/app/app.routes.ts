@@ -22,4 +22,11 @@ export const routes: Routes = [
 
 
 
+  {
+    path: 'perfil',
+    loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
+  },
+
+
+
 ];
