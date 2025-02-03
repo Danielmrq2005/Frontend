@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('Formulario inválido. Por favor verifica los datos.');
     }
-
   }
 
 }

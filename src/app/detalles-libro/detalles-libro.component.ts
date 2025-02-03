@@ -18,6 +18,7 @@ import {home} from "ionicons/icons";
   providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent  implements OnInit {
+
   libro: Libro | undefined;
   comentarios: Comentario[] = [];
   loading = true;
@@ -25,6 +26,9 @@ export class DetallesLibroComponent  implements OnInit {
   constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService) { }
 
   ngOnInit() {
+    const token = sessionStorage.getItem('uthToken');
+    console.log('Token:', token);
+
     const libroId = this.route.snapshot.params['id'];
 
     if (libroId) {
@@ -49,6 +53,7 @@ export class DetallesLibroComponent  implements OnInit {
       );
     }
   }
+
 
 
   protected readonly home = home;
