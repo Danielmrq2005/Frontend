@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IonicModule} from "@ionic/angular";
+import {NgForOf, NgStyle} from "@angular/common";
 
 @Component({
   selector: 'app-perfil',
@@ -7,10 +8,18 @@ import {IonicModule} from "@ionic/angular";
   styleUrls: ['./perfil.component.scss'],
   standalone: true,
   imports: [
-    IonicModule
+    IonicModule,
+    NgForOf,
+    NgStyle
   ]
 })
 export class PerfilComponent  implements OnInit {
+  followText: string = "Seguir";
+
+  toggleFollow() {
+    this.followText = this.followText === "Seguir" ? "No seguir" : "Seguir";
+  }
+
 
   constructor() { }
 

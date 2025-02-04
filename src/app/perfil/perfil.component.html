@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-toolbar style="--background: #12294D; color: white;">
+    <div class="desktop-menu">
+      <ion-buttons slot="start">
+        <ion-button>Inicio</ion-button>
+        <ion-button>Seguidos</ion-button>
+        <ion-button>Publicaciones</ion-button>
+        <ion-button>Chats</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button href="perfil">Perfil</ion-button>
+      </ion-buttons>
+    </div>
+
+    <ion-buttons slot="start" class="mobile-menu">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu content-id="main-content" side="start" menu-id="mobile-menu">
+  <ion-header>
+    <ion-toolbar style="color: white;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button>Inicio</ion-item>
+      <ion-item button>Seguidos</ion-item>
+      <ion-item button>Publicaciones</ion-item>
+      <ion-item button>Chats</ion-item>
+      <ion-item button>Perfil</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="custom-background">
+  <div class="perfil-container">
+    <img class="perfil-imagen" src="assets/pulgarcito.png">
+    <div class="perfil-info">
+      <h1 class="perfil-nombre">Daniel</h1>
+      <div class="perfil-estadisticas">
+        <h2 class="perfil-publicaciones">Publicaciones: 2000</h2>
+        <h2 class="perfil-publicaciones">Seguidores: 500</h2>
+        <h2 class="perfil-publicaciones">Seguidos: 100</h2>
+      </div>
+      <p class="perfil-descripcion">Esta es mi descripcion</p>
+      <p class="perfil-descripcion">AVENTURA</p>
+      <ion-button class="follow-button" color="primary" (click)="toggleFollow()">{{ followText }}</ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+  .custom-background {
+    --background: white;
+  }
+
+  .perfil-container {
+    display: flex;
+    align-items: center;
+    margin-top: 6%;
+    margin-left: 5%;
+    height: auto;
+    width: auto;
+  }
+
+  .perfil-imagen {
+    width: 16vw;
+    height: 15vw;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 50%;
+  }
+
+  .perfil-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .perfil-nombre {
+    font-size: 24px;
+    font-weight: bold;
+    color: #12294D;
+    margin: 0;
+  }
+
+  .perfil-estadisticas {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .perfil-publicaciones {
+    font-size: 20px;
+    font-weight: bold;
+    color: #12294D;
+  }
+
+  .perfil-descripcion {
+    font-size: 17px;
+    font-weight: normal;
+    color: #12294D;
+    margin-top: -3px;
+  }
+
+  .follow-button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .desktop-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+
+    .perfil-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .perfil-imagen {
+      width: 30vw;
+      height: 30vw;
+      margin: 0 auto 10px auto;
+    }
+
+    .perfil-estadisticas {
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .follow-button {
+      width: 80%;
+      text-align: center;
+    }
+  }
+</style>
