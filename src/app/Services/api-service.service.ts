@@ -10,7 +10,7 @@ export class ApiService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Replace with your actual token
+      'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // CAMBIAR POR EL TOKEN
     })
   };
 
