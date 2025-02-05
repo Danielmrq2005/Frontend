@@ -38,15 +38,15 @@ export const routes: Routes = [
     path: 'crear_libro',
     loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
   },
-
-
-
-  {
-    path: 'login',
-    loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
-  },
   {
     path: 'registro',
     loadComponent: () => import('./registro/registro.component').then((m) => m.RegistroComponent),
   },
+  {
+    path: 'perfil',
+    loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
+  },
+
+
+
 ];

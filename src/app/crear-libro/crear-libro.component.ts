@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { add } from 'ionicons/icons';
+import {add, image} from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
@@ -33,6 +33,21 @@ export class CrearLibroComponent implements OnInit {
   autorId: number = 1;
   username: string = '';
   fecha_publicacion: Date = new Date();
+
+
+  imagendefecto: string = 'assets/images.jpg'
+
+  comprobarimagen(){
+    if(!this.imagen){
+      this.imagen = this.imagendefecto
+    } else {
+      const img = new Image();
+      img.src = this.imagen
+      img.onerror = () => {
+        this.imagen = this.imagendefecto
+      };
+    }
+  }
   constructor(
     private libroService: LibroService,
     private usuarioService: UsuarioService
@@ -51,6 +66,7 @@ export class CrearLibroComponent implements OnInit {
     });
   }
   async crearLibro() {
+    this.comprobarimagen();
     this.fecha_publicacion = new Date();
 
     if (this.nombre && this.generos && this.descripcion && this.imagen) {
