@@ -24,14 +24,14 @@ export const routes: Routes = [
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
 
   },
-  {
-    path: 'admin',
-    loadComponent: () => import('./admin/admin.component').then((m) => m.AdminComponent),
-  },
 
   {
     path: 'publicaciones',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
   },
 
   {
