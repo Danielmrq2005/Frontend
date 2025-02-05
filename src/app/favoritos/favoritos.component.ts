@@ -27,7 +27,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getLibrosIds(): void {
-    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/2`, { observe: 'response' })
+    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/3`, { observe: 'response' })
       .subscribe(
         response => {
           console.log('Response from /libros-favoritos/yourFaves/1:', response);
@@ -52,7 +52,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`api/seguidores/tusSeguidos/2`, { observe: 'response' })
+    this.http.get<any[]>(`api/seguidores/tusSeguidos/3`, { observe: 'response' })
       .subscribe(
         response => {
           console.log('Response from /seguidores/tusSeguidos/1:', response);
