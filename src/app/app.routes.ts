@@ -1,8 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './home/home.page';
-import { CrearLibroComponent } from './crear-libro/crear-libro.component';
-import { PublicacionesComponent } from './publicaciones/publicaciones.component';
-import { FavoritosComponent } from './favoritos/favoritos.component';
 
 export const routes: Routes = [
   {
@@ -28,8 +24,8 @@ export const routes: Routes = [
 
   },
   {
-    path: 'admin',
-    loadComponent: () => import('./admin/admin.component').then((m) => m.AdminComponent),
+    path: 'pub-admin',
+    loadComponent: () => import('./pub-admin/pub-admin.component').then((m) => m.PubAdminComponent),
   }
 
 ];
