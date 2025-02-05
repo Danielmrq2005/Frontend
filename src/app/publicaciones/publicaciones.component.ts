@@ -6,6 +6,7 @@ import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
+import { finalize } from 'rxjs/operators';  // Importa finalize
 
 @Component({
   selector: 'app-publicaciones',
@@ -26,31 +27,39 @@ export class PublicacionesComponent implements OnInit {
     addIcons({ add });
   }
 
-  ngOnInit() {
-    this.listarLibros();
+  async ngOnInit() {
+    await this.listarLibros();
   }
 
   listarLibros() {
-    this.libroService.listarlibros().subscribe(
-      (libros: Libro[]) => {
+    this.libroService.listarlibros().pipe(
+      finalize(() => {
+        console.log('La operación de listar libros ha terminado');
+      })
+    ).subscribe({
+      next: (libros: Libro[]) => {
         this.libros = libros;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al obtener libros', error);
       }
-    );
+    });
   }
 
-  votar(libroId: number, esLike: boolean){
-    const usuarioId = 1
-    this.libroService.votarlibro(libroId,usuarioId,esLike).subscribe(
-      (response) =>{
-        console.log('Voto registrado con exito: ', response)
-        this.listarLibros()
+  votar(libroId: number, esLike: boolean) {
+    const usuarioId = 1;
+    this.libroService.votarlibro(libroId, usuarioId, esLike).pipe(
+      finalize(() => {
+        console.log('La operación de votar ha terminado');
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log('Voto registrado con éxito');
+        this.listarLibros(); // Actualiza la lista de libros después de votar
       },
-      (error) =>{
-        console.error('Error al obtener libros', error);
+      error: (error) => {
+        console.error('Error al registrar voto', error);
       }
-    )
+    });
   }
 }
