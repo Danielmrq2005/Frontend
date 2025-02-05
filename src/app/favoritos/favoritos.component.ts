@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {RouterLink} from "@angular/router";
 
+// CAMBIAR LOS ID'S HARCODEADOS CUANDO TENGAMOS EL EXTRAER USUARIO
+
 @Component({
   selector: 'app-favoritos',
   templateUrl: './favoritos.component.html',
@@ -14,62 +16,112 @@ import {RouterLink} from "@angular/router";
 export class FavoritosComponent implements OnInit {
   librosFavoritos: any[] = [];
   autoresFavoritos: any[] = [];
+  librosIds: number[] = [];
+  autoresIds: number[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getLibrosFavoritos();
-    this.getAutoresFavoritos();
+    this.getLibrosIds();
+    this.getAutoresIds();
+  }
+
+  getLibrosIds(): void {
+    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/2`, { observe: 'response' })
+      .subscribe(
+        response => {
+          console.log('Response from /libros-favoritos/yourFaves/1:', response);
+          if (response.headers.get('content-type')?.includes('application/json')) {
+            const body = response.body;
+            console.log('Body:', body);
+            if (Array.isArray(body)) {
+              this.librosIds = body.map(item => item.libroId);
+              this.getLibrosFavoritos();
+            } else {
+              console.error('Unexpected response format:', body);
+            }
+          } else {
+            console.error('Unexpected content type:', response.headers.get('content-type'));
+            console.error('Response text:', response.body);
+          }
+        },
+        error => {
+          console.error('Error fetching libros IDs:', error);
+        }
+      );
+  }
+
+  getAutoresIds(): void {
+    this.http.get<any[]>(`api/seguidores/tusSeguidos/2`, { observe: 'response' })
+      .subscribe(
+        response => {
+          console.log('Response from /seguidores/tusSeguidos/1:', response);
+          if (response.headers.get('content-type')?.includes('application/json')) {
+            const body = response.body;
+            console.log('Body:', body);
+            if (Array.isArray(body)) {
+              this.autoresIds = body.map(item => item.seguidorId);
+              this.getAutoresFavoritos();
+            } else {
+              console.error('Unexpected response format:', body);
+            }
+          } else {
+            console.error('Unexpected content type:', response.headers.get('content-type'));
+          }
+        },
+        error => {
+          console.error('Error fetching autores IDs:', error);
+        }
+      );
   }
 
   getLibrosFavoritos(): void {
-    this.http.get<any[]>('/api/libros-favoritos/listaLibros')
-      .subscribe(
-        data => {
-          console.log('Fetched libros favoritos:', data);
-          this.librosFavoritos = data.map(libro => {
-            console.log('Processing libro:', libro);
-            return {
-              id: libro.libroId.id,
-              nombre: libro.libroId.nombre || 'No name available',
-              autor: libro.libroId.autorId ? libro.libroId.autorId.username : 'Unknown',
-              descripcion: libro.libroId.descripcion || 'No description available',
-              fecha_publicacion: libro.libroId.fechaPublicacion || 'No publication date available',
-              imagen: libro.libroId.imagen || 'No image available'
-            };
-          });
-        },
-        error => {
-          console.error('Error fetching libros favoritos:', error);
-        }
-      );
-  }
-
-  getAutoresFavoritos(): void {
-    this.http.get<any[]>('/api/seguidores/listaSeguidores')
-      .subscribe(
-        data => {
-          console.log('Fetched autores favoritos:', data);
-          data.forEach(seguidor => {
-            this.http.get<any>(`/api/usuario/${seguidor.seguidorId}/perfil`)
+    this.librosIds.forEach(id => {
+      this.http.get<any>(`/api/libros/${id}`)
+        .subscribe(
+          libro => {
+            console.log('Fetched libro favorito:', libro);
+            const autorId = libro.autorId;
+            this.http.get<any>(`/api/usuario/${autorId}/perfil`)
               .subscribe(
-                user => {
-                  this.autoresFavoritos.push({
-                    id: user.id,
-                    nombre: user.nombre ,
-                    apellido: user.apellido,
-                    imagen: user.imagen
+                autor => {
+                  this.librosFavoritos.push({
+                    id: libro.id,
+                    nombre: libro.nombre || 'No name available',
+                    autor: autor.nombre || 'Unknown',
+                    descripcion: libro.descripcion || 'No description available',
+                    fecha_publicacion: libro.fechaPublicacion || 'No publication date available',
+                    imagen: libro.imagen || 'No image available'
                   });
                 },
                 error => {
-                  console.error('Error fetching autor favorito:', error);
+                  console.error('Error fetching autor:', error);
                 }
               );
-          });
-        },
-        error => {
-          console.error('Error fetching autores favoritos:', error);
-        }
-      );
+          },
+          error => {
+            console.error('Error fetching libro favorito:', error);
+          }
+        );
+    });
+  }
+
+  getAutoresFavoritos(): void {
+    this.autoresIds.forEach(id => {
+      this.http.get<any>(`/api/usuario/${id}/perfil`)
+        .subscribe(
+          user => {
+            console.log('Fetched autor favorito:', user);
+            this.autoresFavoritos.push({
+              id: user.id,
+              nombre: user.nombre,
+              imagen: user.imagen
+            });
+          },
+          error => {
+            console.error('Error fetching autor favorito:', error);
+          }
+        );
+    });
   }
 }

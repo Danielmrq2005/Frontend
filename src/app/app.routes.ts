@@ -35,7 +35,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'crear_libro',
+    path: 'crear-libro',
     loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
   },
   {
@@ -46,6 +46,10 @@ export const routes: Routes = [
     path: 'perfil',
     loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
   },
+  {
+    path: 'pub-admin',
+    loadComponent: () => import('./pub-admin/pub-admin.component').then((m) => m.PubAdminComponent),
+  }
 
 
 
