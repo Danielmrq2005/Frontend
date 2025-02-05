@@ -8,7 +8,7 @@
     <ion-input [(ngModel)]="nombre" style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Introduzca el título del libro" label-placement="floating" fill="outline" placeholder="Escriba el título"></ion-input>
     <ion-input [(ngModel)]="generos" style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Género del libro" label-placement="floating" fill="outline" placeholder="Escriba el género"></ion-input>
     <ion-input [(ngModel)]="descripcion" style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Descripción del libro" label-placement="floating" fill="outline" placeholder="Escriba la descripción"></ion-input>
-    <ion-input [(ngModel)]="imagen" style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Introduzca la URL de la imagen de portada" label-placement="floating" fill="outline" placeholder="URL de la portada"></ion-input>
+    <ion-input [(ngModel)]="imagen" (ionBlur)="comprobarimagen()"  style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Introduzca la URL de la imagen de portada" label-placement="floating" fill="outline" placeholder="URL de la portada"></ion-input>
   </div>
 
   <div style="width: 80%; display: flex; justify-content: center; align-items: center; margin: auto;">
