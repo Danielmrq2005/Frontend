@@ -16,18 +16,6 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getData(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/ruta-de-datos`, this.httpOptions);
-  }
-
-  postData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/ruta-de-datos`, data, this.httpOptions);
-  }
-
-  deleteData(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/ruta-de-datos/${id}`, this.httpOptions);
-  }
-
   getLibro(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}libros/listaLibros`, this.httpOptions);
   }

@@ -22,10 +22,6 @@ export const routes: Routes = [
     path: 'libros-favoritos',
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
 
-  },
-  {
-    path: 'pub-admin',
-    loadComponent: () => import('./pub-admin/pub-admin.component').then((m) => m.PubAdminComponent),
   }
 
 ];
