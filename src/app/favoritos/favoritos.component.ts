@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import {RouterLink} from "@angular/router";
 
 // CAMBIAR LOS ID'S HARCODEADOS CUANDO TENGAMOS EL EXTRAER USUARIO
 
@@ -11,7 +10,7 @@ import {RouterLink} from "@angular/router";
   templateUrl: './favoritos.component.html',
   styleUrls: ['./favoritos.component.css'],
   standalone: true,
-    imports: [CommonModule, HttpClientModule, IonicModule, RouterLink]
+  imports: [CommonModule, HttpClientModule, IonicModule]
 })
 export class FavoritosComponent implements OnInit {
   librosFavoritos: any[] = [];
@@ -27,9 +26,9 @@ export class FavoritosComponent implements OnInit {
   }
 
   getLibrosIds(): void {
-    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/3`, { observe: 'response' })
-      .subscribe(
-        response => {
+    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/1`, { observe: 'response' })
+      .subscribe({
+        next: response => {
           console.log('Response from /libros-favoritos/yourFaves/1:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
@@ -45,16 +44,19 @@ export class FavoritosComponent implements OnInit {
             console.error('Response text:', response.body);
           }
         },
-        error => {
+        error: error => {
           console.error('Error fetching libros IDs:', error);
+        },
+        complete: () => {
+          console.log('Request for libros IDs completed.');
         }
-      );
+      });
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`api/seguidores/tusSeguidos/3`, { observe: 'response' })
-      .subscribe(
-        response => {
+    this.http.get<any[]>(`api/seguidores/tusSeguidos/1`, { observe: 'response' })
+      .subscribe({
+        next: response => {
           console.log('Response from /seguidores/tusSeguidos/1:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
@@ -69,22 +71,25 @@ export class FavoritosComponent implements OnInit {
             console.error('Unexpected content type:', response.headers.get('content-type'));
           }
         },
-        error => {
+        error: error => {
           console.error('Error fetching autores IDs:', error);
+        },
+        complete: () => {
+          console.log('Request for autores IDs completed.');
         }
-      );
+      });
   }
 
   getLibrosFavoritos(): void {
     this.librosIds.forEach(id => {
       this.http.get<any>(`/api/libros/${id}`)
-        .subscribe(
-          libro => {
+        .subscribe({
+          next: libro => {
             console.log('Fetched libro favorito:', libro);
             const autorId = libro.autorId;
             this.http.get<any>(`/api/usuario/${autorId}/perfil`)
-              .subscribe(
-                autor => {
+              .subscribe({
+                next: autor => {
                   this.librosFavoritos.push({
                     id: libro.id,
                     nombre: libro.nombre || 'No name available',
@@ -94,23 +99,29 @@ export class FavoritosComponent implements OnInit {
                     imagen: libro.imagen || 'No image available'
                   });
                 },
-                error => {
+                error: error => {
                   console.error('Error fetching autor:', error);
+                },
+                complete: () => {
+                  console.log('Request for autor completed.');
                 }
-              );
+              });
           },
-          error => {
+          error: error => {
             console.error('Error fetching libro favorito:', error);
+          },
+          complete: () => {
+            console.log('Request for libro favorito completed.');
           }
-        );
+        });
     });
   }
 
   getAutoresFavoritos(): void {
     this.autoresIds.forEach(id => {
       this.http.get<any>(`/api/usuario/${id}/perfil`)
-        .subscribe(
-          user => {
+        .subscribe({
+          next: user => {
             console.log('Fetched autor favorito:', user);
             this.autoresFavoritos.push({
               id: user.id,
@@ -118,10 +129,13 @@ export class FavoritosComponent implements OnInit {
               imagen: user.imagen
             });
           },
-          error => {
+          error: error => {
             console.error('Error fetching autor favorito:', error);
+          },
+          complete: () => {
+            console.log('Request for autor favorito completed.');
           }
-        );
+        });
     });
   }
 }

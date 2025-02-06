@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { PubAdminComponent } from './pub-admin.component';
+import { PubAdmin } from './publicaciones.component';
 
-describe('PubAdminComponent', () => {
-  let component: PubAdminComponent;
-  let fixture: ComponentFixture<PubAdminComponent>;
+describe('PubAdmin', () => {
+  let component: PubAdmin;
+  let fixture: ComponentFixture<PubAdmin>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [PubAdminComponent],
+      imports: [PubAdmin],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PubAdminComponent);
+    fixture = TestBed.createComponent(PubAdmin);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -51,6 +51,4 @@ export const routes: Routes = [
     loadComponent: () => import('./pub-admin/pub-admin.component').then((m) => m.PubAdminComponent),
   }
 
-
-
 ];

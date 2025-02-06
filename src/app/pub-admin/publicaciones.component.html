@@ -63,18 +63,8 @@
       </ion-card-content>
     </ion-card>
   </div>
-</ion-content>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let libro of libros">
-      <ion-label>
-        <h2>{{ libro.nombre }}</h2>
-        <p>{{ libro.descripcion }}</p>
-      </ion-label>
-      <ion-button color="danger" (click)="eliminarLibro(libro.id)">Eliminar</ion-button>
-    </ion-item>
-  </ion-list>
+
 </ion-content>
 
 <ion-fab horizontal="end" vertical="bottom" slot="fixed">
@@ -82,7 +72,6 @@
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
 <style>
   .custom-background {
     --background: white;
@@ -95,7 +84,8 @@
     gap: 10px;
     padding: 16px;
   }
-
+</style>
+<style>
   .mobile-menu {
     display: none;
   }
@@ -141,4 +131,5 @@
     width: 24px;
     height: 24px;
   }
+
 </style>
