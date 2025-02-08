@@ -59,7 +59,7 @@ export class CrearLibroComponent implements OnInit {
       })
     ).subscribe({
       next: (nombre) => {
-        this.username = nombre;
+        this.username = nombre.nombre;
         console.log('Username obtenido: ', this.username);
       },
       error: (error) => {

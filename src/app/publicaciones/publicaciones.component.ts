@@ -6,7 +6,7 @@ import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
-import { finalize } from 'rxjs/operators';  // Importa finalize
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-publicaciones',
@@ -34,7 +34,6 @@ export class PublicacionesComponent implements OnInit {
   listarLibros() {
     this.libroService.listarlibros().pipe(
       finalize(() => {
-        console.log('La operación de listar libros ha terminado');
       })
     ).subscribe({
       next: (libros: Libro[]) => {
@@ -50,12 +49,11 @@ export class PublicacionesComponent implements OnInit {
     const usuarioId = 1;
     this.libroService.votarlibro(libroId, usuarioId, esLike).pipe(
       finalize(() => {
-        console.log('La operación de votar ha terminado');
       })
     ).subscribe({
       next: (response) => {
         console.log('Voto registrado con éxito');
-        this.listarLibros(); // Actualiza la lista de libros después de votar
+        this.listarLibros();
       },
       error: (error) => {
         console.error('Error al registrar voto', error);

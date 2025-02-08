@@ -37,19 +37,29 @@
 
 <ion-content id="main-content" class="custom-background">
   <div class="perfil-container">
-    <img class="perfil-imagen" src="assets/pulgarcito.png">
+    <img class="perfil-imagen" [src]="perfil.imagen || 'assets/pulgarcito.png'">
+
     <div class="perfil-info">
-      <h1 class="perfil-nombre">Daniel</h1>
+      <h1 class="perfil-nombre">{{ perfil.nombre }} {{ perfil.apellidos }}</h1>
+
       <div class="perfil-estadisticas">
         <h2 class="perfil-publicaciones">Publicaciones: 2000</h2>
         <h2 class="perfil-publicaciones">Seguidores: 500</h2>
         <h2 class="perfil-publicaciones">Seguidos: 100</h2>
       </div>
-      <p class="perfil-descripcion">Esta es mi descripcion</p>
-      <p class="perfil-descripcion">AVENTURA</p>
-      <ion-button class="follow-button" color="primary" (click)="toggleFollow()">{{ followText }}</ion-button>
+      <p class="perfil-descripcion">{{ perfil.descripcion }}</p>
+
+      <p class="perfil-descripcion">Genero favorito: {{ perfil.generos }}</p>
+
+      <ion-button class="follow-button" color="primary" (click)="toggleFollow()">
+        {{ followText }}
+      </ion-button>
+
+
     </div>
+
   </div>
+  <h2 style="text-align: center; color: black">Publicaciones</h2>
 </ion-content>
 
 <style>
