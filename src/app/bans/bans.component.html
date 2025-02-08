@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar style="--background: #12294D; color: white;">
+    <div class="desktop-menu">
+      <ion-buttons slot="start">
+        <ion-button>Inicio</ion-button>
+        <ion-button>Seguidos</ion-button>
+        <ion-button>Publicaciones</ion-button>
+        <ion-button>Chats</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button href="perfil">Perfil</ion-button>
+      </ion-buttons>
+    </div>
+
+    <ion-buttons slot="start" class="mobile-menu">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu content-id="main-content" side="start" menu-id="mobile-menu">
+  <ion-header>
+    <ion-toolbar style="color: white;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button>Inicio</ion-item>
+      <ion-item button>Seguidos</ion-item>
+      <ion-item button>Publicaciones</ion-item>
+      <ion-item button>Chats</ion-item>
+      <ion-item button>Perfil</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="custom-background">
+  <div class="Usuarios">
+    <div *ngFor="let usuario of usuarios" class="usuario-container">
+      <ion-button fill="clear" style="border-radius: 50%">
+        <img [src]="usuario.imagen" class="imagen_pfp"/>
+      </ion-button>
+      <p class="texto_pagina">{{ usuario.nombre }}</p>
+      <ion-button (click)="toggleBan(usuario)" [color]="usuario.baneado ? 'danger' : 'primary'">
+        {{ usuario.baneado ? 'Desbanear' : 'Banear' }}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+<style>
+  ion-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .custom-background {
+    --background: white;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .desktop-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+
+  .reaction img {
+    width: 24px;
+    height: 24px;
+  }
+
+</style>

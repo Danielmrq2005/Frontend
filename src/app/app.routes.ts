@@ -22,6 +22,14 @@ export const routes: Routes = [
     path: 'libros-favoritos',
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
 
+  },
+  {
+    path: 'baneos',
+    loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
+  },
+  {
+    path: 'seguidores',
+    loadComponent: () => import('./seguidores/seguidores.component').then((m) => m.SeguidoresComponent),
   }
 
 ];
