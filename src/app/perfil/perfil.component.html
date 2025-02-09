@@ -35,19 +35,21 @@
   </ion-content>
 </ion-menu>
 
+
+
 <ion-content id="main-content" class="custom-background">
   <div class="perfil-container">
     <img class="perfil-imagen" [src]="perfil.imagen || 'assets/pulgarcito.png'">
 
     <div class="perfil-info">
-      <h1 class="perfil-nombre">{{ perfil.nombre }} {{ perfil.apellidos }}</h1>
+      <h1  class="perfil-nombre">{{ perfil.nombre }} {{ perfil.apellidos }}</h1>
 
       <div class="perfil-estadisticas">
-        <h2 class="perfil-publicaciones">Publicaciones: 2000</h2>
+        <h2 class="perfil-publicaciones">Publicaciones: {{Publicaciones.length}}</h2>
         <h2 class="perfil-publicaciones">Seguidores: 500</h2>
         <h2 class="perfil-publicaciones">Seguidos: 100</h2>
       </div>
-      <p class="perfil-descripcion">{{ perfil.descripcion }}</p>
+      <p style="text-align: center" class="perfil-descripcion">{{ perfil.descripcion }}</p>
 
       <p class="perfil-descripcion">Genero favorito:  {{ perfil.generos }}</p>
 
@@ -60,6 +62,106 @@
 
   </div>
   <h2 style="text-align: center; color: black">Publicaciones</h2>
+
+  <ion-content  class="custom-background">
+    <div class="estilo_cartas">
+
+      <p *ngIf="Publicaciones.length === 0" style="text-align: center; color: gray; font-size: 18px;">
+        Aun no hay publicaciones
+      </p>
+
+      <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let publicacion of Publicaciones">
+        <img  [src]="publicacion.imagen" alt="{{ publicacion.nombre }}" style="width: 100%;height: 70% "  />
+        <ion-card-header>
+          <ion-card-title>{{publicacion.nombre}}</ion-card-title>
+          <ion-card-subtitle>{{publicacion.generos}}</ion-card-subtitle>
+          <ion-card-subtitle>{{publicacion.username}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="reaction-container">
+            <div class="reaction">
+              <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" (click)="votar(publicacion.id,true)" >
+              <p style="color: white">{{publicacion.likes}}</p>
+            </div>
+            <div class="reaction">
+              <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(publicacion.id,false)" >
+              <p style="color: white">{{publicacion.dislikes}}</p>
+            </div>
+            <div class="reaction">
+              <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+              <p style="color: white">23</p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+  </ion-content>
+
+
+  <style>
+    .custom-background {
+      --background: white;
+    }
+
+    .estilo_cartas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+    }
+  </style>
+  <style>
+    .mobile-menu {
+      display: none;
+    }
+
+    .desktop-menu {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    .tamaño_carta {
+      width: 300px;
+      height: 500px;
+      border-radius: 40px;
+    }
+
+    .reaction-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reaction {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .reaction p {
+      margin: 0;
+    }
+
+    .reaction img {
+      width: 24px;
+      height: 24px;
+    }
+
+  </style>
+
 </ion-content>
 
 <style>
@@ -94,7 +196,9 @@
     font-size: 24px;
     font-weight: bold;
     color: #12294D;
-    margin: 0;
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
   }
 
   .perfil-estadisticas {
@@ -142,10 +246,15 @@
       display: block;
     }
 
+    .perfil-nombre {
+      margin: auto;
+    }
+
     .perfil-container {
       flex-direction: column;
       align-items: center;
       text-align: center;
+      margin-left: 10px;
     }
 
     .perfil-imagen {
@@ -158,11 +267,20 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
+      margin-right: auto;
+      margin-left: auto;
+      margin-bottom: 10px;
+    }
+
+    .perfil-descripcion {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 30px;
     }
 
     .follow-button {
       width: 80%;
-      text-align: center;
+      margin: auto;
     }
   }
 </style>

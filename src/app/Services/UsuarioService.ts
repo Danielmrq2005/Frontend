@@ -9,6 +9,7 @@ import {Perfil} from "../Models/Perfil";
 })
 export class UsuarioService {
   private apiUrl = 'http://localhost:8080/usuario';
+  private apiUrlLibros = 'http://localhost:8080/libros';
   constructor(private http: HttpClient) {
   }
 
@@ -18,6 +19,11 @@ export class UsuarioService {
 
   obetenerPerfil(id: number): Observable<Perfil> {
     return this.http.get<Perfil>(`${this.apiUrl}/${id}/perfil`);
+  }
+
+
+  obtenerPublicaciones(id: number): Observable<Libro[]>{
+    return this.http.get<Libro[]>(`${this.apiUrlLibros}/perfil/publicaciones/${id}`)
   }
 
 
