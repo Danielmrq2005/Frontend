@@ -60,14 +60,13 @@ export class LoginComponent implements OnInit {
 
         },
         error: (e) => console.error(e),
-        complete: () => this.router.navigate([''])
+        complete: () => this.router.navigate(['/home'])
       })
 
 
     } else {
       console.log('Formulario inválido. Por favor verifica los datos.');
     }
-
   }
 
 }
