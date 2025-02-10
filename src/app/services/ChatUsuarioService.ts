@@ -9,9 +9,13 @@ import {Observable} from "rxjs";
 
 export class ChatUsuarioService {
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl + '/chatUsuarios';
 
   constructor(private http: HttpClient) {
+  }
+
+  agregarUsuarioAlChat(chatUsuariosDTO: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/agregar`, chatUsuariosDTO);
   }
 
   obtenerUsuariosEnChat(chatId: number): Observable<any[]> {
