@@ -26,10 +26,10 @@ export class FavoritosComponent implements OnInit {
   }
 
   getLibrosIds(): void {
-    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/1`, { observe: 'response' })
+    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/3`, { observe: 'response' })
       .subscribe({
         next: response => {
-          console.log('Response from /libros-favoritos/yourFaves/1:', response);
+          console.log('Response from /libros-favoritos/yourFaves/3:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
             console.log('Body:', body);
@@ -54,10 +54,10 @@ export class FavoritosComponent implements OnInit {
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`api/seguidores/tusSeguidos/1`, { observe: 'response' })
+    this.http.get<any[]>(`api/seguidores/tusSeguidos/3`, { observe: 'response' })
       .subscribe({
         next: response => {
-          console.log('Response from /seguidores/tusSeguidos/1:', response);
+          console.log('Response from /seguidores/tusSeguidos/3:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
             console.log('Body:', body);

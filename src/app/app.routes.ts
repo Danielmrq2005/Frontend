@@ -48,7 +48,7 @@ export const routes: Routes = [
   },
   {
     path: 'pub-admin',
-    loadComponent: () => import('./pub-admin/pub-admin.component').then((m) => m.PubAdminComponent),
+    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
   }
 
 ];

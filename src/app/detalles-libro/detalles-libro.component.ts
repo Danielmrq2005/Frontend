@@ -71,6 +71,19 @@ export class DetallesLibroComponent implements OnInit {
     return null;
   }
 
+  cargarComentarios() {
+    if (this.libro?.id) {
+      this.comentariosService.obtenerComentarios(this.libro.id).subscribe(
+        (comentariosActualizados: Comentario[]) => {
+          this.comentarios = [...comentariosActualizados]; // Clonamos la lista para forzar cambio
+          console.log('Comentarios actualizados:', this.comentarios);
+        },
+        error => console.error('Error al obtener comentarios actualizados', error)
+      );
+    }
+  }
+
+
   agregarComentario() {
     const userId = this.obtenerUsuarioId();
     if (!userId) {
@@ -85,19 +98,21 @@ export class DetallesLibroComponent implements OnInit {
 
     const nuevoComentario: Comentario = {
       usuarioId: userId,
-      username: userId,
+      username: userId, // Aquí asegúrate de que tienes el username real
       comentario: this.nuevoComentario,
       libroId: this.libro?.id || 0,
       fecha: new Date().toISOString().slice(0, 19)
     };
 
-    console.log('Comentario a publicar:', nuevoComentario);
-
     this.comentariosService.agregarComentario(nuevoComentario).subscribe(
       () => {
         console.log('Comentario agregado con éxito');
-        this.nuevoComentario = ''; // Limpiar el input después de agregar
-        this.comentarios.push(nuevoComentario); // Agregar comentario localmente
+
+        // Limpiar el input
+        this.nuevoComentario = '';
+
+        // 🚀 Volver a cargar los comentarios DESDE EL BACKEND
+        this.cargarComentarios();
       },
       error => console.error('Error al agregar comentario', error)
     );
