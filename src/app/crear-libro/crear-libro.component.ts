@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule, AlertController } from '@ionic/angular'; // Importa AlertController
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import {add, image} from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";

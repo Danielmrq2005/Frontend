@@ -1,0 +1,73 @@
+<ion-content *ngIf="loginViewFlag">
+  <div class="login-container">
+    <ion-icon name="person-circle-outline" class="icon"></ion-icon>
+    <img src="assets/images/libro.png" alt="Libro Icono" class="icon">
+    <form [formGroup]="registroForm" id="registro">
+
+      <ion-item lines="none">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input  placeholder="Nombre"
+                    fill="outline"
+                    formControlName="nombre"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Apellidos</ion-label>
+        <ion-input placeholder="Apellidos"
+                   fill="outline"
+                   formControlName="apellidos"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Nom Usuario</ion-label>
+        <ion-input placeholder="Nombre de usuario"
+                   fill="outline"
+                   formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input  placeholder="Email"
+                    fill="outline"
+                    formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input placeholder="Contraseña"
+                   type="password"
+                   fill="outline"
+                   formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Género</ion-label>
+        <ion-select formControlName="genero">
+          <ion-select-option *ngFor="let genero of generos" [value]="genero">{{ genero }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Imagen</ion-label>
+        <ion-input placeholder="Imagen"
+                   fill="outline"
+                   formControlName="imagen"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input placeholder="Descripción"
+                   fill="outline"
+                   formControlName="descripcion"></ion-input>
+      </ion-item>
+      <ion-button expand="block" class="login-button" color="primary" (click)="doRegister()">Crear</ion-button>
+    </form>
+    <div class="signup-link">
+      <a href="login">¿Ya tienes una cuenta?</a>
+      <p>Inicia Sesión</p>
+    </div>
+  </div>
+
+
+
+</ion-content>
