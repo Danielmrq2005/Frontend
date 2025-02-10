@@ -108,6 +108,47 @@ export class CrearLibroComponent implements OnInit {
     }
   }
 
+  crearChat() {
+    if (!this.libro?.id) {
+      console.error('No se encontró el ID del libro');
+      return;
+    }
+
+    const chatData = {
+      nombre: this.libro.nombre,
+      descripcion: `Chat sobre ${this.libro.nombre}`,
+      imagen: this.libro.imagen,
+      libroId: this.libro.id
+    };
+
+    this.Chatusuario.crearChat(chatData).subscribe(
+      (chatId: number) => {
+        console.log('Chat creado con ID:', chatId);
+        this.unirseChat(chatId); // Unir al usuario al chat
+      },
+      error => console.error('Error al crear chat', error)
+    );
+  }
+
+  unirseChat(chatId: number) {
+    const userId = this.obtenerUsuarioId();
+    if (!userId) {
+      console.error('No se encontró la ID del usuario');
+      return;
+    }
+
+    const nuevousuario: Chatusuarios = {
+      usuarioId: userId,
+      chatId: chatId
+    };
+
+    this.Chatusuario.agregarUsuarioAlChat(nuevousuario).subscribe(
+      () => console.log('Usuario agregado al chat con éxito'),
+      error => console.error('Error al agregar usuario al chat', error)
+    );
+  }
+
+
   async mostrarAlerta(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({
       header: titulo,

@@ -9,7 +9,9 @@ import { Comentario } from "../Models/Comentario";
 import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
 import {jwtDecode} from 'jwt-decode';
-import {FormsModule} from "@angular/forms"; // Importar jwt-decode
+import {FormsModule} from "@angular/forms";
+import {Chatusuarios} from "../modelos/Chatusuarios";
+import {ChatUsuarioService} from "../Services/ChatUsuarioService"; // Importar jwt-decode
 
 @Component({
   selector: 'app-detalles-libro',
@@ -26,7 +28,7 @@ export class DetallesLibroComponent implements OnInit {
   nuevoComentario: string = ''; // Variable para el comentario nuevo
   loading = true;
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private Chatusuario: ChatUsuarioService) { }
 
   ngOnInit() {
     const token = sessionStorage.getItem('authToken');
@@ -117,6 +119,44 @@ export class DetallesLibroComponent implements OnInit {
       error => console.error('Error al agregar comentario', error)
     );
   }
+
+
+  agregarUsuarioschat(){
+
+    const userId = this.obtenerUsuarioId();
+
+    const chatId =
+
+    if (!userId) {
+      console.error('No se encontró la ID del usuario');
+      return;
+    }
+
+
+
+
+    const nuevousuario:Chatusuarios  = {
+      usuarioId: userId,
+      chatId:chatId,
+
+    };
+
+    this.Chatusuario.agregarUsuarioAlChat(nuevousuario).subscribe(
+      () => {
+        console.log('Usuario agregado con éxito');
+
+        // Limpiar el input
+        this.nuevoComentario = '';
+
+        // 🚀 Volver a cargar los comentarios DESDE EL BACKEND
+        this.cargarComentarios();
+      },
+      error => console.error('Error al agregar Usuario', error)
+    );
+  }
+
+
+
 
   protected readonly home = home;
 }

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Libro} from "../modelos/Libro";
+import {Libro} from "../Models/Libro";
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +36,7 @@ export class LibroService {
   obtenerTop4Libros(): Observable<Libro[]> {
     return this.http.get<Libro[]>('http://localhost:8080/votos/top4');
   }
+
 
 
 }

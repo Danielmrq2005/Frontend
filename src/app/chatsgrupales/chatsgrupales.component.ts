@@ -43,9 +43,6 @@ export class ChatsgrupalesComponent  implements OnInit {
     }
 
 
-
-
-
     const nuevousuario:Chatusuarios  = {
         usuarioId: userId,
         chatId:chatId,
