@@ -43,11 +43,10 @@
     <p style="margin: 0;">Crear libro</p>
   </div>
 
-  <!-- Formulario -->
   <div style="border: none; width: 95%; margin: 20px auto; background-color: #1C4585; color: black; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
     <ion-input [(ngModel)]="nombre" style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Introduzca el título del libro" label-placement="floating" fill="outline" placeholder="Escriba el título"></ion-input>
 
-    <ion-select  [(ngModel)]="generos">
+    <ion-select  style="width: 100%; --background: white; margin-top: 20px; --color: black; --placeholder-color: #1C4585;" label="Introduzca el título del libro" label-placement="floating" fill="outline" placeholder="Escriba el título"  [(ngModel)]="generos">
       <ion-select-option  *ngFor="let genero of generosArray" [value]="genero">
         {{ genero }}
       </ion-select-option>

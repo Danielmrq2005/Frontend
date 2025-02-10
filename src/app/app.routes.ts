@@ -4,11 +4,13 @@ import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import {AuthGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'detallesLibro/:id',
@@ -22,10 +24,13 @@ export const routes: Routes = [
   {
     path: 'libros-favoritos',
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'publicaciones',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'login',
@@ -34,6 +39,7 @@ export const routes: Routes = [
   {
     path: 'crear-libro',
     loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -42,9 +48,12 @@ export const routes: Routes = [
   {
     path: 'perfil/:id',
     loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'pub-admin',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+    canActivate: [AuthGuard]
   }
 ];
