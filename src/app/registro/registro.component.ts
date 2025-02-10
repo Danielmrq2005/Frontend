@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Genero } from './genero.enum';
-import {RegistroService} from "../Services/registro.service";
-
-import {CommonModule, KeyValuePipe} from "@angular/common";
-import {Registro} from "../modelos/Registro";
-import {Router} from "@angular/router";
+import { RegistroService } from "../Services/registro.service";
+import { CommonModule, KeyValuePipe } from "@angular/common";
+import { Registro } from "../modelos/Registro";
+import { Router } from "@angular/router";
+import { i5Genero } from "../Models/Genero";
 
 @Component({
   selector: 'app-registro',
@@ -22,16 +22,16 @@ import {Router} from "@angular/router";
     CommonModule,
     ReactiveFormsModule
   ],
-  providers:[RegistroService]
+  providers: [RegistroService]
 })
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   registro: Registro = new Registro();
   generos = Object.values(Genero);
   loginViewFlag: boolean = true;
+  generosArray = Object.values(i5Genero);
 
-
-  constructor(private registroService: RegistroService, private fb: FormBuilder,private router: Router) {
+  constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router) {
     this.registroForm = this.fb.group({
       nombre: [this.registro.nombre, Validators.required],
       apellidos: [this.registro.apellidos, Validators.required],
@@ -48,13 +48,12 @@ export class RegistroComponent implements OnInit {
 
   doRegister() {
     if (this.registroForm.valid) {
-      this.registro = {...this.registro, ...this.registroForm.value};
+      this.registro = { ...this.registro, ...this.registroForm.value };
       this.registroService.registrar(this.registro).subscribe({
         next: (respuesta) => console.info("registro exitoso"),
         error: (e) => console.error(e),
         complete: () => this.router.navigate(['login'])
-      })
-
+      });
     } else {
       console.log('Formulario inválido. Por favor verifica los datos.');
     }

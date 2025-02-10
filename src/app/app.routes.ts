@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {DetallesLibroComponent} from "./detalles-libro/detalles-libro.component";
+import { DetallesLibroComponent } from "./detalles-libro/detalles-libro.component";
 import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
@@ -22,9 +22,7 @@ export const routes: Routes = [
   {
     path: 'libros-favoritos',
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
-
   },
-
   {
     path: 'publicaciones',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
@@ -33,7 +31,6 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
   },
-
   {
     path: 'crear-libro',
     loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
@@ -43,12 +40,11 @@ export const routes: Routes = [
     loadComponent: () => import('./registro/registro.component').then((m) => m.RegistroComponent),
   },
   {
-    path: 'perfil',
+    path: 'perfil/:id',
     loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
   },
   {
     path: 'pub-admin',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
   }
-
 ];

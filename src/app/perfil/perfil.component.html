@@ -53,9 +53,10 @@
 
       <p class="perfil-descripcion">Genero favorito:  {{ perfil.generos }}</p>
 
-      <ion-button class="follow-button" color="primary" (click)="toggleFollow()">
-        {{ followText }}
-      </ion-button>
+        <ion-button *ngIf="idactual !== usuarioId" class="follow-button" color="primary" (click)="toggleFollow()">
+            {{ followText }}
+        </ion-button>
+
 
 
     </div>

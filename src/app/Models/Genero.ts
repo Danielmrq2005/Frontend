@@ -1,4 +1,4 @@
-export enum Genero {
+export enum i5Genero {
   AVENTURA = "AVENTURA",
   CIENCIA_FICCION = "CIENCIA_FICCION",
   FANTASIA = "FANTASIA",

@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Libro} from "../Models/Libro";
 import {Perfil} from "../Models/Perfil";
+import {Usuario} from "../Models/Usuario";
 
 @Injectable({
   providedIn: 'root',
@@ -13,18 +14,27 @@ export class UsuarioService {
   constructor(private http: HttpClient) {
   }
 
-  obtenerUsername(autorId: number): Observable<Perfil> {
+  obtenerUsername(autorId: number | null): Observable<Perfil> {
     return this.http.get<Perfil>(`http://localhost:8080/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
   }
 
-  obetenerPerfil(id: number): Observable<Perfil> {
+  obetenerPerfil(id: number | null): Observable<Perfil> {
     return this.http.get<Perfil>(`${this.apiUrl}/${id}/perfil`);
   }
 
 
-  obtenerPublicaciones(id: number): Observable<Libro[]>{
+  obtenerPublicaciones(id: number | null): Observable<Libro[]>{
     return this.http.get<Libro[]>(`${this.apiUrlLibros}/perfil/publicaciones/${id}`)
   }
+
+  obtenerPerfilPorUsername(username: string): Observable<Perfil> {
+    return this.http.get<Perfil>(`${this.apiUrl}/perfil/${username}`);
+  }
+
+  obtenerPublicacionesPorUsername(username: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.apiUrl}/publicaciones/${username}`);
+  }
+
 
 
 

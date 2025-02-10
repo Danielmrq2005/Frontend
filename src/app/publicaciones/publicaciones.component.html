@@ -9,7 +9,10 @@
                 <ion-button routerLink="/libros-favoritos">Libros favoritos</ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button href="perfil">Perfil</ion-button>
+              <a [routerLink]="['/perfil',idactual]" style="color: white;">
+                <ion-button>Perfil</ion-button>
+              </a>
+
             </ion-buttons>
         </div>
 
@@ -42,11 +45,15 @@
 <ion-content id="main-content" class="custom-background">
   <div class="estilo_cartas">
     <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let libro of libros">
-      <img  [src]="libro.imagen" alt="{{ libro.nombre }}" style="width: 100%;height: 70% " (click)="verDetallesLibro(libro.id)" />
+      <img  [src]="libro.imagen" alt="{{ libro.nombre }}" style="width: 100%;height: 70% " />
       <ion-card-header>
         <ion-card-title>{{libro.nombre}}</ion-card-title>
         <ion-card-subtitle>{{libro.generos}}</ion-card-subtitle>
-        <ion-card-subtitle>{{libro.username}}</ion-card-subtitle>
+        <ion-card-subtitle>
+          <a [routerLink]="['/perfil', libro.autorId]" style="color: white;">
+            {{ libro.username }}
+          </a>
+        </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <div class="reaction-container">
@@ -59,7 +66,6 @@
             <p style="color: white">{{libro.dislikes}}</p>
           </div>
           <div class="reaction">
-            <p>12</p>
             <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
             <p style="color: white">23</p>
           </div>

@@ -1,5 +1,6 @@
-import { Genero } from "./Genero";
+import { i5Genero } from "./Genero";
 import { Usuario } from "./Usuario";
+import {Genero} from "../registro/genero.enum";
 
 export interface Perfil {
   id: number;

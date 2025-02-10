@@ -5,7 +5,7 @@ export interface Libro {
   username: string;
   generos: string;
   imagen: string;
-  autorId: number;
+  autorId: number | null;
   likes: number;
   fecha_publicacion: Date;
   dislikes: number;
