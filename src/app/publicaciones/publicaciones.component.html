@@ -50,7 +50,7 @@
         <ion-card-title style="color: white">{{libro.nombre}}</ion-card-title>
         <ion-card-subtitle>{{libro.generos}}</ion-card-subtitle>
         <ion-card-subtitle>
-          <a [routerLink]="['/perfil', libro.autorId]" style="color: white;">
+          <a [routerLink]="['/perfil', libro.autorId]" style="color: white;text-decoration: none;">
             {{ libro.username }}
           </a>
         </ion-card-subtitle>
