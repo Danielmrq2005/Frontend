@@ -1,4 +1,4 @@
-import {Genero} from "../registro/genero.enum";
+import {Genero} from "../Models/Genero";
 
 export class Registro{
   nombre?:string;

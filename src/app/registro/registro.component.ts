@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Genero } from './genero.enum';
+import { Genero } from '../Models/Genero';
 import {RegistroService} from "../Services/registro.service";
 
 import {CommonModule, KeyValuePipe} from "@angular/common";

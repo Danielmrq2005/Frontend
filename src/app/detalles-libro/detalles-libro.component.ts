@@ -125,14 +125,17 @@ export class DetallesLibroComponent implements OnInit {
 
     const userId = this.obtenerUsuarioId();
 
-    const chatId =
+    const chatId = this.libro?.id
 
     if (!userId) {
       console.error('No se encontró la ID del usuario');
       return;
     }
 
-
+    if (!chatId) {
+      console.error('No se encontró la ID del Chat');
+      return;
+    }
 
 
     const nuevousuario:Chatusuarios  = {

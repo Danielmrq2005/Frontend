@@ -7,6 +7,9 @@ import {ChatUsuarioService} from "../Services/ChatUsuarioService";
 import {Chatusuarios} from "../modelos/Chatusuarios";
 import {finalize} from "rxjs";
 import {jwtDecode} from "jwt-decode";
+import {Chat} from "../modelos/Chat";
+import {ChatService} from "../Services/ChatService";
+
 
 @Component({
   selector: 'app-chatsgrupales',
@@ -20,58 +23,32 @@ import {jwtDecode} from "jwt-decode";
     KeyValuePipe,
     CommonModule,
     ReactiveFormsModule
-  ]
+  ],
+  providers: [ChatService]
 })
-export class ChatsgrupalesComponent  implements OnInit {
+export class ChatsgrupalesComponent implements OnInit {
 
-  constructor(private chatusuarioService: ChatUsuarioService) { }
+  nombreLibro: string = '';
+  chats: any[] = [];
 
-  ngOnInit() {}
+  constructor(private chatService: ChatService) {}
 
-
-
-
-
-
-  agregarUsuarioschat(){
-
-    const userId = this.obtenerUsuarioId();
-
-    if (!userId) {
-      console.error('No se encontró la ID del usuario');
-      return;
-    }
-
-
-    const nuevousuario:Chatusuarios  = {
-        usuarioId: userId,
-        chatId:chatId,
-
-      };
-
-      this.comentariosService.agregarComentario(nuevoComentario).subscribe(
-        () => {
-          console.log('Comentario agregado con éxito');
-
-          // Limpiar el input
-          this.nuevoComentario = '';
-
-          // 🚀 Volver a cargar los comentarios DESDE EL BACKEND
-          this.cargarComentarios();
-        },
-        error => console.error('Error al agregar comentario', error)
-      );
-    }
-
-  protected readonly home = home;
+  ngOnInit() {
+    this.obtenerChats();
   }
 
+  obtenerChats() {
+    this.chatService.obtenerChats().subscribe((chats) => {
+      this.chats = chats;
+      if (this.chats.length > 0) {
+        this.nombreLibro = this.chats[0].nombre;
+      }
+    });
   }
 
-  crearChat(){
-
+  crearNuevoChat() {
+    console.log('Función para crear un nuevo chat');
   }
-
-
-
 }
+
+

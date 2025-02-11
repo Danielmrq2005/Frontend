@@ -9,7 +9,7 @@ import {ComunService} from "./comun.service";
 })
 
 export class ComentariosService {
-  private apiUrl = 'http://localhost:8080/comentarios';
+  private apiUrl = 'http://localhost:8081/comentarios';
 
   constructor(private http: HttpClient, private comunService: ComunService) {
   }

@@ -8,7 +8,9 @@ import {Libro} from "../Models/Libro";
 })
 
 export class LibroService {
-  private apiUrl = 'http://localhost:8080/libros';
+  private apiUrl = 'http://localhost:8081/libros';
+  private apiUrl2 = 'http://localhost:8081/chat';
+
 
 
   constructor(private http: HttpClient) {
@@ -23,6 +25,10 @@ export class LibroService {
     return this.http.post<Libro>(`${this.apiUrl}/crear`, libro);
   }
 
+  crearChat(chatData: any): Observable<number> {
+    return this.http.post<number>(`${this.apiUrl2}/crear`, chatData);
+  }
+
   votarlibro(libroId: number, usuarioId: number, esLike: boolean): Observable<any> {
     const params = new HttpParams()
       .set('usuarioId', usuarioId.toString())
@@ -34,7 +40,7 @@ export class LibroService {
     return this.http.get<Libro>(`${this.apiUrl}/${libroId}`);
   }
   obtenerTop4Libros(): Observable<Libro[]> {
-    return this.http.get<Libro[]>('http://localhost:8080/votos/top4');
+    return this.http.get<Libro[]>('http://localhost:8081/votos/top4');
   }
 
 

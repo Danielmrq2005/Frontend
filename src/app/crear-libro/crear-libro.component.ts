@@ -8,7 +8,11 @@ import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";
-import { finalize } from 'rxjs/operators'; // Importa finalize
+import { finalize } from 'rxjs/operators';
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
+import {Chatusuarios} from "../modelos/Chatusuarios";
+import {jwtDecode} from "jwt-decode";
+import {ChatService} from "../Services/ChatService"; // Importa finalize
 
 @Component({
   selector: 'app-crea-libro',
@@ -25,6 +29,8 @@ import { finalize } from 'rxjs/operators'; // Importa finalize
 })
 
 export class CrearLibroComponent implements OnInit {
+  libro: Libro | undefined;
+
   nombre: string = '';
   generos: string = '';
   descripcion: string = '';
@@ -38,7 +44,8 @@ export class CrearLibroComponent implements OnInit {
   constructor(
     private libroService: LibroService,
     private usuarioService: UsuarioService,
-    private alertController: AlertController  // Inyectamos AlertController
+    private alertController: AlertController,
+    private Chatusuario: ChatUsuarioService
   ) { }
 
   ngOnInit() { }
@@ -77,7 +84,7 @@ export class CrearLibroComponent implements OnInit {
     this.fecha_publicacion = new Date();
 
     if (this.nombre && this.generos && this.descripcion && this.imagen) {
-      this.obtenerUsername(this.autorId); // Obtén el username antes de crear el libro
+      this.obtenerUsername(this.autorId);
 
       const datoslibro = {
         nombre: this.nombre,
@@ -97,6 +104,7 @@ export class CrearLibroComponent implements OnInit {
         next: (response) => {
           console.log('Libro creado exitosamente', response);
           this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
+          this.crearChat()
         },
         error: (error) => {
           console.error('Error al crear el libro', error);
@@ -106,6 +114,20 @@ export class CrearLibroComponent implements OnInit {
     } else {
       this.mostrarAlerta('Campos incompletos', 'Por favor, complete todos los campos');
     }
+  }
+
+  obtenerUsuarioId(): number | null {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.tokenDataDTO?.id || null;
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+        return null;
+      }
+    }
+    return null;
   }
 
   crearChat() {
@@ -121,10 +143,10 @@ export class CrearLibroComponent implements OnInit {
       libroId: this.libro.id
     };
 
-    this.Chatusuario.crearChat(chatData).subscribe(
+    this.libroService.crearChat(chatData).subscribe(
       (chatId: number) => {
         console.log('Chat creado con ID:', chatId);
-        this.unirseChat(chatId); // Unir al usuario al chat
+        this.unirseChat(chatId);
       },
       error => console.error('Error al crear chat', error)
     );

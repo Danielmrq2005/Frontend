@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 
 export class VotosService {
-  private apiUrl = 'http://localhost:8080/votos';
+  private apiUrl = 'http://localhost:8081/votos';
   constructor(private http: HttpClient) {}
 
 

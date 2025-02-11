@@ -4,6 +4,8 @@ import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import {ChatsgrupalesComponent} from "./chatsgrupales/chatsgrupales.component";
+
 
 export const routes: Routes = [
   {
@@ -49,6 +51,11 @@ export const routes: Routes = [
   {
     path: 'pub-admin',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+  },
+
+  {
+    path: 'chats',
+    loadComponent: () => import('./chatsgrupales/chatsgrupales.component').then((m) => m.ChatsgrupalesComponent),
   }
 
 ];

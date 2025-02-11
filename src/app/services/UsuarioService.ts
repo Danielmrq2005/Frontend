@@ -7,12 +7,12 @@ import {Libro} from "../Models/Libro";
   providedIn: 'root',
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/usuario';
+  private apiUrl = 'http://localhost:8081/usuario';
   constructor(private http: HttpClient) {
   }
 
   obtenerUsername(autorId: number): Observable<string> {
-    return this.http.get<string>(`http://localhost:8080/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
+    return this.http.get<string>(`http://localhost:8081/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
   }
 
 
