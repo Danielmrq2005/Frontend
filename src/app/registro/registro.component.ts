@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
+import {AlertController, IonicModule } from "@ionic/angular";
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Genero } from './genero.enum';
@@ -31,7 +31,7 @@ export class RegistroComponent implements OnInit {
   loginViewFlag: boolean = true;
   generosArray = Object.values(i5Genero);
 
-  constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router) {
+  constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router,private alertController: AlertController) {
     this.registroForm = this.fb.group({
       nombre: [this.registro.nombre, Validators.required],
       apellidos: [this.registro.apellidos, Validators.required],
@@ -50,12 +50,23 @@ export class RegistroComponent implements OnInit {
     if (this.registroForm.valid) {
       this.registro = { ...this.registro, ...this.registroForm.value };
       this.registroService.registrar(this.registro).subscribe({
-        next: (respuesta) => console.info("registro exitoso"),
-        error: (e) => console.error(e),
+        next: (respuesta) => {
+          this.presentAlert('Exito', 'Usuario registrado correctamente');
+        },
+        error: (e) => {console.error(e)
+        this.presentAlert('Fallo al registrarse', 'Revise los datos introducidos');
+        },
         complete: () => this.router.navigate(['login'])
       });
     } else {
-      console.log('Formulario inválido. Por favor verifica los datos.');
-    }
+      this.presentAlert('Formulario inválido', 'Debes rellenar todos los campos y comprobar que sean correctos');}
+  }
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
