@@ -9,7 +9,8 @@ import { Comentario } from "../Models/Comentario";
 import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
 import {jwtDecode} from 'jwt-decode';
-import {FormsModule} from "@angular/forms"; // Importar jwt-decode
+import {FormsModule} from "@angular/forms";
+import {UsuarioService} from "../Services/UsuarioService"; // Importar jwt-decode
 
 @Component({
   selector: 'app-detalles-libro',
@@ -23,12 +24,17 @@ export class DetallesLibroComponent implements OnInit {
 
   libro: Libro | undefined;
   comentarios: Comentario[] = [];
-  nuevoComentario: string = ''; // Variable para el comentario nuevo
+  nuevoComentario: string = '';
   loading = true;
+  usuId = this.obtenerUsuarioId();
+  esAdmin: boolean = false;
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService:UsuarioService) { }
 
   ngOnInit() {
+    this.usuarioService.obtenerRolUsuario(this.usuId).subscribe(rol => {
+      this.esAdmin = rol === 'ADMIN';
+    });
     const token = sessionStorage.getItem('authToken');
     console.log('Token:', token);
 
@@ -57,18 +63,23 @@ export class DetallesLibroComponent implements OnInit {
     }
   }
 
-  obtenerUsuarioId(): number | null {
+  obtenerUsuarioId(): number {
     const token = sessionStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
-        return decodedToken.tokenDataDTO?.id || null;
+        const userId = decodedToken.tokenDataDTO?.id;
+        if (userId !== undefined && userId !== null) {
+          return userId;
+        } else {
+          throw new Error('ID de usuario no encontrado en el token');
+        }
       } catch (error) {
         console.error('Error al decodificar el token', error);
-        return null;
+        throw new Error('Token inválido');
       }
     }
-    return null;
+    throw new Error('Token no encontrado en el sessionStorage');
   }
 
   cargarComentarios() {

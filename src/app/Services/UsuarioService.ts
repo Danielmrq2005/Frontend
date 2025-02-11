@@ -14,7 +14,7 @@ export class UsuarioService {
   obtenerUsername(autorId: number): Observable<string> {
     return this.http.get<string>(`http://localhost:8080/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
   }
-
-
-
+  obtenerRolUsuario(id: number): Observable<string> {
+    return this.http.get(`${this.apiUrl}/rol/${id}`, { responseType: 'text' });
+  }
 }

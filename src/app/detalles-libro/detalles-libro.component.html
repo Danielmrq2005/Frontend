@@ -68,7 +68,9 @@
   <ion-button>
     Unirse chat
   </ion-button>
-
+  <ion-button *ngIf="esAdmin">
+    Botón solo para Admins
+  </ion-button>
   <div class="comentarios-container">
     <ion-list *ngIf="comentarios.length > 0; else noComentarios">
       <ion-item *ngFor="let comentario of comentarios">
