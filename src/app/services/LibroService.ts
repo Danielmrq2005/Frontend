@@ -12,8 +12,6 @@ export class LibroService {
   private apiUrl2 = 'http://localhost:8081/chat';
 
 
-
-
   constructor(private http: HttpClient) {
   }
 

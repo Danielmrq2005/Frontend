@@ -103,6 +103,7 @@ export class CrearLibroComponent implements OnInit {
       ).subscribe({
         next: (response) => {
           console.log('Libro creado exitosamente', response);
+          this.libro = response;
           this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
           this.crearChat()
         },
@@ -131,26 +132,26 @@ export class CrearLibroComponent implements OnInit {
   }
 
   crearChat() {
-    if (!this.libro?.id) {
-      console.error('No se encontró el ID del libro');
-      return;
-    }
-
-    const chatData = {
-      nombre: this.libro.nombre,
-      descripcion: `Chat sobre ${this.libro.nombre}`,
-      imagen: this.libro.imagen,
-      libroId: this.libro.id
-    };
-
-    this.libroService.crearChat(chatData).subscribe(
-      (chatId: number) => {
-        console.log('Chat creado con ID:', chatId);
-        this.unirseChat(chatId);
-      },
-      error => console.error('Error al crear chat', error)
-    );
+  if (!this.libro?.id) {
+    console.error('No se encontró el ID del libro');
+    return;
   }
+
+  const chatData = {
+    nombre: this.libro.nombre,
+    descripcion: `Chat sobre ${this.libro.nombre}`,
+    imagen: this.libro.imagen,
+    libroId: this.libro.id
+  };
+
+  this.libroService.crearChat(chatData).subscribe(
+    (chatId: number) => {
+      console.log('Chat creado con ID:', chatId);
+      this.unirseChat(chatId);
+    },
+    error => console.error('Error al crear chat', error)
+  );
+}
 
   unirseChat(chatId: number) {
     const userId = this.obtenerUsuarioId();
