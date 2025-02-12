@@ -4,6 +4,7 @@ import {LibroService} from "../Services/LibroService";
 import {UsuarioService} from "../Services/UsuarioService";
 import {IonicModule} from "@ionic/angular";
 import {RouterLink} from "@angular/router";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,8 @@ import {RouterLink} from "@angular/router";
   providers: [LibroService, UsuarioService],
   imports: [
     IonicModule,
-    RouterLink
+    RouterLink,
+    NgIf
   ]
 })
 export class NavbarComponent  implements OnInit {

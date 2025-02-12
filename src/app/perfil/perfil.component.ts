@@ -82,7 +82,6 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarPerfil() {
-    // Verificamos que tenemos el ID del usuario en la URL
     if (this.usuarioId) {
       forkJoin([
         this.usuarioService.obetenerPerfil(this.usuarioId),
@@ -121,6 +120,8 @@ export class PerfilComponent implements OnInit {
     }
 
   }
+
+
 
 
 
