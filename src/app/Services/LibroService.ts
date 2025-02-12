@@ -19,11 +19,11 @@ export class LibroService {
     return this.http.get<Libro[]>(this.apiUrl);
   }
 
-  publicarlibro(libro: Partial<Libro>): Observable<Libro> {
+  publicarlibro(libro: Partial<Libro> | null): Observable<Libro> {
     return this.http.post<Libro>(`${this.apiUrl}/crear`, libro);
   }
 
-  votarlibro(libroId: number, usuarioId: number, esLike: boolean): Observable<any> {
+  votarlibro(libroId: number, usuarioId: number   , esLike: boolean): Observable<any> {
     const params = new HttpParams()
       .set('usuarioId', usuarioId.toString())
       .set('esLike', esLike.toString());
@@ -40,6 +40,9 @@ export class LibroService {
     return this.http.delete(`${this.apiUrl}/elim/${libroId}`, {responseType: 'text'});
   }
 
+  obtenerPublicacionesPorUsername(username: string): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.apiUrl}/publicaciones/${username}`);
+  }
 
 
 

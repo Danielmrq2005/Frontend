@@ -1,21 +1,133 @@
 <app-navbar></app-navbar>
 
 
+
+
 <ion-content id="main-content" class="custom-background">
   <div class="perfil-container">
-    <img class="perfil-imagen" src="assets/pulgarcito.png">
+    <img class="perfil-imagen" [src]="perfil.imagen || 'data:image/jpeg;base64,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'">
+
     <div class="perfil-info">
-      <h1 class="perfil-nombre">Daniel</h1>
+      <h1  class="perfil-nombre">{{ perfil.nombre }} {{ perfil.apellidos }}</h1>
+
       <div class="perfil-estadisticas">
-        <h2 class="perfil-publicaciones">Publicaciones: 2000</h2>
-        <h2 class="perfil-publicaciones">Seguidores: 500</h2>
-        <h2 class="perfil-publicaciones">Seguidos: 100</h2>
+        <h2 class="perfil-publicaciones">Publicaciones: {{Publicaciones.length}}</h2>
+        <h2 class="perfil-publicaciones">Seguidores: {{seguidores.length}}</h2>
+        <h2 class="perfil-publicaciones">Seguidos: {{autoresFavoritos.length}}</h2>
       </div>
-      <p class="perfil-descripcion">Esta es mi descripcion</p>
-      <p class="perfil-descripcion">AVENTURA</p>
-      <ion-button class="follow-button" color="primary" (click)="toggleFollow()">{{ followText }}</ion-button>
+      <p style="text-align: center" class="perfil-descripcion">{{ perfil.descripcion }}</p>
+
+      <p class="perfil-descripcion">Genero favorito:  {{ perfil.generos }}</p>
+
+        <ion-button *ngIf="idactual !== usuarioId" class="follow-button" color="primary" (click)="toggleFollow()">
+            {{ followText }}
+        </ion-button>
+
+
+
     </div>
+
   </div>
+  <h2 style="text-align: center; color: black">Publicaciones</h2>
+
+  <ion-content  class="custom-background">
+    <div class="estilo_cartas">
+
+      <p *ngIf="Publicaciones.length === 0" style="text-align: center; color: gray; font-size: 18px;">
+        Aun no hay publicaciones
+      </p>
+
+      <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let publicacion of Publicaciones">
+        <img  [src]="publicacion.imagen" alt="{{ publicacion.nombre }}" style="width: 100%;height: 70% "  />
+        <ion-card-header>
+          <ion-card-title style="color: white">{{publicacion.nombre}}</ion-card-title>
+          <ion-card-subtitle>{{publicacion.generos}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="reaction-container">
+            <div class="reaction">
+              <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" (click)="votar(publicacion.id,true)" >
+              <p style="color: white">{{publicacion.likes}}</p>
+            </div>
+            <div class="reaction">
+              <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(publicacion.id,false)" >
+              <p style="color: white">{{publicacion.dislikes}}</p>
+            </div>
+            <div class="reaction">
+              <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
+              <p style="color: white">23</p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+  </ion-content>
+
+
+  <style>
+    .custom-background {
+      --background: white;
+    }
+
+    .estilo_cartas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+    }
+  </style>
+  <style>
+    .mobile-menu {
+      display: none;
+    }
+
+    .desktop-menu {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    .tamaño_carta {
+      width: 300px;
+      height: 500px;
+      border-radius: 40px;
+    }
+
+    .reaction-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reaction {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .reaction p {
+      margin: 0;
+    }
+
+    .reaction img {
+      width: 24px;
+      height: 24px;
+    }
+
+  </style>
+
 </ion-content>
 
 <style>
@@ -50,7 +162,9 @@
     font-size: 24px;
     font-weight: bold;
     color: #12294D;
-    margin: 0;
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
   }
 
   .perfil-estadisticas {
@@ -98,10 +212,15 @@
       display: block;
     }
 
+    .perfil-nombre {
+      margin: auto;
+    }
+
     .perfil-container {
       flex-direction: column;
       align-items: center;
       text-align: center;
+      margin-left: 10px;
     }
 
     .perfil-imagen {
@@ -114,11 +233,20 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
+      margin-right: auto;
+      margin-left: auto;
+      margin-bottom: 10px;
+    }
+
+    .perfil-descripcion {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 30px;
     }
 
     .follow-button {
       width: 80%;
-      text-align: center;
+      margin: auto;
     }
   }
 </style>

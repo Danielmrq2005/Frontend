@@ -1,18 +1,31 @@
 import { Routes } from '@angular/router';
-import {DetallesLibroComponent} from "./detalles-libro/detalles-libro.component";
+import { DetallesLibroComponent } from "./detalles-libro/detalles-libro.component";
 import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
+import {AuthGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'detallesLibro/:id',
     loadComponent: () => import('./detalles-libro/detalles-libro.component').then((m) => m.DetallesLibroComponent),
+  },
+  {
+    path: 'crear-libro',
+    loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'publicaciones',
+    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+    canActivate: [AuthGuard]
+
   },
   {
     path: '',
@@ -22,41 +35,33 @@ export const routes: Routes = [
   {
     path: 'libros-favoritos',
     loadComponent: () => import('./favoritos/favoritos.component').then((m) => m.FavoritosComponent),
-
-  },
-
-  {
-    path: 'publicaciones',
-    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
-  },
-  {
-    path: 'login',
-    loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
-  },
-
-  {
-    path: 'crear-libro',
-    loadComponent: () => import('./crear-libro/crear-libro.component').then((m) => m.CrearLibroComponent),
-  },
-  {
-    path: 'registro',
-    loadComponent: () => import('./registro/registro.component').then((m) => m.RegistroComponent),
-  },
-  {
-    path: 'perfil',
-    loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
-  },
-  {
-    path: 'pub-admin',
-    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'baneos',
     loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
   },
   {
+    path: 'login',
+    loadComponent: () => import('./login/loginn.component').then((m) => m.LoginComponent),
+  },
+  {
     path: 'seguidores',
     loadComponent: () => import('./seguidores/seguidores.component').then((m) => m.SeguidoresComponent),
-  }
+  },
+  {
+    path: 'perfil/:id',
+    loadComponent: () => import('./perfil/perfil.component').then((m) => m.PerfilComponent),
+    canActivate: [AuthGuard]
 
+  },
+  {
+    path: 'registro',
+    loadComponent: () => import('./registro/registro.component').then((m) => m.RegistroComponent),
+  },
+  {
+    path: 'pub-admin',
+    loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+    canActivate: [AuthGuard]
+  }
 ];

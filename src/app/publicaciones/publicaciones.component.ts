@@ -8,7 +8,10 @@ import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import {Router, RouterLink} from "@angular/router";
 import { finalize } from 'rxjs/operators';
-import {NavbarComponent} from "../navbar/navbar.component";  // Importa finalize
+import {NavbarComponent} from "../navbar/navbar.component";
+import {jwtDecode} from "jwt-decode";
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-publicaciones',
@@ -19,11 +22,13 @@ import {NavbarComponent} from "../navbar/navbar.component";  // Importa finalize
     IonicModule,
     HttpClientModule,
     CommonModule,
+    RouterModule,
     RouterLink,
     NavbarComponent
   ],
   providers: [LibroService],
 })
+
 export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
 
@@ -34,14 +39,19 @@ export class PublicacionesComponent implements OnInit {
     this.router.navigate(['detallesLibro', libroId]);
   }
 
+  idactual: number = this.obtenerUsuarioId();
+
+
   async ngOnInit() {
     await this.listarLibros();
   }
 
+
+
+
   listarLibros() {
     this.libroService.listarlibros().pipe(
       finalize(() => {
-        console.log('La operación de listar libros ha terminado');
       })
     ).subscribe({
       next: (libros: Libro[]) => {
@@ -53,11 +63,26 @@ export class PublicacionesComponent implements OnInit {
     });
   }
 
+
+  // @ts-ignore
+  obtenerUsuarioId(): number {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.tokenDataDTO?.id || null;
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+      }
+    }
+  }
+
+
+
   votar(libroId: number, esLike: boolean) {
-    const usuarioId = 1;
+    const usuarioId = this.obtenerUsuarioId();
     this.libroService.votarlibro(libroId, usuarioId, esLike).pipe(
       finalize(() => {
-        console.log('La operación de votar ha terminado');
       })
     ).subscribe({
       next: (response) => {
