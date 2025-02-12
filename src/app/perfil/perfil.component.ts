@@ -14,6 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
 import { forkJoin } from 'rxjs';
 import { Usuario } from "../Models/Usuario";
+import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-perfil',
@@ -25,7 +26,8 @@ import { Usuario } from "../Models/Usuario";
     NgForOf,
     NgStyle,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    NavbarComponent
   ],
   providers: [UsuarioService, LibroService]
 })
@@ -148,7 +150,6 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
 
   getAutoresFavoritos(): void {
     this.autoresIds.forEach(id => {
