@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
+import { IonicModule, AlertController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { CommonModule } from '@angular/common';
 
@@ -13,11 +13,13 @@ import { CommonModule } from '@angular/common';
 export class BansComponent implements OnInit {
   usuarios: any[] = [];
   usuariosId: number[] = [];
+  usuariosBaneados: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertController: AlertController) {}
 
   ngOnInit(): void {
     this.getUsuarios();
+    this.getUsuariosBaneados();
   }
 
   getUsuarios(): void {
@@ -49,6 +51,7 @@ export class BansComponent implements OnInit {
             next: response => {
               console.log(`Response from /usuario/${id}/perfil:`, response);
               this.usuarios.push(response);
+              this.updateUsuariosBaneados();
             },
             error: error => {
               console.error(`Error fetching profile for user ${id}:`, error);
@@ -58,6 +61,55 @@ export class BansComponent implements OnInit {
         console.error('User ID is undefined');
       }
     });
+  }
+
+  getUsuariosBaneados(): void {
+    this.http.get<any[]>('/api/baneados/getUsuariosBaneados')
+      .subscribe({
+        next: response => {
+          console.log('Response from /baneados/getUsuariosBaneados:', response);
+          this.usuariosBaneados = response.map(ban => ban.usuarioId);
+          this.updateUsuariosBaneados();
+        },
+        error: error => {
+          console.error('Error fetching banned users:', error);
+        }
+      });
+  }
+
+  updateUsuariosBaneados(): void {
+    this.usuarios.forEach(usuario => {
+      const isBanned = this.usuariosBaneados.some(bannedUser => bannedUser.id === usuario.id);
+      usuario.baneado = isBanned;
+    });
+  }
+
+  async showBanPopup(usuarioId: number): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Motivo del Ban',
+      inputs: [
+        {
+          name: 'motivoBan',
+          type: 'text',
+          placeholder: 'Ingrese el motivo del ban'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Banear',
+          handler: (data) => {
+            this.banearUsuario(usuarioId, data.motivoBan);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   banearUsuario(usuarioId: number, motivoBan: string): void {
@@ -78,7 +130,7 @@ export class BansComponent implements OnInit {
   }
 
   desbanearUsuario(usuarioId: number): void {
-    this.http.delete(`/api/baneados/desbanearUsuario/${usuarioId}`)
+    this.http.delete(`/api/baneados/eliminarBaneo/${usuarioId}`)
       .subscribe({
         next: response => {
           console.log('User unbanned successfully:', response);

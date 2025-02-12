@@ -42,7 +42,7 @@
         <img [src]="usuario.imagen" class="imagen_pfp"/>
       </ion-button>
       <p class="texto_pagina" style="color: black">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
-      <ion-button [color]="usuario.baneado ? 'danger' : 'primary'" (click)="usuario.baneado ? desbanearUsuario(usuario.id) : banearUsuario(usuario.id, 'Motivo del ban')">
+      <ion-button [color]="usuario.baneado ? 'danger' : 'primary'" (click)="usuario.baneado ? desbanearUsuario(usuario.id) : showBanPopup(usuario.id)">
         {{ usuario.baneado ? 'Desbanear' : 'Banear' }}
       </ion-button>
     </div>
