@@ -32,13 +32,14 @@ export class SeguidoresComponent implements OnInit {
             const body = response.body;
             console.log('Body:', body);
             if (Array.isArray(body)) {
-              this.seguidoresId = body.map(item => item.seguidorId);
+              this.seguidoresId = [...new Set(body)]; // Ensure unique IDs
               this.getSeguidores();
             } else {
               console.error('Unexpected response format:', body);
             }
           } else {
             console.error('Unexpected content type:', response.headers.get('content-type'));
+            console.error('Response text:', response.body);
           }
         },
         error: error => {
@@ -52,40 +53,20 @@ export class SeguidoresComponent implements OnInit {
 
   getSeguidores(): void {
     this.seguidoresId.forEach(id => {
-      this.http.get<any>(`/api/usuario/${id}/perfil`)
-        .subscribe({
-          next: user => {
-            console.log('Fetched seguidor:', user);
-            this.seguidores.push({
-              id: user.id,
-              nombre: user.nombre,
-              imagen: user.imagen
-            });
-          },
-          error: error => {
-            console.error('Error fetching seguidor:', error);
-          },
-          complete: () => {
-            console.log('Request for seguidor completed.');
-          }
-        });
+      if (id !== undefined) {
+        this.http.get<any>(`/api/usuario/${id}/perfil`)
+          .subscribe({
+            next: response => {
+              console.log(`Response from /usuario/${id}/perfil:`, response);
+              this.seguidores.push(response);
+            },
+            error: error => {
+              console.error(`Error fetching seguidor ${id} profile:`, error);
+            }
+          });
+      } else {
+        console.error('Seguidor ID is undefined');
+      }
     });
-  }
-
-  dejarSeguirte(id: number): void {
-    const body = { id: id };
-    this.http.post<any>(`/api/seguidores/eliminarSeguidor`, body)
-      .subscribe({
-        next: response => {
-          console.log(`Response from /seguidores/eliminarSeguidor:`, response);
-          this.seguidores = this.seguidores.filter(seguidor => seguidor.id !== id);
-        },
-        error: error => {
-          console.error(`Error deleting seguidor with id ${id}:`, error);
-        },
-        complete: () => {
-          console.log(`Request for deleting seguidor with id ${id} completed.`);
-        }
-      });
   }
 }

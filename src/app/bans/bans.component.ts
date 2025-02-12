@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-bans',
   templateUrl: './bans.component.html',
   styleUrls: ['./bans.component.scss'],
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonicModule, CommonModule]
 })
 export class BansComponent implements OnInit {
   usuarios: any[] = [];
+  usuariosId: number[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -22,41 +24,71 @@ export class BansComponent implements OnInit {
     this.http.get<any[]>('/api/usuario/allPerfiles')
       .subscribe({
         next: response => {
-          this.usuarios = response.map(usuario => ({
-            ...usuario,
-            baneado: false
-          }));
-          this.checkBanStatus();
+          console.log('Response from /usuario/allPerfiles:', response);
+          if (Array.isArray(response)) {
+            this.usuariosId = response.map(usuario => usuario.id);
+            this.getPerfiles(this.usuariosId);
+          } else {
+            console.error('Unexpected response format:', response);
+          }
         },
         error: error => {
-          console.error('Error fetching usuarios:', error);
+          console.error('Error fetching users:', error);
+        },
+        complete: () => {
+          console.log('Request for users completed.');
         }
       });
   }
 
-  checkBanStatus(): void {
-    this.usuarios.forEach(usuario => {
-      this.http.get<any>(`/api/usuariosBaneados/${usuario.id}`)
-        .subscribe({
-          next: response => {
-            usuario.baneado = response.baneado;
-          },
-          error: error => {
-            console.error(`Error fetching ban status for user ${usuario.id}:`, error);
-          }
-        });
+  getPerfiles(ids: number[]): void {
+    ids.forEach(id => {
+      if (id !== undefined) {
+        this.http.get<any>(`/api/usuario/${id}/perfil`)
+          .subscribe({
+            next: response => {
+              console.log(`Response from /usuario/${id}/perfil:`, response);
+              this.usuarios.push(response);
+            },
+            error: error => {
+              console.error(`Error fetching profile for user ${id}:`, error);
+            }
+          });
+      } else {
+        console.error('User ID is undefined');
+      }
     });
   }
 
-  toggleBan(usuario: any): void {
-    const url = usuario.baneado ? `/api/usuariosBaneados/desbanear/${usuario.id}` : `/api/usuariosBaneados/banear/${usuario.id}`;
-    this.http.post(url, {})
+  banearUsuario(usuarioId: number, motivoBan: string): void {
+    const banData = { usuarioId, motivoBan };
+    this.http.post('/api/baneados/banearUsuario', banData)
       .subscribe({
-        next: () => {
-          usuario.baneado = !usuario.baneado;
+        next: response => {
+          console.log('User banned successfully:', response);
+          const usuario = this.usuarios.find(u => u.id === usuarioId);
+          if (usuario) {
+            usuario.baneado = true;
+          }
         },
         error: error => {
-          console.error(`Error toggling ban status for user ${usuario.id}:`, error);
+          console.error('Error banning user:', error);
+        }
+      });
+  }
+
+  desbanearUsuario(usuarioId: number): void {
+    this.http.delete(`/api/baneados/desbanearUsuario/${usuarioId}`)
+      .subscribe({
+        next: response => {
+          console.log('User unbanned successfully:', response);
+          const usuario = this.usuarios.find(u => u.id === usuarioId);
+          if (usuario) {
+            usuario.baneado = false;
+          }
+        },
+        error: error => {
+          console.error('Error unbanning user:', error);
         }
       });
   }
