@@ -14,11 +14,8 @@ export class ChatService {
 
   constructor(private http: HttpClient) {
   }
-  crearChat(chatData: any): Observable<number> {
-    return this.http.post<number>(`${this.apiUrl}/crear`, chatData);
-  }
   obtenerChats(): Observable<Chat[]> {
-    return this.http.get<Chat[]>(`${this.apiUrl}/chats`);
+    return this.http.get<Chat[]>(`${this.apiUrl}chat/listar`);
   }
 
 
