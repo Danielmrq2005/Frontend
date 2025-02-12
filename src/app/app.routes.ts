@@ -49,6 +49,14 @@ export const routes: Routes = [
   {
     path: 'pub-admin',
     loadComponent: () => import('./publicaciones/publicaciones.component').then((m) => m.PublicacionesComponent),
+  },
+  {
+    path: 'baneos',
+    loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
+  },
+  {
+    path: 'seguidores',
+    loadComponent: () => import('./seguidores/seguidores.component').then((m) => m.SeguidoresComponent),
   }
 
 ];
