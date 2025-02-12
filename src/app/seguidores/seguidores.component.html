@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar style="--background: #12294D; color: white;">
+    <div class="desktop-menu">
+      <ion-buttons slot="start">
+        <ion-button>Inicio</ion-button>
+        <ion-button>Seguidos</ion-button>
+        <ion-button>Publicaciones</ion-button>
+        <ion-button>Chats</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button href="perfil">Perfil</ion-button>
+      </ion-buttons>
+    </div>
+
+    <ion-buttons slot="start" class="mobile-menu">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu content-id="main-content" side="start" menu-id="mobile-menu">
+  <ion-header>
+    <ion-toolbar style="color: white;">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button>Inicio</ion-item>
+      <ion-item button>Seguidos</ion-item>
+      <ion-item button>Publicaciones</ion-item>
+      <ion-item button>Chats</ion-item>
+      <ion-item button>Perfil</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-content id="main-content" class="custom-background">
+  <div class="Seguidores">
+    <div *ngFor="let seguidor of seguidores" class="seguidor-container">
+      <ion-button fill="clear" style="border-radius: 50%">
+        <img [src]="seguidor.imagen" class="imagen_pfp"/>
+      </ion-button>
+      <p class="texto_pagina" style="color: black">{{ seguidor.nombre }}</p>
+      <ion-button color="danger">
+        Eliminar
+        de seguidores
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+<style>
+  ion-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .custom-background {
+    --background: white;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .desktop-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+
+  .seguidor-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .imagen_pfp {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .texto_pagina {
+    flex: 1;
+    margin-left: 10px;
+  }
+</style>
