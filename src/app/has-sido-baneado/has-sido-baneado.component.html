@@ -1,3 +1,44 @@
-<p>
-  has-sido-baneado works!
-</p>
+<ion-content class="custom-background">
+  <div class="estilo_cartas">
+    <ion-card class="tamaño_carta">
+      <ion-card-content>
+        <div *ngIf="usuarioId && fechaBaneo && motivoBaneo">
+          <p class="texto-grande">El usuario {{ usuarioId.username }} ha sido baneado por la siguiente razón:</p>
+          <p class="texto-grande">Motivo: {{ motivoBaneo }}</p>
+          <p class="texto-grande">Fecha de baneo: {{ fechaBaneo }}</p>
+          <p class="texto-grande">Esto significa que no podrás acceder a tu cuenta hasta que un administrador revise tu baneo</p>
+        </div>
+        <div *ngIf="!usuarioId || !fechaBaneo || !motivoBaneo">
+          <p class="texto-grande">No se encontró información sobre el baneo.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<style>
+  .custom-background {
+    --background: white;
+  }
+
+  .estilo_cartas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    height: 100%;
+  }
+
+  .tamaño_carta {
+    width: 300px;
+    height: auto;
+    border-radius: 40px;
+  }
+
+  .texto-grande {
+    font-size: 1.2em;
+    text-align: center;
+  }
+</style>
