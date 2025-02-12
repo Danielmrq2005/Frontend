@@ -10,14 +10,15 @@ import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
 import {jwtDecode} from 'jwt-decode';
 import {FormsModule} from "@angular/forms";
-import {UsuarioService} from "../Services/UsuarioService"; // Importar jwt-decode
+import {UsuarioService} from "../Services/UsuarioService";
+import {NavbarComponent} from "../navbar/navbar.component"; // Importar jwt-decode
 
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',
   styleUrls: ['./detalles-libro.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule, RouterLink, FormsModule],
+  imports: [IonicModule, CommonModule, HttpClientModule, RouterLink, FormsModule, NavbarComponent],
   providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent implements OnInit {
@@ -94,6 +95,28 @@ export class DetallesLibroComponent implements OnInit {
     }
   }
 
+  eliminarLibro() {
+    if (!this.libro?.id) {
+      console.error('No se encontró el ID del libro para eliminar');
+      return;
+    }
+
+    if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
+      this.libroService.eliminarLibro(this.libro.id).subscribe(
+        (response: string) => {
+          console.log(response);
+          alert(response);  // Muestra el mensaje de éxito
+          window.location.href = '/publicaciones';
+        },
+        error => {
+          console.error('Error al eliminar el libro', error);
+          alert('No se pudo eliminar el libro');
+        }
+      );
+    }
+  }
+
+
 
   agregarComentario() {
     const userId = this.obtenerUsuarioId();
@@ -109,7 +132,7 @@ export class DetallesLibroComponent implements OnInit {
 
     const nuevoComentario: Comentario = {
       usuarioId: userId,
-      username: userId, // Aquí asegúrate de que tienes el username real
+      username: userId,
       comentario: this.nuevoComentario,
       libroId: this.libro?.id || 0,
       fecha: new Date().toISOString().slice(0, 19)

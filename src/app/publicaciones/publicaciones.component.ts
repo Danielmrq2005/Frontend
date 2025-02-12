@@ -7,7 +7,8 @@ import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import {Router, RouterLink} from "@angular/router";
-import { finalize } from 'rxjs/operators';  // Importa finalize
+import { finalize } from 'rxjs/operators';
+import {NavbarComponent} from "../navbar/navbar.component";  // Importa finalize
 
 @Component({
   selector: 'app-publicaciones',
@@ -18,7 +19,8 @@ import { finalize } from 'rxjs/operators';  // Importa finalize
     IonicModule,
     HttpClientModule,
     CommonModule,
-    RouterLink
+    RouterLink,
+    NavbarComponent
   ],
   providers: [LibroService],
 })
@@ -60,7 +62,7 @@ export class PublicacionesComponent implements OnInit {
     ).subscribe({
       next: (response) => {
         console.log('Voto registrado con éxito');
-        this.listarLibros(); // Actualiza la lista de libros después de votar
+        this.listarLibros();
       },
       error: (error) => {
         console.error('Error al registrar voto', error);

@@ -8,19 +8,21 @@ import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";
-import { finalize } from 'rxjs/operators'; // Importa finalize
+import { finalize } from 'rxjs/operators';
+import {NavbarComponent} from "../navbar/navbar.component"; // Importa finalize
 
 @Component({
   selector: 'app-crea-libro',
   templateUrl: './crear-libro.component.html',
   styleUrls: ['./crear-libro.component.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    HttpClientModule,
-    CommonModule,
-    FormsModule
-  ],
+    imports: [
+        IonicModule,
+        HttpClientModule,
+        CommonModule,
+        FormsModule,
+        NavbarComponent
+    ],
   providers: [LibroService, UsuarioService],
 })
 

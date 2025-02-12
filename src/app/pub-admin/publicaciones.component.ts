@@ -6,17 +6,19 @@ import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
+import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-publicaciones',
   templateUrl: './publicaciones.component.html',
   styleUrls: ['./publicaciones.component.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    HttpClientModule,
-    CommonModule
-  ],
+    imports: [
+        IonicModule,
+        HttpClientModule,
+        CommonModule,
+        NavbarComponent
+    ],
   providers: [LibroService],
 })
 export class PubAdmin implements OnInit {

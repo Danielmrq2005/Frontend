@@ -1,45 +1,28 @@
-import { Component } from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonList,
-  IonThumbnail,
-  IonItem,
-  IonLabel
-} from '@ionic/angular/standalone';
-import { VotosService } from '../Services/VotosService';
+import { Component, OnInit } from '@angular/core';
+import {jwtDecode} from "jwt-decode";
 import {LibroService} from "../Services/LibroService";
-import {HttpClientModule} from "@angular/common/http";
-import {CommonModule} from "@angular/common";
+import {UsuarioService} from "../Services/UsuarioService";
 import {IonicModule} from "@ionic/angular";
 import {RouterLink} from "@angular/router";
-import {UsuarioService} from "../Services/UsuarioService";
-import {jwtDecode} from "jwt-decode";
-import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  imports: [IonicModule, HttpClientModule, CommonModule, RouterLink, NavbarComponent],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
   standalone: true,
-  providers: [LibroService],
+  providers: [LibroService, UsuarioService],
+  imports: [
+    IonicModule,
+    RouterLink
+  ]
 })
-export class HomePage {
-  librosTop: any[] = [];
-
+export class NavbarComponent  implements OnInit {
   usuId = this.obtenerUsuarioId();
   esAdmin: boolean = false;
-
 
   constructor(private libroService: LibroService, public usuarioService:UsuarioService) {}
 
   ngOnInit() {
-    this.libroService.obtenerTop4Libros().subscribe(data => {
-      this.librosTop = data;
-    });
     this.usuarioService.obtenerRolUsuario(this.usuId).subscribe(rol => {
       this.esAdmin = rol === 'ADMIN';
     });

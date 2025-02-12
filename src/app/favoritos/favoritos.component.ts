@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import {NavbarComponent} from "../navbar/navbar.component";
 
 // CAMBIAR LOS ID'S HARCODEADOS CUANDO TENGAMOS EL EXTRAER USUARIO
 
@@ -10,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './favoritos.component.html',
   styleUrls: ['./favoritos.component.css'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, IonicModule]
+    imports: [CommonModule, HttpClientModule, IonicModule, NavbarComponent]
 })
 export class FavoritosComponent implements OnInit {
   librosFavoritos: any[] = [];

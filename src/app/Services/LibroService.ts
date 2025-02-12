@@ -36,6 +36,10 @@ export class LibroService {
   obtenerTop4Libros(): Observable<Libro[]> {
     return this.http.get<Libro[]>('http://localhost:8080/votos/top4');
   }
+  eliminarLibro(libroId: number) {
+    return this.http.delete(`${this.apiUrl}/elim/${libroId}`, {responseType: 'text'});
+  }
+
 
 
 
