@@ -28,7 +28,6 @@ import {ChatService} from "../Services/ChatService";
 })
 export class ChatsgrupalesComponent implements OnInit {
 
-  nombreLibro: string = '';
   chats: any[] = [];
 
   constructor(private chatService: ChatService) {}
@@ -40,15 +39,9 @@ export class ChatsgrupalesComponent implements OnInit {
   obtenerChats() {
     this.chatService.obtenerChats().subscribe((chats) => {
       this.chats = chats;
-      if (this.chats.length > 0) {
-        this.nombreLibro = this.chats[0].nombre;
-      }
     });
   }
 
-  crearNuevoChat() {
-    console.log('Función para crear un nuevo chat');
-  }
 }
 
 
