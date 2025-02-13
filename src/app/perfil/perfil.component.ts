@@ -8,7 +8,7 @@ import { Rol } from "../Models/Rol";
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { Libro } from "../Models/Libro";
 import { finalize } from "rxjs/operators";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
@@ -27,7 +27,8 @@ import {NavbarComponent} from "../navbar/navbar.component";
     NgStyle,
     HttpClientModule,
     CommonModule,
-    NavbarComponent
+    NavbarComponent,
+    RouterLink
   ],
   providers: [UsuarioService, LibroService]
 })
