@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule, AlertController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { CommonModule } from '@angular/common';
+import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-bans',
   templateUrl: './bans.component.html',
   styleUrls: ['./bans.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule]
+    imports: [IonicModule, CommonModule, NavbarComponent]
 })
 export class BansComponent implements OnInit {
   usuarios: any[] = [];
