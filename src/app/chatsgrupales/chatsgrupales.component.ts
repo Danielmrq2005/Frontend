@@ -9,6 +9,7 @@ import {finalize} from "rxjs";
 import {jwtDecode} from "jwt-decode";
 import {Chat} from "../modelos/Chat";
 import {ChatService} from "../Services/ChatService";
+import {routes} from "../app.routes";
 
 
 @Component({
@@ -42,6 +43,7 @@ export class ChatsgrupalesComponent implements OnInit {
     });
   }
 
+    protected readonly routes = routes;
 }
 
 

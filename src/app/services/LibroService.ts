@@ -10,6 +10,7 @@ import {Libro} from "../Models/Libro";
 export class LibroService {
   private apiUrl = 'http://localhost:8081/libros';
   private apiUrl2 = 'http://localhost:8081/chat';
+  private apiUrl3 = 'http://localhost:8081/chatusuario';
 
 
   constructor(private http: HttpClient) {
@@ -41,6 +42,10 @@ export class LibroService {
   obtenerTop4Libros(): Observable<Libro[]> {
     return this.http.get<Libro[]>('http://localhost:8081/votos/top4');
   }
+  agregarUsuarioAlChat(chatUsuariosDTO: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl3}/agregar`, chatUsuariosDTO);
+  }
+
 
 
 

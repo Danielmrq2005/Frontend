@@ -11,7 +11,8 @@ import { home } from "ionicons/icons";
 import {jwtDecode} from 'jwt-decode';
 import {FormsModule} from "@angular/forms";
 import {Chatusuarios} from "../modelos/Chatusuarios";
-import {ChatUsuarioService} from "../Services/ChatUsuarioService"; // Importar jwt-decode
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
+import {ChatService} from "../Services/ChatService"; // Importar jwt-decode
 
 @Component({
   selector: 'app-detalles-libro',
@@ -27,10 +28,12 @@ export class DetallesLibroComponent implements OnInit {
   comentarios: Comentario[] = [];
   nuevoComentario: string = ''; // Variable para el comentario nuevo
   loading = true;
-
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private Chatusuario: ChatUsuarioService) { }
+  chats: any[] = [];
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private Chat: ChatService) { }
 
   ngOnInit() {
+
+    console.log('Libro cargado:', this.libro);
     const token = sessionStorage.getItem('authToken');
     console.log('Token:', token);
 
@@ -121,45 +124,48 @@ export class DetallesLibroComponent implements OnInit {
   }
 
 
-  agregarUsuarioschat(){
+  agregarUsuarioschat(chatId: number | undefined) {
+    const usuarioId = this.obtenerUsuarioId();
 
-    const userId = this.obtenerUsuarioId();
-
-    const chatId = this.libro?.id
-
-    if (!userId) {
+    if (!usuarioId) {
       console.error('No se encontró la ID del usuario');
+      alert('Error: No se pudo obtener el usuario.');
       return;
     }
 
-    if (!chatId) {
-      console.error('No se encontró la ID del Chat');
+    this.obtenerChats();
+
+    const chatExistente = this.chats.find(chat => chat.id === chatId);
+
+    if (!chatExistente) {
+      console.error('El chat no fue encontrado.');
+      alert('Error: Chat no encontrado.');
       return;
     }
 
-
-    const nuevousuario:Chatusuarios  = {
-      usuarioId: userId,
-      chatId:chatId,
-
+    const chatUsuariosDTO = {
+      chatId: chatId,
+      usuarioId: usuarioId
     };
 
-    this.Chatusuario.agregarUsuarioAlChat(nuevousuario).subscribe(
-      () => {
-        console.log('Usuario agregado con éxito');
-
-        // Limpiar el input
-        this.nuevoComentario = '';
-
-        // 🚀 Volver a cargar los comentarios DESDE EL BACKEND
-        this.cargarComentarios();
+    this.libroService.agregarUsuarioAlChat(chatUsuariosDTO).subscribe(
+      (response) => {
+        console.log('Usuario agregado al chat:', response);
+        alert('Has sido añadido al chat exitosamente.');
       },
-      error => console.error('Error al agregar Usuario', error)
+      (error) => {
+        console.error('Error al agregar usuario al chat:', error);
+        alert('Hubo un problema al unirte al chat.');
+      }
     );
   }
 
 
-
+  obtenerChats() {
+    this.Chat.obtenerChats().subscribe((chats) => {
+      this.chats = chats;
+    });
+  }
 
   protected readonly home = home;
 }
