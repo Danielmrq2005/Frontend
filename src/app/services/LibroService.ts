@@ -42,10 +42,10 @@ export class LibroService {
   obtenerTop4Libros(): Observable<Libro[]> {
     return this.http.get<Libro[]>('http://localhost:8081/votos/top4');
   }
+
   agregarUsuarioAlChat(chatUsuariosDTO: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl3}/agregar`, chatUsuariosDTO);
   }
-
 
 
 

@@ -124,8 +124,11 @@ export class DetallesLibroComponent implements OnInit {
   }
 
 
-  agregarUsuarioschat(chatId: number | undefined) {
+  agregarUsuarioschat() {
     const usuarioId = this.obtenerUsuarioId();
+    const chatId = this.route.snapshot.params['id'];
+
+    console.log(chatId);
 
     if (!usuarioId) {
       console.error('No se encontró la ID del usuario');
@@ -133,15 +136,14 @@ export class DetallesLibroComponent implements OnInit {
       return;
     }
 
-    this.obtenerChats();
-
-    const chatExistente = this.chats.find(chat => chat.id === chatId);
-
-    if (!chatExistente) {
-      console.error('El chat no fue encontrado.');
-      alert('Error: Chat no encontrado.');
+    if (!chatId) {
+      console.error('No se encontró la ID del chat');
+      alert('Error: No se pudo obtener el chat.');
       return;
     }
+
+    this.obtenerChats();
+
 
     const chatUsuariosDTO = {
       chatId: chatId,
