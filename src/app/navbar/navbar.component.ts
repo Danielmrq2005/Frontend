@@ -48,5 +48,7 @@ export class NavbarComponent  implements OnInit {
     }
     throw new Error('Token no encontrado en el sessionStorage');
   }
+  idactual: number = this.obtenerUsuarioId();
+
 
 }

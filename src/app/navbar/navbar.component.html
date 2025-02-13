@@ -10,7 +10,9 @@
         <ion-button *ngIf="esAdmin" routerLink="/baneos">Admin</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button href="perfil">Perfil</ion-button>
+        <a [routerLink]="['/perfil',idactual]" style="color: white;">
+          <ion-button>Perfil</ion-button>
+        </a>
       </ion-buttons>
     </div>
 
