@@ -41,7 +41,6 @@ export const routes: Routes = [
   {
     path: 'baneos',
     loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
-    canActivate: [BanGuard]
   },
   {
     path: 'login',
