@@ -3,8 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {NavbarComponent} from "../navbar/navbar.component";
-
-// CAMBIAR LOS ID'S HARCODEADOS CUANDO TENGAMOS EL EXTRAER USUARIO
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-favoritos',
@@ -18,6 +17,7 @@ export class FavoritosComponent implements OnInit {
   autoresFavoritos: any[] = [];
   librosIds: number[] = [];
   autoresIds: number[] = [];
+  userId = this.obtenerUsuarioId();
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +27,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getLibrosIds(): void {
-    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/3`, { observe: 'response' })
+    this.http.get<any[]>(`/api/libros-favoritos/yourFaves/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /libros-favoritos/yourFaves/3:', response);
@@ -55,7 +55,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`api/seguidores/tusSeguidos/3`, { observe: 'response' })
+    this.http.get<any[]>(`api/seguidores/tusSeguidos/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /seguidores/tusSeguidos/3:', response);
@@ -139,4 +139,19 @@ export class FavoritosComponent implements OnInit {
         });
     });
   }
+
+  obtenerUsuarioId(): number | null {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.tokenDataDTO?.id || null;
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
 }

@@ -50,7 +50,7 @@ export class CrearLibroComponent implements OnInit {
       private libroService: LibroService,
       private usuarioService: UsuarioService,
       private alertController: AlertController,
-      private router: Router // Inject Router
+      private router: Router
   ) { }
 
   ngOnInit() { }
