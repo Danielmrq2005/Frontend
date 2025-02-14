@@ -1,0 +1,13 @@
+<ion-content>
+  <div style="text-align: center; margin-top: 10%">
+    <ion-icon name="checkmark-circle-outline" class="icon"></ion-icon>
+    <img src="assets/images/libro.png" alt="Libro Icono" class="icon">
+    <form [formGroup]="verificarCodigoForm" id="verificarCodigo">
+      <ion-label style="margin-left: auto; margin-right: auto; font-size: 20px;" position="floating">Introduza el codigo de verificacion que le hemos enviado a su correo</ion-label>
+      <ion-item lines="none">
+        <ion-input style="width: 400px;margin: auto; margin-top: 20px; margin-bottom: 20px" placeholder="Código" type="text" fill="outline" formControlName="codigoVerificacion"></ion-input>
+      </ion-item>
+
+      <ion-button style="width: 300px;margin: auto" expand="block" color="primary" (click)="verificarCodigo()">Verificar Código</ion-button>    </form>
+  </div>
+</ion-content>
