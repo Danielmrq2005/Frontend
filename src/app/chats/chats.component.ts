@@ -9,6 +9,7 @@ import {CommonModule, KeyValuePipe} from "@angular/common";
 import {ChatService} from "../Services/ChatService";
 import {IonContent} from "@ionic/angular/standalone";
 import {interval, Subscription} from "rxjs";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-chats',
@@ -28,10 +29,11 @@ import {interval, Subscription} from "rxjs";
   providers: [ChatMensajeService]
 })
 export class ChatsComponent implements OnInit {
+  chats: any[] = [];
   mensajes: ChatMensaje[] = [];
   nuevoMensaje: string = '';
-  chatId: number = 1;
-  usuarioId: number = 1;
+  chatId = this.route.snapshot.params['id'];
+  usuarioId = this.obtenerUsuarioId();
   private chatSubscription!: Subscription;
   @ViewChild('content') content!: IonContent;
 
@@ -39,8 +41,6 @@ export class ChatsComponent implements OnInit {
   constructor(private chatMensajesService: ChatMensajeService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.chatId = +(this.route.snapshot.paramMap.get('id') || 1);
-    this.usuarioId = +(this.route.snapshot.paramMap.get('id') || 1);
 
     if (this.chatId) {
       this.cargarMensajes();
@@ -60,7 +60,7 @@ export class ChatsComponent implements OnInit {
   private scrollToBottom(): void {
     setTimeout(() => {
       if (this.content) {
-        this.content.scrollToBottom(0); // Prueba con 500ms para un desplazamiento más suave
+        this.content.scrollToBottom(0);
       }
     }, 0);
   }
@@ -88,5 +88,19 @@ export class ChatsComponent implements OnInit {
       this.nuevoMensaje = '';
       this.cargarMensajes();
     });
+  }
+
+  obtenerUsuarioId(): number | null {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken.tokenDataDTO?.id || null;
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+        return null;
+      }
+    }
+    return null;
   }
 }
