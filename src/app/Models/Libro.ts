@@ -7,6 +7,6 @@ export interface Libro {
   imagen: string;
   autorId: number | null;
   likes: number;
-  fecha_publicacion: Date;
+  fechaPublicacion: Date;
   dislikes: number;
 }
