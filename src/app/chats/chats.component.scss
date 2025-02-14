@@ -1,0 +1,13 @@
+/* Para hacer que el contenido sea desplazable */
+.scrollable-content {
+  height: calc(100vh - 60px); /* Ajusta este valor dependiendo del tamaño de tu input */
+  overflow-y: auto;
+}
+
+/* Estilo para fijar el input en la parte inferior */
+.fixed-input {
+  position: fixed;
+  bottom: 80px;
+  width: 100%;
+  background-color: white;
+}

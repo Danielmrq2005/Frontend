@@ -1,27 +1,27 @@
-<ion-content>
-  <!-- Encabezado del Chat -->
+<ion-content #content scroll-y="true">
   <div class="chat-header">
     <ion-avatar>
-      <img src="assets/images/avatar.png">
+      <img src="assets/images/avatar.png" alt="Avatar">
     </ion-avatar>
     <h2>Chat Grupal</h2>
     <ion-button fill="clear" color="primary">+ Añadir usuario</ion-button>
   </div>
 
-  <!-- Área de Mensajes -->
   <div class="chat-messages">
-    <div *ngFor="let message of messages" [ngClass]="message.type">
+    <div *ngFor="let mensaje of mensajes" [ngClass]="mensaje.usuarioId === usuarioId ? 'mensaje-propio' : 'mensaje-ajeno'">
       <ion-chip>
-        <ion-label>{{ message.user }}: {{ message.text }}</ion-label>
+        <ion-label>
+          <strong>{{ mensaje.usuarioId === usuarioId ? 'Tú' : mensaje.usuarioId }}</strong>:
+          {{ mensaje.mensaje }}
+        </ion-label>
       </ion-chip>
     </div>
   </div>
 
-  <!-- Entrada de Mensajes -->
   <div class="chat-input">
     <ion-item>
-      <ion-input placeholder="Escribe un mensaje..." formControlName="message"></ion-input>
-      <ion-button fill="clear" color="primary" (click)="sendMessage()">➤</ion-button>
+      <ion-input placeholder="Escribe un mensaje..." [(ngModel)]="nuevoMensaje"></ion-input>
+      <ion-button fill="clear" color="primary" (click)="enviarMensaje()">➤</ion-button>
     </ion-item>
   </div>
 </ion-content>

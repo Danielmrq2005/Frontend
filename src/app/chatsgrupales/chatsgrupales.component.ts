@@ -10,6 +10,7 @@ import {jwtDecode} from "jwt-decode";
 import {Chat} from "../modelos/Chat";
 import {ChatService} from "../Services/ChatService";
 import {routes} from "../app.routes";
+import {Router, RouterLink} from "@angular/router";
 
 
 @Component({
@@ -23,7 +24,8 @@ import {routes} from "../app.routes";
     FormsModule,
     KeyValuePipe,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   providers: [ChatService]
 })
@@ -31,7 +33,7 @@ export class ChatsgrupalesComponent implements OnInit {
 
   chats: any[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService,private router: Router) {}
 
   ngOnInit() {
     this.obtenerChats();
@@ -41,6 +43,10 @@ export class ChatsgrupalesComponent implements OnInit {
     this.chatService.obtenerChats().subscribe((chats) => {
       this.chats = chats;
     });
+  }
+
+  Vergrupos(chatId: number) {
+    this.router.navigate(['grupo', chatId]);
   }
 
     protected readonly routes = routes;

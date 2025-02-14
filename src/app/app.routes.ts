@@ -56,6 +56,11 @@ export const routes: Routes = [
   {
     path: 'chats',
     loadComponent: () => import('./chatsgrupales/chatsgrupales.component').then((m) => m.ChatsgrupalesComponent),
+  },
+
+  {
+    path: 'grupo/:id',
+    loadComponent: () => import('./chats/chats.component').then((m) => m.ChatsComponent),
   }
 
 ];
