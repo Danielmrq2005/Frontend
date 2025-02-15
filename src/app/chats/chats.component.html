@@ -1,23 +1,39 @@
+<!-- chats.component.html -->
 <ion-content #content scroll-y="true">
   <div class="chat-header">
     <ion-avatar>
       <img src="assets/images/avatar.png" alt="Avatar">
     </ion-avatar>
     <h2>Chat Grupal</h2>
-    <ion-button fill="clear" color="primary">+ Añadir usuario</ion-button>
   </div>
 
-  <div class="chat-messages">
-    <div *ngFor="let mensaje of mensajes" [ngClass]="mensaje.usuarioId === usuarioId ? 'mensaje-propio' : 'mensaje-ajeno'">
-      <ion-chip>
-        <ion-label>
-          <strong>{{ mensaje.usuarioId === usuarioId ? 'Tú' : mensaje.usuarioId }}</strong>:
-          {{ mensaje.mensaje }}
+  <ion-card>
+    <ion-list>
+
+      <ion-item lines="none" *ngFor="let m of mensajes">
+
+        <ion-avatar slot="start" *ngIf="m.usuarioId === usuarioId">
+        </ion-avatar>
+        <ion-label class="message-bubble mensaje-propio" *ngIf="m.usuarioId === usuarioId">
+          {{ m.mensaje }}
+          <br>
         </ion-label>
-      </ion-chip>
-    </div>
-  </div>
 
+
+
+        <ion-avatar slot="end" *ngIf="m.usuarioId !== usuarioId">
+          <ion-img src="{{sessionStorage.getItem('avatar')}}"></ion-img>
+        </ion-avatar>
+        <ion-label class="message-bubble mensaje-ajeno" slot="end" *ngIf="m.usuarioId !== usuarioId">
+          {{ m.mensaje }}
+          <br>
+        </ion-label>
+
+      </ion-item>
+
+
+    </ion-list>
+  </ion-card>
   <div class="chat-input">
     <ion-item>
       <ion-input placeholder="Escribe un mensaje..." [(ngModel)]="nuevoMensaje"></ion-input>

@@ -1,15 +1,14 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChatMensaje } from "../modelos/Chatmensajes";
 import { ChatMensajeService } from "../Services/ChatMensajeService";
-import {IonicModule} from "@ionic/angular";
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CommonModule, KeyValuePipe} from "@angular/common";
-import {ChatService} from "../Services/ChatService";
-import {IonContent} from "@ionic/angular/standalone";
-import {interval, Subscription} from "rxjs";
-import {jwtDecode} from "jwt-decode";
+import { IonicModule, IonContent } from "@ionic/angular";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { Subscription, interval } from "rxjs";
+import { jwtDecode } from "jwt-decode";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-chats',
@@ -17,31 +16,22 @@ import {jwtDecode} from "jwt-decode";
   styleUrls: ['./chats.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    IonicModule,
-    HttpClientModule,
-    FormsModule,
-    KeyValuePipe,
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink
-  ],
+  imports: [IonicModule, HttpClientModule, FormsModule, CommonModule, ReactiveFormsModule],
   providers: [ChatMensajeService]
 })
 export class ChatsComponent implements OnInit {
-  chats: any[] = [];
   mensajes: ChatMensaje[] = [];
   nuevoMensaje: string = '';
   chatId = this.route.snapshot.params['id'];
   usuarioId = this.obtenerUsuarioId();
   private chatSubscription!: Subscription;
-  @ViewChild('content') content!: IonContent;
 
+
+  @ViewChild('content') content!: IonContent;
 
   constructor(private chatMensajesService: ChatMensajeService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-
     if (this.chatId) {
       this.cargarMensajes();
     }
@@ -51,10 +41,33 @@ export class ChatsComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
+  cargarMensajes() {
+    if (!this.chatId) return;
+    this.chatMensajesService.obtenerMensajesDeChat(this.chatId).subscribe((data) => {
+      this.mensajes = data;
       this.scrollToBottom();
-    }, 500);
+      console.log(this.mensajes);
+      console.log(this.usuarioId);
+    });
+  }
+
+  enviarMensaje() {
+    if (!this.chatId || !this.usuarioId || !this.nuevoMensaje.trim()) return;
+
+    const mensaje: ChatMensaje = {
+      mensaje: this.nuevoMensaje,
+      fecha: new Date(),
+      chatId: this.chatId,
+      usuarioId: this.usuarioId,
+
+    };
+
+    this.chatMensajesService.crearMensaje(mensaje).subscribe(() => {
+      this.nuevoMensaje = '';
+      this.cargarMensajes();
+      console.log(this.usuarioId);
+    });
+    console.log(mensaje);
   }
 
   private scrollToBottom(): void {
@@ -62,32 +75,7 @@ export class ChatsComponent implements OnInit {
       if (this.content) {
         this.content.scrollToBottom(0);
       }
-    }, 0);
-  }
-
-
-  cargarMensajes() {
-    if (!this.chatId) return;
-
-    this.chatMensajesService.obtenerMensajesDeChat(this.chatId).subscribe((data) => {
-      this.mensajes = data;
-    });
-  }
-
-  enviarMensaje() {
-    if (!this.chatId || !this.usuarioId) return;
-
-    const mensaje: ChatMensaje = {
-      mensaje: this.nuevoMensaje,
-      fecha: new Date(),
-      chatId: this.chatId,
-      usuarioId: this.usuarioId,
-    };
-
-    this.chatMensajesService.crearMensaje(mensaje).subscribe(() => {
-      this.nuevoMensaje = '';
-      this.cargarMensajes();
-    });
+    }, 100);
   }
 
   obtenerUsuarioId(): number | null {
@@ -103,4 +91,6 @@ export class ChatsComponent implements OnInit {
     }
     return null;
   }
+
+  protected readonly sessionStorage = sessionStorage;
 }
