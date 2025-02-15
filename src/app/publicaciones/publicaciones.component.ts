@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
-import { Router, RouterLink } from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import { finalize } from 'rxjs/operators';
-import { NavbarComponent } from "../navbar/navbar.component";
-import { jwtDecode } from "jwt-decode";
+import {NavbarComponent} from "../navbar/navbar.component";
+import {jwtDecode} from "jwt-decode";
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-publicaciones',
@@ -32,7 +34,7 @@ export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
 
   constructor(private libroService: LibroService, private router: Router, private http: HttpClient) {
-    addIcons({ add });
+    addIcons({add});
   }
 
   verDetallesLibro(libroId: number) {
@@ -53,15 +55,14 @@ export class PublicacionesComponent implements OnInit {
       next: (libros: Libro[]) => {
         this.libros = libros;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.error('Error al obtener libros', error);
       }
     });
   }
 
-
   // @ts-ignore
-  obtenerUsuarioId(): number{
+  obtenerUsuarioId(): number {
     const token = sessionStorage.getItem('authToken');
     if (token) {
       try {
@@ -71,43 +72,52 @@ export class PublicacionesComponent implements OnInit {
         console.error('Error al decodificar el token', error);
       }
     }
-
   }
 
   votar(libroId: number, esLike: boolean) {
     const usuarioId = this.obtenerUsuarioId();
-    const url = esLike
-      ? 'http://localhost:8080/libros-favoritos/anyadirLibroFavorito'
-      : 'http://localhost:8080/libros-favoritos/eliminarLibroFav';
-    const body = { userId: usuarioId, libroId: libroId };
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.libroService.votarlibro(libroId, usuarioId, esLike).pipe(
+      finalize(() => {
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log('Voto registrado con éxito');
+        this.listarLibros();
+        if (esLike) {
+          this.anyadirLibroFavorito(usuarioId, libroId);
+        } else {
+          this.eliminarLibroFavorito(usuarioId, libroId);
+        }
+      },
+      error: (error) => {
+        console.error('Error al registrar voto', error);
+      }
+    });
+  }
 
-    if (esLike) {
-      this.http.post(url, body, { headers }).pipe(
-        finalize(() => {
-          this.listarLibros();
-        })
-      ).subscribe({
-        next: (response: any) => {
-          console.log('Libro añadido a favoritos con éxito');
-        },
-        error: (error: any) => {
-          console.error('Error al añadir libro a favoritos', error);
-        }
-      });
-    } else {
-      this.http.delete(url, { headers, body }).pipe(
-        finalize(() => {
-          this.listarLibros();
-        })
-      ).subscribe({
-        next: (response: any) => {
-          console.log('Libro eliminado de favoritos con éxito');
-        },
-        error: (error: any) => {
-          console.error('Error al eliminar libro de favoritos', error);
-        }
-      });
-    }
+  anyadirLibroFavorito(userId: number, libroId: number) {
+    const url = 'http://localhost:8080/libros-favoritos/anyadirLibroFavorito';
+    const body = {userId, libroId};
+    this.http.post(url, body).subscribe({
+      next: (response) => {
+        console.log('Libro añadido a favoritos con éxito:', response);
+      },
+      error: (error) => {
+        console.error('Error al añadir libro a favoritos:', error);
+      }
+    });
+  }
+
+  eliminarLibroFavorito(userId: number, libroId: number) {
+    const url = 'http://localhost:8080/libros-favoritos/eliminarLibroFav';
+    const body = {userId, libroId};
+    this.http.request('delete', url, {body}).subscribe({
+      next: (response) => {
+        console.log('Libro eliminado de favoritos con éxito:', response);
+      },
+      error: (error) => {
+        console.error('Error al eliminar libro de favoritos:', error);
+      }
+    });
   }
 }

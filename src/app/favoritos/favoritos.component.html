@@ -3,7 +3,7 @@
 <ion-content id="main-content" class="custom-background">
   <div class="horizontal-scroll">
     <div class="autores_favoritos">
-      <div *ngFor="let autor of autoresFavoritos" class="autor-container">
+      <div *ngFor="let autor of autoresFavoritos" class="autor-container" [routerLink]="['/perfil', autor.id]">
         <ion-button fill="clear" style="border-radius: 50%">
           <img [src]="autor.imagen" class="imagen_pfp"/>
         </ion-button>
@@ -14,9 +14,9 @@
   <div class="libros-favoritos">
     <div *ngFor="let libro of librosFavoritos" class="libro-container">
       <ion-button fill="clear">
-        <img [src]="libro.imagen" class="imagen-libros"/>
+        <img [src]="libro.imagen" class="imagen-libros" (click)="verDetallesLibro(libro.id)"/>
       </ion-button>
-      <div class="libro-detalles">
+      <div class="libro-detalles" >
         <p class="titulo-libro">{{ libro.nombre }}</p>
         <p class="autor-libro">{{ libro.autor }}</p>
         <p class="descripcion-libro">{{ libro.fecha_publicacion }}</p>
