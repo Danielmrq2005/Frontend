@@ -6,6 +6,7 @@ import { PublicacionesComponent } from './publicaciones/publicaciones.component'
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { AuthGuard } from "./guards/auth.guard";
 import { BanGuard } from './auth/ban.guard';
+import {VerificarCodigoComponent} from "./verificar-codigo/verificar-codigo.component";
 
 export const routes: Routes = [
   {
@@ -41,6 +42,12 @@ export const routes: Routes = [
   {
     path: 'baneos',
     loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
+  },
+
+
+  {
+    path: 'verificar-codigo',
+    loadComponent: () => import('./verificar-codigo/verificar-codigo.component').then((m) => m.VerificarCodigoComponent),
   },
   {
     path: 'login',

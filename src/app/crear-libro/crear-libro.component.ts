@@ -40,7 +40,7 @@ export class CrearLibroComponent implements OnInit {
   descripcion: string = '';
   imagen: string = '';
   username: string = '';
-  fecha_publicacion: Date = new Date();
+  fechaPublicacion: Date = new Date();
 
   imagendefecto: string = 'assets/images.jpg'
 
@@ -87,37 +87,45 @@ export class CrearLibroComponent implements OnInit {
   crearLibro() {
     const autorId = this.obtenerUsuarioId();
     this.comprobarimagen();
-    this.fecha_publicacion = new Date();
 
     if (this.nombre && this.generos && this.descripcion && this.imagen) {
       this.obtenerUsername(autorId);
 
-      const datoslibro = {
-        nombre: this.nombre,
-        generos: this.generos,
-        descripcion: this.descripcion,
-        imagen: this.imagen,
-        autorId: autorId,
-        username: this.username,
-        fecha_publicacion: this.fecha_publicacion,
-      };
-
-
-
-
-      this.libroService.publicarlibro(datoslibro).pipe(
-          finalize(() => {
-            console.log('Operación de crear libro finalizada');
-          })
+      // Esperamos a obtener el username antes de crear el libro
+      this.usuarioService.obtenerUsername(autorId).pipe(
+        finalize(() => console.log('Operación de obtener username finalizada'))
       ).subscribe({
-        next: (response) => {
-          console.log('Libro creado exitosamente', response);
-          this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
-          this.router.navigate(['/publicaciones']);
+        next: (nombre) => {
+          this.username = nombre.nombre;
+
+          // Aquí asignamos la fecha actual antes de enviar los datos
+          const datoslibro = {
+            nombre: this.nombre,
+            generos: this.generos,
+            descripcion: this.descripcion,
+            imagen: this.imagen,
+            autorId: autorId,
+            username: this.username,
+            fechaPublicacion: new Date(), // Se asigna la fecha justo antes de enviarlo
+          };
+
+          this.libroService.publicarlibro(datoslibro).pipe(
+            finalize(() => console.log('Operación de crear libro finalizada'))
+          ).subscribe({
+            next: (response) => {
+              console.log('Libro creado exitosamente', response);
+              this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
+              this.router.navigate(['/publicaciones']);
+            },
+            error: (error) => {
+              console.error('Error al crear el libro', error);
+              this.mostrarAlerta('Error', `Error al crear el libro: ${error.message}`);
+            }
+          });
         },
         error: (error) => {
-          console.error('Error al crear el libro', error);
-          this.mostrarAlerta('Error', `Error al crear el libro: ${error.message}`);
+          console.error('Error al obtener el username', error);
+          this.mostrarAlerta('Error', 'No se pudo obtener el nombre de usuario.');
         }
       });
     } else {
