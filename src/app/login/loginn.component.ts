@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
                 console.log('Usuario verificado');
                 this.router.navigate(['/home']);
               } else {
-                this.router.navigate(['/publicaciones']);
+                this.router.navigate(['/verificar-codigo']);
               }
             },
             error: (err) => {
