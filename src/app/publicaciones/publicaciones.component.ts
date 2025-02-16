@@ -12,6 +12,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
 import {jwtDecode} from "jwt-decode";
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import {ComentariosService} from "../Services/ComentarioService";
 
 
 @Component({
@@ -32,8 +33,9 @@ import { HttpClient } from '@angular/common/http';
 
 export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
+  totalComentarios: number = 0;
 
-  constructor(private libroService: LibroService, private router: Router, private http: HttpClient) {
+  constructor(private libroService: LibroService, private router: Router, private http: HttpClient, private comentariosService: ComentariosService) {
     addIcons({add});
   }
 
@@ -48,18 +50,26 @@ export class PublicacionesComponent implements OnInit {
   }
 
   listarLibros() {
-    this.libroService.listarlibros().pipe(
-      finalize(() => {
-      })
-    ).subscribe({
+    this.libroService.listarlibros().subscribe({
       next: (libros: Libro[]) => {
         this.libros = libros;
+
+        // ✅ Obtener el total de comentarios por cada libro
+        this.libros.forEach(libro => {
+          this.comentariosService.contarComentarios(libro.id).subscribe(
+            (total: number) => {
+              libro.totalComentarios = total; // 🔹 Guardamos el total de comentarios en cada libro
+            },
+            (error) => console.error('Error al obtener total de comentarios', error)
+          );
+        });
       },
       error: (error) => {
         console.error('Error al obtener libros', error);
       }
     });
   }
+
 
   // @ts-ignore
   obtenerUsuarioId(): number {
