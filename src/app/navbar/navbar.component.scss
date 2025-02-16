@@ -1,0 +1,19 @@
+.mobile-menu {
+  display: none;
+}
+
+.desktop-menu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  .mobile-menu {
+    display: block;
+  }
+}
+
