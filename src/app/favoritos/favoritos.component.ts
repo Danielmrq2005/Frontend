@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {jwtDecode} from "jwt-decode";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-favoritos',
   templateUrl: './favoritos.component.html',
   styleUrls: ['./favoritos.component.css'],
   standalone: true,
-    imports: [CommonModule, HttpClientModule, IonicModule, NavbarComponent]
+  imports: [CommonModule, HttpClientModule, IonicModule, NavbarComponent, RouterLink]
 })
 export class FavoritosComponent implements OnInit {
   librosFavoritos: any[] = [];
@@ -19,7 +20,7 @@ export class FavoritosComponent implements OnInit {
   autoresIds: number[] = [];
   userId = this.obtenerUsuarioId();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,  private router: Router) {}
 
   ngOnInit(): void {
     this.getLibrosIds();
@@ -58,15 +59,17 @@ export class FavoritosComponent implements OnInit {
     this.http.get<any[]>(`api/seguidores/tusSeguidos/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
-          console.log('Response from /seguidores/tusSeguidos/3:', response);
+          console.log('Response from /seguidores/tusSeguidos:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
             console.log('Body:', body);
-            if (Array.isArray(body)) {
-              this.autoresIds = body.map(item => item.seguidorId);
+            if (Array.isArray(body) && body.length > 0) {
+              this.autoresIds = body
+                .filter(item => item.userId !== null) // Filter out items with null userId
+                .map(item => item.userId); // Map to userId
               this.getAutoresFavoritos();
             } else {
-              console.error('Unexpected response format:', body);
+              console.error('Unexpected response format or empty body:', body);
             }
           } else {
             console.error('Unexpected content type:', response.headers.get('content-type'));
@@ -79,6 +82,10 @@ export class FavoritosComponent implements OnInit {
           console.log('Request for autores IDs completed.');
         }
       });
+  }
+
+  verDetallesLibro(libroId: number) {
+    this.router.navigate(['detallesLibro', libroId]);
   }
 
   getLibrosFavoritos(): void {
@@ -120,23 +127,27 @@ export class FavoritosComponent implements OnInit {
 
   getAutoresFavoritos(): void {
     this.autoresIds.forEach(id => {
-      this.http.get<any>(`/api/usuario/${id}/perfil`)
-        .subscribe({
-          next: user => {
-            console.log('Fetched autor favorito:', user);
-            this.autoresFavoritos.push({
-              id: user.id,
-              nombre: user.nombre,
-              imagen: user.imagen
-            });
-          },
-          error: error => {
-            console.error('Error fetching autor favorito:', error);
-          },
-          complete: () => {
-            console.log('Request for autor favorito completed.');
-          }
-        });
+      if (id !== undefined && id !== null) {
+        this.http.get<any>(`/api/usuario/${id}/perfil`)
+          .subscribe({
+            next: user => {
+              console.log('Fetched autor favorito:', user);
+              this.autoresFavoritos.push({
+                id: user.id,
+                nombre: user.nombre,
+                imagen: user.imagen
+              });
+            },
+            error: error => {
+              console.error('Error fetching autor favorito:', error);
+            },
+            complete: () => {
+              console.log('Request for autor favorito completed.');
+            }
+          });
+      } else {
+        console.error('Invalid autor ID:', id);
+      }
     });
   }
 

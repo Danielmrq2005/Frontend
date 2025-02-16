@@ -24,7 +24,6 @@ import {NavbarComponent} from "../navbar/navbar.component";
   imports: [
     IonicModule,
     NgForOf,
-    NgStyle,
     HttpClientModule,
     CommonModule,
     NavbarComponent,
@@ -76,9 +75,14 @@ export class PerfilComponent implements OnInit {
 
       this.getAutoresIds();
       this.getAutoresFavoritos();
-
-      this.seguidoresId
       this.getSeguidoresId();
+
+      const followState = localStorage.getItem(`followState_${this.usuarioId}`);
+      if (followState === 'true') {
+        this.followText = "Dejar de seguir";
+      } else {
+        this.followText = "Seguir";
+      }
     });
   }
 
@@ -102,11 +106,7 @@ export class PerfilComponent implements OnInit {
   }
 
 
-  toggleFollow() {
-    if (this.perfil.id !== this.usuarioId) {
-      this.followText = this.followText === "Seguir" ? "No seguir" : "Seguir";
-    }
-  }
+
 
   // @ts-ignore
   obtenerUsuarioId(): number{
@@ -121,10 +121,6 @@ export class PerfilComponent implements OnInit {
     }
 
   }
-
-
-
-
 
   getAutoresIds(): void {
     this.http.get<any[]>(`api/seguidores/tusSeguidos/${this.idactual}`, { observe: 'response' })
@@ -152,7 +148,6 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-
   getAutoresFavoritos(): void {
     this.autoresIds.forEach(id => {
       this.http.get<any>(`/api/usuario/${id}/perfil`)
@@ -174,8 +169,6 @@ export class PerfilComponent implements OnInit {
         });
     });
   }
-
-
 
   getSeguidoresId(): void {
     this.http.get<any[]>(`api/seguidores/listaSeguidores/${this.idactual}`, { observe: 'response' })
@@ -224,10 +217,56 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  toggleFollow(): void {
+    if (this.seguidoresId.includes(this.usuarioId)) {
+      this.dejarSeguirUsuario();
+      this.followText = "Seguir";
+      localStorage.setItem(`followState_${this.usuarioId}`, 'false');
+      this.seguidoresId = this.seguidoresId.filter(id => id !== this.usuarioId);
+    } else {
+      this.seguirUsuario();
+      this.followText = "Dejar de seguir";
+      localStorage.setItem(`followState_${this.usuarioId}`, 'true');
+      this.seguidoresId.push(this.usuarioId);
+    }
+  }
 
+  seguirUsuario(): void {
+    const followData = { userId: this.usuarioId, seguidorId: this.idactual };
+    const url = `http://localhost:8080/seguidores/anyadirSeguidor`;
 
+    this.http.post(url, followData)
+      .subscribe({
+        next: response => {
+          console.log('Usuario seguido con éxito:', response);
+        },
+        error: error => {
+          console.error('Error al seguir usuario:', error);
+        }
+      });
+  }
 
+  dejarSeguirUsuario(): void {
+    const unfollowData = {userId: this.usuarioId, seguidorId: this.idactual};
+    const url = `api/seguidores/eliminarSeguidor`;
 
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+
+    this.http.delete(url, {headers, body: unfollowData})
+      .subscribe({
+        next: response => {
+          console.log('Usuario dejado de seguir con éxito:', response);
+        },
+        error: error => {
+          if (error.status === 403) {
+            console.error('Forbidden: Verifique la configuración de CORS y los permisos del usuario.');
+          }
+        }
+      });
+  }
 
   votar(libroId: number, esLike: boolean) {
     const usuarioId = this.obtenerUsuarioId();
