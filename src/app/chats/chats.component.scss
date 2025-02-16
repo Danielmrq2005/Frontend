@@ -16,7 +16,7 @@
   color: #f6f7f9 !important;
   padding: 10px;
   border-radius: 15px;
-  max-width: 70%;
+  max-width: fit-content;
   word-wrap: break-word;
   align-self: flex-end; /* Asegura que los mensajes propios se alineen a la derecha */
 }
@@ -26,7 +26,7 @@
   color: #f6f7f9 !important;
   padding: 10px;
   border-radius: 15px;
-  max-width: 70%;
+  max-width: fit-content;
   word-wrap: break-word;
   align-self: flex-start; /* Asegura que los mensajes ajenos se alineen a la izquierda */
 }

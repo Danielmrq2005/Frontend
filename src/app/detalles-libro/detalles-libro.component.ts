@@ -164,9 +164,16 @@ export class DetallesLibroComponent implements OnInit {
 
 
   obtenerChats() {
-    this.Chat.obtenerChats().subscribe((chats) => {
-      this.chats = chats;
-    });
+    const usuarioId = this.obtenerUsuarioId();
+    if (usuarioId) {
+      this.Chat.obtenerChatsPorUsuario(usuarioId).subscribe((chats) => {
+        this.chats = chats;
+      }, error => {
+        console.error('Error al obtener chats del usuario', error);
+      });
+    } else {
+      console.error('No se pudo obtener la ID del usuario');
+    }
   }
 
   protected readonly home = home;
