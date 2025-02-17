@@ -9,6 +9,11 @@ import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {jwtDecode} from "jwt-decode";
+import {addIcons} from "ionicons";
+import {
+  personOutline, keyOutline, textOutline, mailOutline,
+  idCard, idCardOutline, text, personCircle, personCircleOutline
+} from "ionicons/icons";
 
 
 @Component({
@@ -37,7 +42,10 @@ export class LoginComponent implements OnInit {
       password: [this.login.password, Validators.required],
     });
 
-
+    addIcons({
+      personOutline, keyOutline, textOutline, mailOutline,
+      idCard, idCardOutline, text, personCircle, personCircleOutline
+    });
   }
 
   ngOnInit() {
