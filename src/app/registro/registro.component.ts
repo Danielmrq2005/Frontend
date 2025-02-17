@@ -27,8 +27,10 @@ import {Router} from "@angular/router";
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   registro: Registro = new Registro();
-  generos= Object.values(Genero);
+  generos: Genero = Genero.BIOGRAFICO;
   loginViewFlag: boolean = true;
+
+  generosArray = Object.values(Genero);
 
   constructor(private registroService: RegistroService, private fb: FormBuilder,private router: Router) {
     this.registroForm = this.fb.group({
@@ -37,7 +39,7 @@ export class RegistroComponent implements OnInit {
       username: [this.registro.username, Validators.required],
       email: [this.registro.email, [Validators.required, Validators.email]],
       password: [this.registro.password, Validators.required],
-      genero: [this.registro.genero, Validators.required],
+      genero: [this.registro.generos, Validators.required],
       imagen: [this.registro.imagen, Validators.required],
       descripcion: [this.registro.descripcion, Validators.required],
     });
@@ -47,15 +49,21 @@ export class RegistroComponent implements OnInit {
 
   doRegister() {
     if (this.registroForm.valid) {
-      this.registro = {...this.registro, ...this.registroForm.value};
-      this.registroService.registrar(this.registro).subscribe({
-        next: (respuesta) => console.info("registro exitoso"),
-        error: (e) => console.error(e),
-        complete: () => this.router.navigate(['login'])
-      })
+      this.registro = { ...this.registro, ...this.registroForm.value };
 
+      this.registro.generos = this.registroForm.value.genero;
+
+      console.log("Datos enviados:", this.registro);
+
+      this.registroService.registrar(this.registro).subscribe({
+        next: () => console.info("Registro exitoso"),
+        error: (e) => console.error("Error en el registro:", e),
+        complete: () => this.router.navigate(['login'])
+      });
     } else {
-      console.log('Formulario inválido. Por favor verifica los datos.');
+      console.log('Formulario inválido. Por favor, verifica los datos.');
     }
   }
+
+
 }

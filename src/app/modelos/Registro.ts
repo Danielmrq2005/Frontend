@@ -6,7 +6,7 @@ export class Registro{
   username?:string;
   email?:string;
   password?:string;
-  genero?:Genero
+  generos?:string
   imagen?:String
   descripcion?:String
 
