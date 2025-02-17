@@ -31,7 +31,6 @@ export class FavoritosComponent implements OnInit {
     this.http.get<any[]>(`/api/libros-favoritos/yourFaves/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
-          console.log('Response from /libros-favoritos/yourFaves/3:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
             console.log('Body:', body);
@@ -96,11 +95,11 @@ export class FavoritosComponent implements OnInit {
             console.log('Fetched libro favorito:', libro);
             const libroFavorito = {
               id: libro.id,
-              nombre: libro.nombre || 'No name available',
-              autor: 'Loading...',
-              descripcion: libro.descripcion || 'No description available',
-              fecha_publicacion: libro.fechaPublicacion || 'No publication date available',
-              imagen: libro.imagen || 'No image available'
+              nombre: libro.nombre || 'No se encontró el nombre',
+              autor: 'Cargando...',
+              descripcion: libro.descripcion || 'No hay descripción disponible',
+              fecha_publicacion: libro.fechaPublicacion || 'No hay fecha de publicación',
+              imagen: libro.imagen || 'No hay imagen disponible'
             };
             this.librosFavoritos.push(libroFavorito);
 
@@ -138,7 +137,6 @@ export class FavoritosComponent implements OnInit {
         this.http.get<any>(`/api/usuario/${id}/perfil`)
           .subscribe({
             next: user => {
-              console.log('Fetched autor favorito:', user);
               this.autoresFavoritos.push({
                 id: user.id,
                 nombre: user.nombre,
