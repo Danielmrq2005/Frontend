@@ -30,6 +30,7 @@ export class DetallesLibroComponent implements OnInit {
   usuId = this.obtenerUsuarioId();
   esAdmin: boolean = false;
 
+
   constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService:UsuarioService) { }
 
   ngOnInit() {
