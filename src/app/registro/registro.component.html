@@ -29,14 +29,14 @@
                 <ion-input placeholder="Contraseña" type="password" fill="outline" formControlName="password"></ion-input>
             </ion-item>
 
-            <ion-item lines="none">
-                <ion-label position="floating">Género</ion-label>
-                <ion-select formControlName="genero">
-                    <ion-select-option *ngFor="let genero of generosArray" [value]="genero">
-                        {{genero}}
-                    </ion-select-option>
-                </ion-select>
-            </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Género</ion-label>
+            <ion-select formControlName="genero">
+              <ion-select-option *ngFor="let genero of generosArray" [value]="genero">
+                {{genero}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
 
             <ion-item lines="none">
                 <ion-label position="floating">Imagen</ion-label>

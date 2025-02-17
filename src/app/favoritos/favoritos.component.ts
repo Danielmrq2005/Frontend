@@ -31,7 +31,6 @@ export class FavoritosComponent implements OnInit {
     this.http.get<any[]>(`/api/libros-favoritos/yourFaves/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
-          console.log('Response from /libros-favoritos/yourFaves/3:', response);
           if (response.headers.get('content-type')?.includes('application/json')) {
             const body = response.body;
             console.log('Body:', body);
@@ -94,18 +93,24 @@ export class FavoritosComponent implements OnInit {
         .subscribe({
           next: libro => {
             console.log('Fetched libro favorito:', libro);
+            const libroFavorito = {
+              id: libro.id,
+              nombre: libro.nombre || 'No se encontró el nombre',
+              autor: 'Cargando...',
+              descripcion: libro.descripcion || 'No hay descripción disponible',
+              fecha_publicacion: libro.fechaPublicacion || 'No hay fecha de publicación',
+              imagen: libro.imagen || 'No hay imagen disponible'
+            };
+            this.librosFavoritos.push(libroFavorito);
+
             const autorId = libro.autorId;
             this.http.get<any>(`/api/usuario/${autorId}/perfil`)
               .subscribe({
                 next: autor => {
-                  this.librosFavoritos.push({
-                    id: libro.id,
-                    nombre: libro.nombre || 'No name available',
-                    autor: autor.nombre || 'Unknown',
-                    descripcion: libro.descripcion || 'No description available',
-                    fecha_publicacion: libro.fechaPublicacion || 'No publication date available',
-                    imagen: libro.imagen || 'No image available'
-                  });
+                  const index = this.librosFavoritos.findIndex(l => l.id === libro.id);
+                  if (index !== -1) {
+                    this.librosFavoritos[index].autor = autor.nombre || 'Unknown';
+                  }
                 },
                 error: error => {
                   console.error('Error fetching autor:', error);
@@ -126,12 +131,12 @@ export class FavoritosComponent implements OnInit {
   }
 
   getAutoresFavoritos(): void {
-    this.autoresIds.forEach(id => {
-      if (id !== undefined && id !== null) {
+    this.autoresIds
+      .filter(id => id !== undefined && id !== null)
+      .forEach(id => {
         this.http.get<any>(`/api/usuario/${id}/perfil`)
           .subscribe({
             next: user => {
-              console.log('Fetched autor favorito:', user);
               this.autoresFavoritos.push({
                 id: user.id,
                 nombre: user.nombre,
@@ -145,10 +150,7 @@ export class FavoritosComponent implements OnInit {
               console.log('Request for autor favorito completed.');
             }
           });
-      } else {
-        console.error('Invalid autor ID:', id);
-      }
-    });
+      });
   }
 
   obtenerUsuarioId(): number | null {

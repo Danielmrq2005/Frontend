@@ -4,7 +4,7 @@ import { CanActivateFn } from '@angular/router';
 import { banGuard } from './ban.guard';
 
 describe('banGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
+  const executeGuard: CanActivateFn = (...guardParameters) =>
       TestBed.runInInjectionContext(() => banGuard(...guardParameters));
 
   beforeEach(() => {

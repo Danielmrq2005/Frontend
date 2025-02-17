@@ -29,7 +29,7 @@
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-button>
+  <ion-button (click)="agregarUsuarioschat()">
     Unirse chat
   </ion-button>
   <ion-button *ngIf="esAdmin" color="danger" (click)="eliminarLibro()">

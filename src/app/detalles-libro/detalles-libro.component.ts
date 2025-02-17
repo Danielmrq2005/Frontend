@@ -8,11 +8,13 @@ import { HttpClientModule } from "@angular/common/http";
 import { Comentario } from "../Models/Comentario";
 import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
-import { jwtDecode } from 'jwt-decode';
-import { FormsModule } from "@angular/forms";
-import { UsuarioService } from "../Services/UsuarioService";
-import { NavbarComponent } from "../navbar/navbar.component";
-
+import {jwtDecode} from 'jwt-decode';
+import {FormsModule} from "@angular/forms";
+import {UsuarioService} from "../Services/UsuarioService";
+import {NavbarComponent} from "../navbar/navbar.component"; // Importar jwt-decode
+import {Chatusuarios} from "../modelos/Chatusuarios";
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
+import {ChatService} from "../Services/ChatService";
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',
@@ -29,8 +31,9 @@ export class DetallesLibroComponent implements OnInit {
   loading = true;
   usuId = this.obtenerUsuarioId();
   esAdmin: boolean = false;
+  chats: any[] = [];
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService: UsuarioService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService:UsuarioService, private Chat: ChatService) { }
 
   ngOnInit() {
     this.usuarioService.obtenerRolUsuario(this.usuId).subscribe({
@@ -154,6 +157,59 @@ export class DetallesLibroComponent implements OnInit {
         console.error('Error al agregar comentario', error);
       }
     });
+  }
+
+
+  agregarUsuarioschat() {
+    const usuarioId = this.obtenerUsuarioId();
+    const chatId = this.route.snapshot.params['id'];
+
+    console.log(chatId);
+
+    if (!usuarioId) {
+      console.error('No se encontró la ID del usuario');
+      alert('Error: No se pudo obtener el usuario.');
+      return;
+    }
+
+    if (!chatId) {
+      console.error('No se encontró la ID del chat');
+      alert('Error: No se pudo obtener el chat.');
+      return;
+    }
+
+    this.obtenerChats();
+
+
+    const chatUsuariosDTO = {
+      chatId: chatId,
+      usuarioId: usuarioId
+    };
+
+    this.libroService.agregarUsuarioAlChat(chatUsuariosDTO).subscribe(
+      (response) => {
+        console.log('Usuario agregado al chat:', response);
+        alert('Has sido añadido al chat exitosamente.');
+      },
+      (error) => {
+        console.error('Error al agregar usuario al chat:', error);
+        alert('Hubo un problema al unirte al chat.');
+      }
+    );
+  }
+
+
+  obtenerChats() {
+    const usuarioId = this.obtenerUsuarioId();
+    if (usuarioId) {
+      this.Chat.obtenerChatsPorUsuario(usuarioId).subscribe((chats) => {
+        this.chats = chats;
+      }, error => {
+        console.error('Error al obtener chats del usuario', error);
+      });
+    } else {
+      console.error('No se pudo obtener la ID del usuario');
+    }
   }
 
   protected readonly home = home;

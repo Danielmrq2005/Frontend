@@ -1,4 +1,4 @@
-import {Genero} from "../registro/genero.enum";
+import {Genero} from "../Models/Genero";
 
 export class Registro{
 
@@ -7,7 +7,7 @@ export class Registro{
   username?:string;
   email?:string;
   password?:string;
-  genero?:Genero
+  generos?:string
   imagen?:String
   descripcion?:String
 

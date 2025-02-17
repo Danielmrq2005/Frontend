@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, AlertController } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular'; // Importa AlertController
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import {add, image} from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";
@@ -9,9 +12,11 @@ import { finalize } from 'rxjs/operators';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
-import { Genero } from "../registro/genero.enum";
-import { i5Genero } from "../Models/Genero";
-import {jwtDecode} from "jwt-decode";
+import { Genero } from "../Models/Genero";
+import {jwtDecode} from "jwt-decode"; // Import Router
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
+import {Chatusuarios} from "../modelos/Chatusuarios";
+import {ChatService} from "../Services/ChatService";
 
 
 
@@ -32,6 +37,8 @@ import {jwtDecode} from "jwt-decode";
 })
 
 export class CrearLibroComponent implements OnInit {
+  libro: Libro | undefined;
+
   nombre: string = '';
   generos: Genero = Genero.BIOGRAFICO;
   descripcion: string = '';
@@ -41,12 +48,13 @@ export class CrearLibroComponent implements OnInit {
 
   imagendefecto: string = 'assets/images.jpg'
 
-  generosArray = Object.values(i5Genero);
+  generosArray = Object.values(Genero);
 
   constructor(
       private libroService: LibroService,
       private usuarioService: UsuarioService,
       private alertController: AlertController,
+      private Chatusuario: ChatUsuarioService,
       private router: Router
   ) { }
 
@@ -109,8 +117,10 @@ export class CrearLibroComponent implements OnInit {
           ).subscribe({
             next: (response) => {
               console.log('Libro creado exitosamente', response);
+              this.libro = response; // Asigna el libro creado a la propiedad libro
               this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
               this.router.navigate(['/publicaciones']);
+              this.crearChat();
             },
             error: (error) => {
               console.error('Error al crear el libro', error);
@@ -128,7 +138,6 @@ export class CrearLibroComponent implements OnInit {
     }
   }
 
-
   obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');
     if (token) {
@@ -142,6 +151,49 @@ export class CrearLibroComponent implements OnInit {
     }
     return null;
   }
+
+  crearChat() {
+
+  if (!this.libro?.id) {
+    console.error('No se encontró el ID del libro');
+    return;
+  }
+
+
+    const chatData = {
+    nombre: this.libro.nombre,
+    descripcion: `Chat sobre ${this.libro.nombre}`,
+    imagen: this.libro.imagen,
+    libroId: this.libro.id
+  };
+
+  this.libroService.crearChat(chatData).subscribe(
+    (chatId: number) => {
+      console.log('Chat creado con ID:', chatId);
+      this.unirseChat(chatId);
+    },
+    error => console.error('Error al crear chat', error)
+  );
+}
+
+  unirseChat(chatId: number) {
+    const userId = this.obtenerUsuarioId();
+    if (!userId) {
+      console.error('No se encontró la ID del usuario');
+      return;
+    }
+
+    const nuevousuario: Chatusuarios = {
+      usuarioId: userId,
+      chatId: chatId
+    };
+
+    this.Chatusuario.agregarUsuarioAlChat(nuevousuario).subscribe(
+      () => console.log('Usuario agregado al chat con éxito'),
+      error => console.error('Error al agregar usuario al chat', error)
+    );
+  }
+
 
   async mostrarAlerta(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({

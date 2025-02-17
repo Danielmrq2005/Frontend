@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AlertController, IonicModule } from "@ionic/angular";
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Genero } from './genero.enum';
 import { RegistroService } from "../Services/registro.service";
 import { CommonModule, KeyValuePipe } from "@angular/common";
 import { Registro } from "../Models/Registro";
 import { Router } from "@angular/router";
-import { i5Genero } from "../Models/Genero";
+import { Genero } from "../Models/Genero";
 
 @Component({
   selector: 'app-registro',
@@ -26,9 +25,10 @@ import { i5Genero } from "../Models/Genero";
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   registro: Registro = new Registro();
-  generos = Object.values(Genero);
+  generos: Genero = Genero.BIOGRAFICO;
   loginViewFlag: boolean = true;
-  generosArray = Object.values(i5Genero);
+
+  generosArray = Object.values(Genero);
 
   constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router,private alertController: AlertController) {
     this.registroForm = this.fb.group({
@@ -37,7 +37,7 @@ export class RegistroComponent implements OnInit {
       username: [this.registro.username, Validators.required],
       email: [this.registro.email, [Validators.required, Validators.email]],
       password: [this.registro.password, Validators.required],
-      genero: [this.registro.genero, Validators.required],
+      genero: [this.registro.generos, Validators.required],
       imagen: [this.registro.imagen, Validators.required],
       descripcion: [this.registro.descripcion, Validators.required],
     });
@@ -48,24 +48,18 @@ export class RegistroComponent implements OnInit {
   doRegister() {
     if (this.registroForm.valid) {
       this.registro = { ...this.registro, ...this.registroForm.value };
+
+      this.registro.generos = this.registroForm.value.genero;
+
+      console.log("Datos enviados:", this.registro);
+
       this.registroService.registrar(this.registro).subscribe({
-        next: (respuesta) => {
-          this.presentAlert('Exito', 'Usuario registrado correctamente');
-        },
-        error: (e) => {console.error(e)
-        this.presentAlert('Fallo al registrarse', 'Revise los datos introducidos');
-        },
+        next: () => console.info("Registro exitoso"),
+        error: (e) => console.error("Error en el registro:", e),
         complete: () => this.router.navigate(['login'])
       });
     } else {
-      this.presentAlert('Formulario inválido', 'Debes rellenar todos los campos y comprobar que sean correctos');}
-  }
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['OK']
-    });
-    await alert.present();
+      console.log('Formulario inválido. Por favor, verifica los datos.');
+    }
   }
 }
