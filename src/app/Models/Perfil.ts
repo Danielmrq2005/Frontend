@@ -1,4 +1,3 @@
-import { i5Genero } from "./Genero";
 import { Usuario } from "./Usuario";
 import {Genero} from "../registro/genero.enum";
 

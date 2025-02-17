@@ -1,0 +1,50 @@
+/* Para hacer que el contenido sea desplazable */
+.scrollable-content {
+  height: calc(100vh - 60px); /* Ajusta este valor dependiendo del tamaño de tu input */
+  overflow-y: auto;
+}
+
+/* Estilo para fijar el input en la parte inferior */
+.fixed-input {
+  position: fixed;
+  bottom: 80px;
+  width: 100%;
+  background-color: white;
+}
+.mensaje-propio {
+  background-color: #555555 !important; /* Fondo gris oscuro para mensajes propios */
+  color: #f6f7f9 !important;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: fit-content;
+  word-wrap: break-word;
+  align-self: flex-end; /* Asegura que los mensajes propios se alineen a la derecha */
+}
+
+.mensaje-ajeno {
+  background-color: #0e6a95 !important; /* Fondo azul para mensajes ajenos */
+  color: #f6f7f9 !important;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: fit-content;
+  word-wrap: break-word;
+  align-self: flex-start; /* Asegura que los mensajes ajenos se alineen a la izquierda */
+}
+
+ion-input{
+  background: #f0f0f0;
+  color: #0e6a95;
+  outline-color:#0e6a95;
+  --ion-color-primary: #0e6a95; /* Cambia el color del borde */
+  --highlight-color-focused: #0e6a95; /* Color del borde cuando está enfocado */
+}
+
+ion-col{
+  margin-top: 10px;
+}
+
+.col-centrada{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

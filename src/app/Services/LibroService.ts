@@ -9,6 +9,9 @@ import {Libro} from "../Models/Libro";
 
 export class LibroService {
   private apiUrl = 'http://localhost:8080/libros';
+  private apiUrl2 = 'http://localhost:8080/chat';
+  private apiUrl3 = 'http://localhost:8080/chatusuario';
+
 
 
   constructor(private http: HttpClient) {
@@ -25,8 +28,8 @@ export class LibroService {
 
   votarlibro(libroId: number, usuarioId: number   , esLike: boolean): Observable<any> {
     const params = new HttpParams()
-      .set('usuarioId', usuarioId.toString())
-      .set('esLike', esLike.toString());
+        .set('usuarioId', usuarioId.toString())
+        .set('esLike', esLike.toString());
 
     return this.http.post(`${this.apiUrl}/votar/${libroId}`, {}, {params});
   }
@@ -44,6 +47,13 @@ export class LibroService {
     return this.http.get<Libro[]>(`${this.apiUrl}/publicaciones/${username}`);
   }
 
+  agregarUsuarioAlChat(chatUsuariosDTO: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl3}/agregar`, chatUsuariosDTO);
+  }
+
+  crearChat(chatData: any): Observable<number> {
+    return this.http.post<number>(`${this.apiUrl2}/crear`, chatData);
+  }
 
 
 }

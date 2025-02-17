@@ -75,5 +75,15 @@ export const routes: Routes = [
   {
     path: 'has-sido-baneado',
     loadComponent: () => import('./has-sido-baneado/has-sido-baneado.component').then((m) => m.HasSidoBaneadoComponent)
+  },
+  {
+    path: 'chats',
+    loadComponent: () => import('./chatsgrupales/chatsgrupales.component').then((m) => m.ChatsgrupalesComponent),
+  },
+
+  {
+    path: 'grupo/:id',
+    loadComponent: () => import('./chats/chats.component').then((m) => m.ChatsComponent),
   }
+
 ];
