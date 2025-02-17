@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { Genero } from "../Models/Genero";
 import {jwtDecode} from "jwt-decode"; // Import Router
 import {ChatUsuarioService} from "../Services/ChatUsuarioService";
-import {Chatusuarios} from "../modelos/Chatusuarios";
+import {Chatusuarios} from "../Models/Chatusuarios";
 import {ChatService} from "../Services/ChatService";
 
 

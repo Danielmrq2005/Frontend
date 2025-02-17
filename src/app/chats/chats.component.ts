@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChatMensaje } from "../modelos/Chatmensajes";
+import { ChatMensaje } from "../Models/Chatmensajes";
 import { ChatMensajeService } from "../Services/ChatMensajeService";
 import { IonicModule, IonContent } from "@ionic/angular";
 import { HttpClientModule } from "@angular/common/http";
@@ -14,7 +14,7 @@ import {Genero} from "../Models/Genero";
 import {Rol} from "../Models/Rol";
 import {UsuarioService} from "../Services/UsuarioService";
 import {Libro} from "../Models/Libro";
-import {Chat} from "../modelos/Chat";
+import {Chat} from "../Models/Chat";
 import {ChatService} from "../Services/ChatService";
 
 @Component({

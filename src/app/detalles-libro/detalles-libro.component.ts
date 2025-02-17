@@ -12,7 +12,7 @@ import {jwtDecode} from 'jwt-decode';
 import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../Services/UsuarioService";
 import {NavbarComponent} from "../navbar/navbar.component"; // Importar jwt-decode
-import {Chatusuarios} from "../modelos/Chatusuarios";
+import {Chatusuarios} from "../Models/Chatusuarios";
 import {ChatUsuarioService} from "../Services/ChatUsuarioService";
 import {ChatService} from "../Services/ChatService";
 @Component({

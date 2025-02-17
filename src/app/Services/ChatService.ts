@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Chat} from "../modelos/Chat";
+import {Chat} from "../Models/Chat";
 
 @Injectable({
   providedIn: 'root',
