@@ -5,7 +5,6 @@ import {HttpClientModule, provideHttpClient} from '@angular/common/http';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { ApiService } from './app/Services/api-service.service';
 import {importProvidersFrom} from "@angular/core";
 import {IonicModule} from "@ionic/angular";
 
@@ -17,6 +16,5 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
     importProvidersFrom(HttpClientModule),
-    ApiService
   ],
 });

@@ -32,7 +32,7 @@ export class SeguidoresComponent implements OnInit {
             const body = response.body;
             console.log('Body:', body);
             if (Array.isArray(body)) {
-              this.seguidoresId = [...new Set(body)]; // Ensure unique IDs
+              this.seguidoresId = [...new Set(body)];
               this.getSeguidores();
             } else {
               console.error('Unexpected response format:', body);

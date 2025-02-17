@@ -22,7 +22,7 @@ export class VerificarCodigoComponent implements OnInit {
 
   verificarCodigoForm: FormGroup;
   UsuarioId: number | null = null;
-  username: string = '';  // Ahora guardamos el string, no un Observable
+  username: string = '';
 
   constructor(
     private fb: FormBuilder,

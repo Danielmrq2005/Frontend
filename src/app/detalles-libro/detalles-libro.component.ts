@@ -8,17 +8,17 @@ import { HttpClientModule } from "@angular/common/http";
 import { Comentario } from "../Models/Comentario";
 import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
-import {jwtDecode} from 'jwt-decode';
-import {FormsModule} from "@angular/forms";
-import {UsuarioService} from "../Services/UsuarioService";
-import {NavbarComponent} from "../navbar/navbar.component"; // Importar jwt-decode
+import { jwtDecode } from 'jwt-decode';
+import { FormsModule } from "@angular/forms";
+import { UsuarioService } from "../Services/UsuarioService";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',
   styleUrls: ['./detalles-libro.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule, RouterLink, FormsModule, NavbarComponent],
+  imports: [IonicModule, CommonModule, RouterLink, FormsModule, NavbarComponent],
   providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent implements OnInit {
@@ -30,37 +30,43 @@ export class DetallesLibroComponent implements OnInit {
   usuId = this.obtenerUsuarioId();
   esAdmin: boolean = false;
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService:UsuarioService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
-    this.usuarioService.obtenerRolUsuario(this.usuId).subscribe(rol => {
-      this.esAdmin = rol === 'ADMIN';
+    this.usuarioService.obtenerRolUsuario(this.usuId).subscribe({
+      next: (rol) => {
+        this.esAdmin = rol === 'ADMIN';
+      },
+      error: (error) => {
+        console.error('Error al obtener el rol del usuario', error);
+      }
     });
+
     const token = sessionStorage.getItem('authToken');
     console.log('Token:', token);
 
     const libroId = this.route.snapshot.params['id'];
 
     if (libroId) {
-      this.libroService.getLibro(+libroId).subscribe(
-        (libro: Libro) => {
+      this.libroService.getLibro(+libroId).subscribe({
+        next: (libro: Libro) => {
           this.libro = libro;
           console.log('Libro obtenido', libro);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error al obtener libro', error);
         }
-      );
+      });
 
-      this.comentariosService.obtenerComentarios(+libroId).subscribe(
-        (comentarios: Comentario[]) => {
+      this.comentariosService.obtenerComentarios(+libroId).subscribe({
+        next: (comentarios: Comentario[]) => {
           this.comentarios = comentarios;
           console.log('Comentarios obtenidos', comentarios);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error al obtener comentarios', error);
         }
-      );
+      });
     }
   }
 
@@ -85,13 +91,15 @@ export class DetallesLibroComponent implements OnInit {
 
   cargarComentarios() {
     if (this.libro?.id) {
-      this.comentariosService.obtenerComentarios(this.libro.id).subscribe(
-        (comentariosActualizados: Comentario[]) => {
-          this.comentarios = [...comentariosActualizados]; // Clonamos la lista para forzar cambio
+      this.comentariosService.obtenerComentarios(this.libro.id).subscribe({
+        next: (comentariosActualizados: Comentario[]) => {
+          this.comentarios = [...comentariosActualizados];
           console.log('Comentarios actualizados:', this.comentarios);
         },
-        error => console.error('Error al obtener comentarios actualizados', error)
-      );
+        error: (error) => {
+          console.error('Error al obtener comentarios actualizados', error);
+        }
+      });
     }
   }
 
@@ -102,21 +110,19 @@ export class DetallesLibroComponent implements OnInit {
     }
 
     if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
-      this.libroService.eliminarLibro(this.libro.id).subscribe(
-        (response: string) => {
+      this.libroService.eliminarLibro(this.libro.id).subscribe({
+        next: (response: string) => {
           console.log(response);
-          alert(response);  // Muestra el mensaje de éxito
+          alert(response);
           window.location.href = '/publicaciones';
         },
-        error => {
+        error: (error) => {
           console.error('Error al eliminar el libro', error);
           alert('No se pudo eliminar el libro');
         }
-      );
+      });
     }
   }
-
-
 
   agregarComentario() {
     const userId = this.obtenerUsuarioId();
@@ -138,21 +144,17 @@ export class DetallesLibroComponent implements OnInit {
       fecha: new Date().toISOString().slice(0, 19)
     };
 
-
-
-    this.comentariosService.agregarComentario(nuevoComentario).subscribe(
-      () => {
+    this.comentariosService.agregarComentario(nuevoComentario).subscribe({
+      next: () => {
         console.log('Comentario agregado con éxito');
-
-        // Limpiar el input
         this.nuevoComentario = '';
-
         this.cargarComentarios();
       },
-      error => console.error('Error al agregar comentario', error)
-    );
+      error: (error) => {
+        console.error('Error al agregar comentario', error);
+      }
+    });
   }
-
 
   protected readonly home = home;
 }

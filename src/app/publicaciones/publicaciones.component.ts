@@ -54,11 +54,10 @@ export class PublicacionesComponent implements OnInit {
       next: (libros: Libro[]) => {
         this.libros = libros;
 
-        // ✅ Obtener el total de comentarios por cada libro
         this.libros.forEach(libro => {
           this.comentariosService.contarComentarios(libro.id).subscribe(
             (total: number) => {
-              libro.totalComentarios = total; // 🔹 Guardamos el total de comentarios en cada libro
+              libro.totalComentarios = total;
             },
             (error) => console.error('Error al obtener total de comentarios', error)
           );
@@ -72,7 +71,7 @@ export class PublicacionesComponent implements OnInit {
 
 
   // @ts-ignore
-  obtenerUsuarioId(): number {
+  obtenerUsuarioId(): number  {
     const token = sessionStorage.getItem('authToken');
     if (token) {
       try {

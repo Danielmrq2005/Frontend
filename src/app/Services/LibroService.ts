@@ -23,7 +23,11 @@ export class LibroService {
     return this.http.post<Libro>(`${this.apiUrl}/crear`, libro);
   }
 
-  votarlibro(libroId: number, usuarioId: number   , esLike: boolean): Observable<any> {
+  votarlibro(libroId: number, usuarioId: number | null   , esLike: boolean): Observable<any> {
+    if (usuarioId === null) {
+      throw new Error('usuarioId cannot be null');
+    }
+
     const params = new HttpParams()
       .set('usuarioId', usuarioId.toString())
       .set('esLike', esLike.toString());
@@ -39,11 +43,5 @@ export class LibroService {
   eliminarLibro(libroId: number) {
     return this.http.delete(`${this.apiUrl}/elim/${libroId}`, {responseType: 'text'});
   }
-
-  obtenerPublicacionesPorUsername(username: string): Observable<Libro[]> {
-    return this.http.get<Libro[]>(`${this.apiUrl}/publicaciones/${username}`);
-  }
-
-
 
 }

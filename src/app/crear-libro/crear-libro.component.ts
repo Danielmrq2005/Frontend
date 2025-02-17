@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, AlertController } from '@ionic/angular'; // Importa AlertController
+import { IonicModule, AlertController } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import {add, image} from 'ionicons/icons';
-import { addIcons } from 'ionicons';
-import { Libro } from '../Models/Libro';
 import { LibroService } from '../Services/LibroService';
 import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";
@@ -14,7 +11,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
 import { Genero } from "../registro/genero.enum";
 import { i5Genero } from "../Models/Genero";
-import {jwtDecode} from "jwt-decode"; // Import Router
+import {jwtDecode} from "jwt-decode";
 
 
 
@@ -91,14 +88,12 @@ export class CrearLibroComponent implements OnInit {
     if (this.nombre && this.generos && this.descripcion && this.imagen) {
       this.obtenerUsername(autorId);
 
-      // Esperamos a obtener el username antes de crear el libro
       this.usuarioService.obtenerUsername(autorId).pipe(
         finalize(() => console.log('Operación de obtener username finalizada'))
       ).subscribe({
         next: (nombre) => {
           this.username = nombre.nombre;
 
-          // Aquí asignamos la fecha actual antes de enviar los datos
           const datoslibro = {
             nombre: this.nombre,
             generos: this.generos,
@@ -106,7 +101,7 @@ export class CrearLibroComponent implements OnInit {
             imagen: this.imagen,
             autorId: autorId,
             username: this.username,
-            fechaPublicacion: new Date(), // Se asigna la fecha justo antes de enviarlo
+            fechaPublicacion: new Date(),
           };
 
           this.libroService.publicarlibro(datoslibro).pipe(

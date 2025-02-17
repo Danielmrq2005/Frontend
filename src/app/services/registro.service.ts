@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Registro} from "../modelos/Registro";
+import {Registro} from "../Models/Registro";
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +17,6 @@ export class RegistroService {
 
   constructor(private http: HttpClient) {
   }
-  setAuthState(isAuthenticated: boolean): void {
-    this.authState.next(isAuthenticated);
-  }
-
 
   registrar(registro: Registro): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}/auth/registro/perfil`,registro) ;

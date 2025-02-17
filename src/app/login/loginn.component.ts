@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController, IonicModule} from '@ionic/angular';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Login} from "../modelos/Login";
+import {Login} from "../Models/Login";
 import {LoginService} from "../Services/login.service";
 import {UsuarioService} from "../Services/UsuarioService";
 import {Router} from "@angular/router";

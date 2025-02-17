@@ -5,16 +5,16 @@ import { NgForOf, NgStyle } from '@angular/common';
 import { UsuarioService } from "../Services/UsuarioService";
 import { LibroService } from "../Services/LibroService";
 import { Rol } from "../Models/Rol";
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Libro } from "../Models/Libro";
 import { finalize } from "rxjs/operators";
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
 import { forkJoin } from 'rxjs';
 import { Usuario } from "../Models/Usuario";
-import {NavbarComponent} from "../navbar/navbar.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-perfil',
@@ -41,19 +41,14 @@ export class PerfilComponent implements OnInit {
     email: '',
     imagen: '',
     generos: Genero.AVENTURA,
-    usuario: {id: 0, username: '', password: '', rol: Rol.USER}
+    usuario: { id: 0, username: '', password: '', rol: Rol.USER }
   };
   autoresIds: number[] = [];
   username: string = '';
   autoresFavoritos: any[] = [];
-
   seguidores: any[] = [];
   seguidoresId: number[] = [];
-
-
-
   idactual: number | null = this.obtenerUsuarioId();
-
   usuarioId: number = 0;
   Publicaciones: Libro[] = [];
 
@@ -62,8 +57,7 @@ export class PerfilComponent implements OnInit {
     private usuarioService: UsuarioService,
     private libroService: LibroService,
     private http: HttpClient
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -91,25 +85,21 @@ export class PerfilComponent implements OnInit {
       forkJoin([
         this.usuarioService.obetenerPerfil(this.usuarioId),
         this.usuarioService.obtenerPublicaciones(this.usuarioId)
-      ]).subscribe(
-        ([perfilObtenido, publicaciones]) => {
+      ]).subscribe({
+        next: ([perfilObtenido, publicaciones]) => {
           this.perfil = perfilObtenido;
           this.Publicaciones = publicaciones;
           console.log("Perfil cargado:", this.perfil);
           console.log("Publicaciones cargadas:", this.Publicaciones);
         },
-        error => console.error("Error al obtener datos del perfil:", error)
-      );
+        error: error => console.error("Error al obtener datos del perfil:", error)
+      });
     } else {
       console.error("No se pudo obtener el ID del usuario.");
     }
   }
 
-
-
-
-  // @ts-ignore
-  obtenerUsuarioId(): number{
+  obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');
     if (token) {
       try {
@@ -119,7 +109,7 @@ export class PerfilComponent implements OnInit {
         console.error('Error al decodificar el token', error);
       }
     }
-
+    return null;
   }
 
   getAutoresIds(): void {
@@ -179,7 +169,7 @@ export class PerfilComponent implements OnInit {
             const body = response.body;
             console.log('Body:', body);
             if (Array.isArray(body)) {
-              this.seguidoresId = [...new Set(body)]; // Ensure unique IDs
+              this.seguidoresId = [...new Set(body)];
               this.getSeguidores();
             } else {
               console.error('Unexpected response format:', body);
@@ -209,6 +199,9 @@ export class PerfilComponent implements OnInit {
             },
             error: error => {
               console.error(`Error fetching seguidor ${id} profile:`, error);
+            },
+            complete: () => {
+              console.log(`Request for seguidor ${id} profile completed.`);
             }
           });
       } else {
@@ -247,7 +240,7 @@ export class PerfilComponent implements OnInit {
   }
 
   dejarSeguirUsuario(): void {
-    const unfollowData = {userId: this.usuarioId, seguidorId: this.idactual};
+    const unfollowData = { userId: this.usuarioId, seguidorId: this.idactual };
     const url = `api/seguidores/eliminarSeguidor`;
 
     const headers = {
@@ -255,7 +248,7 @@ export class PerfilComponent implements OnInit {
       'Accept': 'application/json'
     };
 
-    this.http.delete(url, {headers, body: unfollowData})
+    this.http.delete(url, { headers, body: unfollowData })
       .subscribe({
         next: response => {
           console.log('Usuario dejado de seguir con éxito:', response);
@@ -272,13 +265,14 @@ export class PerfilComponent implements OnInit {
     const usuarioId = this.obtenerUsuarioId();
     this.libroService.votarlibro(libroId, usuarioId, esLike).pipe(
       finalize(() => {
+        console.log('Operación de votar finalizada');
       })
     ).subscribe({
-      next: (response) => {
+      next: response => {
         console.log('Voto registrado con éxito');
-        this.cargarPerfil()
+        this.cargarPerfil();
       },
-      error: (error) => {
+      error: error => {
         console.error('Error al registrar voto', error);
       }
     });

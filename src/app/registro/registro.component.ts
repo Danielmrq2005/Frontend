@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Genero } from './genero.enum';
 import { RegistroService } from "../Services/registro.service";
 import { CommonModule, KeyValuePipe } from "@angular/common";
-import { Registro } from "../modelos/Registro";
+import { Registro } from "../Models/Registro";
 import { Router } from "@angular/router";
 import { i5Genero } from "../Models/Genero";
 
@@ -18,7 +18,6 @@ import { i5Genero } from "../Models/Genero";
     IonicModule,
     HttpClientModule,
     FormsModule,
-    KeyValuePipe,
     CommonModule,
     ReactiveFormsModule
   ],

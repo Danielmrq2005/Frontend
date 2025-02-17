@@ -65,8 +65,8 @@ export class FavoritosComponent implements OnInit {
             console.log('Body:', body);
             if (Array.isArray(body) && body.length > 0) {
               this.autoresIds = body
-                .filter(item => item.userId !== null) // Filter out items with null userId
-                .map(item => item.userId); // Map to userId
+                .filter(item => item.userId !== null)
+                .map(item => item.userId);
               this.getAutoresFavoritos();
             } else {
               console.error('Unexpected response format or empty body:', body);

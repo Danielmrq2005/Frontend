@@ -37,15 +37,6 @@ export class UsuarioService {
     return this.http.get<Libro[]>(`${this.apiUrlLibros}/perfil/publicaciones/${id}`)
   }
 
-  obtenerPerfilPorUsername(username: string): Observable<Perfil> {
-    return this.http.get<Perfil>(`${this.apiUrl}/perfil/${username}`);
-  }
-
-  obtenerPublicacionesPorUsername(username: string): Observable<Libro[]> {
-    return this.http.get<Libro[]>(`${this.apiUrl}/publicaciones/${username}`);
-  }
-
-
   verificarCodigo(verificacionDTO: Verificacion): Observable<any> {
     const url = `${this.apiUrl}/verificar-codigo`;
     return this.http.post(url, verificacionDTO, { responseType: 'text' });

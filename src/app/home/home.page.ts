@@ -1,15 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonList,
-  IonThumbnail,
-  IonItem,
-  IonLabel
-} from '@ionic/angular/standalone';
-import { VotosService } from '../Services/VotosService';
 import {LibroService} from "../Services/LibroService";
 import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
@@ -23,7 +12,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule, HttpClientModule, CommonModule, RouterLink, NavbarComponent],
+  imports: [IonicModule, CommonModule, RouterLink, NavbarComponent],
   standalone: true,
   providers: [LibroService],
 })
