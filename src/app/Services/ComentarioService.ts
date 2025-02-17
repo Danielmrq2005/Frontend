@@ -22,6 +22,9 @@ export class ComentariosService {
     const authHeader = this.comunService.autorizarPeticion();
     return this.http.post<any>(this.apiUrl, comentario, authHeader);
   }
+  contarComentarios(libroId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/cont/${libroId}`);
+  }
 
 
 

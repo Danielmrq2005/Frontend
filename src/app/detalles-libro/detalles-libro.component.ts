@@ -138,6 +138,8 @@ export class DetallesLibroComponent implements OnInit {
       fecha: new Date().toISOString().slice(0, 19)
     };
 
+
+
     this.comentariosService.agregarComentario(nuevoComentario).subscribe(
       () => {
         console.log('Comentario agregado con éxito');
@@ -145,12 +147,12 @@ export class DetallesLibroComponent implements OnInit {
         // Limpiar el input
         this.nuevoComentario = '';
 
-        // 🚀 Volver a cargar los comentarios DESDE EL BACKEND
         this.cargarComentarios();
       },
       error => console.error('Error al agregar comentario', error)
     );
   }
+
 
   protected readonly home = home;
 }

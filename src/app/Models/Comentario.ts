@@ -4,4 +4,5 @@ export interface Comentario {
   libroId: number;
   comentario: string;
   fecha: string;
+  imagen?: string;
 }

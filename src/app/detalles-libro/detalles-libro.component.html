@@ -39,7 +39,7 @@
     <ion-list *ngIf="comentarios.length > 0; else noComentarios">
       <ion-item *ngFor="let comentario of comentarios">
         <ion-avatar slot="start">
-          <img src="assets/images/usuario.png">
+          <img [src]="comentario.imagen ? comentario.imagen : 'assets/images/usuario.png'">
         </ion-avatar>
         <ion-label>
           <h2>{{ comentario.username }}</h2>

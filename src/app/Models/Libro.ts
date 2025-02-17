@@ -9,4 +9,5 @@ export interface Libro {
   likes: number;
   fechaPublicacion: Date;
   dislikes: number;
+  totalComentarios?: number;
 }
