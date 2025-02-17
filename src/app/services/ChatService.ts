@@ -18,4 +18,8 @@ export class ChatService {
     return this.http.get<Chat[]>(`${this.apiUrl}/chat/listar/${usuarioId}`);
   }
 
+  obtenerChatPorId(chatId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/chat/${chatId}`);
+  }
+
 }

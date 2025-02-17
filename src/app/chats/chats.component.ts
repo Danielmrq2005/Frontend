@@ -64,6 +64,12 @@ export class ChatsComponent implements OnInit {
     });
     this.obtenerChats();
 
+    this.chatService.obtenerChatPorId(this.chatId).subscribe(data => {
+      if (data) {
+        this.chat = data;
+      }
+    })
+
   }
   obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');

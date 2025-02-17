@@ -4,4 +4,5 @@ export interface ChatMensaje {
   mensaje: string;
   chatId: number;
   usuarioId: number;
+  imagen?: string;
 }
