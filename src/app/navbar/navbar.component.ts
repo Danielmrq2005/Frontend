@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {jwtDecode} from "jwt-decode";
-import {LibroService} from "../Services/LibroService";
-import {UsuarioService} from "../Services/UsuarioService";
+import {LibroService} from "../services/LibroService";
+import {UsuarioService} from "../services/UsuarioService";
 import {IonicModule} from "@ionic/angular";
 import {RouterLink} from "@angular/router";
 import {NgIf} from "@angular/common";

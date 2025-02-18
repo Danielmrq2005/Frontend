@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
-import { LibroService } from '../Services/LibroService';
+import { LibroService } from '../services/LibroService';
 import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
