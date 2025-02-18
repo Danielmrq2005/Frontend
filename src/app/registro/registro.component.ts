@@ -56,7 +56,7 @@ export class RegistroComponent implements OnInit {
 
       this.registroService.registrar(this.registro).subscribe({
         next: () => console.info("Registro exitoso"),
-        error: (e) => console.error("Error en el registro:", e),
+        error: (e: any) => console.error("Error en el registro:", e),
         complete: () => this.router.navigate(['login'])
       });
     } else {
