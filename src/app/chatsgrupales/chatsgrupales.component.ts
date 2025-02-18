@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, KeyValuePipe } from "@angular/common";
 import { jwtDecode } from "jwt-decode";
 import { Chat } from "../Models/Chat";
-import { ChatService } from "@services/ChatService";
+import { ChatService } from "../Services/ChatService";
+
 import { routes } from "../app.routes";
 import { Router, RouterLink } from "@angular/router";
 

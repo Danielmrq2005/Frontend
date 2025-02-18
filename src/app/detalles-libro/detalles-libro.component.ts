@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { Libro } from "../Models/Libro";
 import { ActivatedRoute, RouterLink } from "@angular/router";
-import { LibroService } from "@services/LibroService";
+import { LibroService } from "../Services/LibroService";
 import { CommonModule } from "@angular/common";
 import { Comentario } from "../Models/Comentario";
-import { ComentariosService } from "@services/ComentarioService";
+import { ComentariosService } from "../Services/ComentarioService";
 import { home } from "ionicons/icons";
 import {jwtDecode} from 'jwt-decode';
 import {FormsModule} from "@angular/forms";
-import {UsuarioService} from "@services/UsuarioService";
+import {UsuarioService} from "../Services/UsuarioService";
 import {NavbarComponent} from "../navbar/navbar.component";
-import {ChatService} from "@services/ChatService";
+import {ChatService} from "../Services/ChatService";
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',

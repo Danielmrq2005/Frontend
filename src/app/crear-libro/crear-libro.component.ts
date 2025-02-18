@@ -3,16 +3,16 @@ import { IonicModule, AlertController } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Libro } from '../Models/Libro';
-import { LibroService } from '@services/LibroService';
-import { UsuarioService } from "@services/UsuarioService";
+import { LibroService } from '../Services/LibroService';
+import { UsuarioService } from "../Services/UsuarioService";
 import { FormsModule } from "@angular/forms";
 import { finalize } from 'rxjs/operators';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
 import { Genero } from "../Models/Genero";
-import {jwtDecode} from "jwt-decode"; // Import Router
-import {ChatUsuarioService} from "@services/ChatUsuarioService";
+import {jwtDecode} from "jwt-decode";
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
 import {Chatusuarios} from "../Models/Chatusuarios";
 
 

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {LibroService} from "@services/LibroService";
+import {LibroService} from "../Services/LibroService";
 import {CommonModule} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
 import {RouterLink} from "@angular/router";
-import {UsuarioService} from "@services/UsuarioService";
+import {UsuarioService} from "../Services/UsuarioService";
 import {jwtDecode} from "jwt-decode";
 import {NavbarComponent} from "../navbar/navbar.component";
 

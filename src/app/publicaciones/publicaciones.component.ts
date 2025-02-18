@@ -5,14 +5,14 @@ import { CommonModule } from '@angular/common';
 import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Libro } from '../Models/Libro';
-import { LibroService } from '@services/LibroService';
+import { LibroService } from '../Services/LibroService';
 import {Router, RouterLink} from "@angular/router";
 import { finalize } from 'rxjs/operators';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {jwtDecode} from "jwt-decode";
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {ComentariosService} from "@services/ComentarioService";
+import {ComentariosService} from "../Services/ComentarioService";
 
 
 @Component({
