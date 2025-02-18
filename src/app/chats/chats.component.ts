@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatMensaje } from "../Models/Chatmensajes";
-import { ChatMensajeService } from "../Services/ChatMensajeService";
+import { ChatMensajeService } from "@services/ChatMensajeService";
 import { IonicModule, IonContent } from "@ionic/angular";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -11,10 +11,10 @@ import { jwtDecode } from "jwt-decode";
 import { Perfil } from "../Models/Perfil";
 import { Genero } from "../Models/Genero";
 import { Rol } from "../Models/Rol";
-import { UsuarioService } from "../Services/UsuarioService";
+import { UsuarioService } from "@services/UsuarioService";
 import { Libro } from "../Models/Libro";
 import { Chat } from "../Models/Chat";
-import { ChatService } from "../Services/ChatService";
+import { ChatService } from "@services/ChatService";
 
 @Component({
   selector: 'app-chats',
