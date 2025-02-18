@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from "../Services/login.service";
-import { UsuarioService } from "../Services/UsuarioService";
+import { LoginService } from "@services/login.service";
+import { UsuarioService } from "@services/UsuarioService";
 import { Router } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { Verificacion } from "../Models/Verificacion";

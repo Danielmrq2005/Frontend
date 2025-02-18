@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Perfil } from '../Models/Perfil';
 import { NgForOf, NgStyle } from '@angular/common';
-import { UsuarioService } from "../Services/UsuarioService";
-import { LibroService } from "../Services/LibroService";
+import { UsuarioService } from "@services/UsuarioService";
+import { LibroService } from "@services/LibroService";
 import { Rol } from "../Models/Rol";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Libro } from "../Models/Libro";
@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
 import { forkJoin } from 'rxjs';
-import { Usuario } from "../Models/Usuario";
 import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
