@@ -6,16 +6,15 @@ import { IonicModule, IonContent } from "@ionic/angular";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import {Subscription, interval, forkJoin} from "rxjs";
+import { Subscription, interval, forkJoin } from "rxjs";
 import { jwtDecode } from "jwt-decode";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
-import {Perfil} from "../Models/Perfil";
-import {Genero} from "../Models/Genero";
-import {Rol} from "../Models/Rol";
-import {UsuarioService} from "../Services/UsuarioService";
-import {Libro} from "../Models/Libro";
-import {Chat} from "../Models/Chat";
-import {ChatService} from "../Services/ChatService";
+import { Perfil } from "../Models/Perfil";
+import { Genero } from "../Models/Genero";
+import { Rol } from "../Models/Rol";
+import { UsuarioService } from "../Services/UsuarioService";
+import { Libro } from "../Models/Libro";
+import { Chat } from "../Models/Chat";
+import { ChatService } from "../Services/ChatService";
 
 @Component({
   selector: 'app-chats',
@@ -41,17 +40,14 @@ export class ChatsComponent implements OnInit {
     email: '',
     imagen: '',
     generos: Genero.AVENTURA,
-    usuario: {id: 0, username: '', password: '', rol: Rol.USER}
+    usuario: { id: 0, username: '', password: '', rol: Rol.USER }
   };
   Publicaciones: Libro[] = [];
   chats: Chat[] = [];
 
-
-
-
   @ViewChild('content') content!: IonContent;
 
-  constructor(private chatMensajesService: ChatMensajeService, private route: ActivatedRoute,private usuarioService: UsuarioService,private chatService:ChatService) {}
+  constructor(private chatMensajesService: ChatMensajeService, private route: ActivatedRoute, private usuarioService: UsuarioService, private chatService: ChatService) {}
 
   ngOnInit() {
     if (this.chatId) {
@@ -60,17 +56,21 @@ export class ChatsComponent implements OnInit {
     this.cargarPerfil();
     this.chatSubscription = interval(30000).subscribe(() => {
       this.cargarMensajes();
-
     });
     this.obtenerChats();
 
-    this.chatService.obtenerChatPorId(this.chatId).subscribe(data => {
-      if (data) {
-        this.chat = data;
+    this.chatService.obtenerChatPorId(this.chatId).subscribe({
+      next: data => {
+        if (data) {
+          this.chat = data;
+        }
+      },
+      error: error => {
+        console.error('Error al obtener el chat:', error);
       }
-    })
-
+    });
   }
+
   obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');
     if (token) {
@@ -85,14 +85,16 @@ export class ChatsComponent implements OnInit {
     return null;
   }
 
-
   obtenerChats() {
     const usuarioId = this.obtenerUsuarioId();
     if (usuarioId) {
-      this.chatService.obtenerChatsPorUsuario(usuarioId).subscribe((chats) => {
-        this.chats = chats;
-      }, error => {
-        console.error('Error al obtener chats del usuario', error);
+      this.chatService.obtenerChatsPorUsuario(usuarioId).subscribe({
+        next: chats => {
+          this.chats = chats;
+        },
+        error: error => {
+          console.error('Error al obtener chats del usuario', error);
+        }
       });
     } else {
       console.error('No se pudo obtener la ID del usuario');
@@ -104,15 +106,17 @@ export class ChatsComponent implements OnInit {
       forkJoin([
         this.usuarioService.obetenerPerfil(this.usuarioId),
         this.usuarioService.obtenerPublicaciones(this.usuarioId)
-      ]).subscribe(
-        ([perfilObtenido, publicaciones]:[Perfil,Libro[]]) => {
+      ]).subscribe({
+        next: ([perfilObtenido, publicaciones]: [Perfil, Libro[]]) => {
           this.perfil = perfilObtenido;
           this.Publicaciones = publicaciones;
           console.log("Perfil cargado:", this.perfil);
           console.log("Publicaciones cargadas:", this.Publicaciones);
         },
-        error => console.error("Error al obtener datos del perfil:", error)
-      );
+        error: error => {
+          console.error("Error al obtener datos del perfil:", error);
+        }
+      });
     } else {
       console.error("No se pudo obtener el ID del usuario.");
     }
@@ -120,15 +124,18 @@ export class ChatsComponent implements OnInit {
 
   cargarMensajes() {
     if (!this.chatId) return;
-    this.chatMensajesService.obtenerMensajesDeChat(this.chatId).subscribe((data) => {
-      this.mensajes = data;
-      this.scrollToBottom();
-      console.log(this.mensajes);
-      console.log(this.usuarioId);
+    this.chatMensajesService.obtenerMensajesDeChat(this.chatId).subscribe({
+      next: data => {
+        this.mensajes = data;
+        this.scrollToBottom();
+        console.log(this.mensajes);
+        console.log(this.usuarioId);
+      },
+      error: error => {
+        console.error('Error al obtener mensajes del chat:', error);
+      }
     });
   }
-
-
 
   enviarMensaje() {
     if (!this.chatId || !this.usuarioId || !this.nuevoMensaje.trim()) return;
@@ -138,13 +145,17 @@ export class ChatsComponent implements OnInit {
       fecha: new Date(),
       chatId: this.chatId,
       usuarioId: this.usuarioId,
-
     };
 
-    this.chatMensajesService.crearMensaje(mensaje).subscribe(() => {
-      this.nuevoMensaje = '';
-      this.cargarMensajes();
-      console.log(this.usuarioId);
+    this.chatMensajesService.crearMensaje(mensaje).subscribe({
+      next: () => {
+        this.nuevoMensaje = '';
+        this.cargarMensajes();
+        console.log(this.usuarioId);
+      },
+      error: error => {
+        console.error('Error al enviar mensaje:', error);
+      }
     });
     console.log(mensaje);
   }
