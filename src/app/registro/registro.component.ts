@@ -8,6 +8,7 @@ import { Registro } from "../Models/Registro";
 import { Router } from "@angular/router";
 import { Genero } from "../Models/Genero";
 
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
