@@ -32,6 +32,7 @@ export class PubAdminComponent implements OnInit {
     this.listarLibros();
   }
 
+
   listarLibros() {
     this.libroService.listarlibros().subscribe(
       (libros: Libro[]) => {
