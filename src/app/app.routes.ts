@@ -84,6 +84,13 @@ export const routes: Routes = [
   {
     path: 'grupo/:id',
     loadComponent: () => import('./chats/chats.component').then((m) => m.ChatsComponent),
+  },
+
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
+
 
 ];
