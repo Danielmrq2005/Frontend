@@ -1,9 +1,7 @@
 {
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
-    }
-  ]
+  "root": "www",
+  "clean_urls": true,
+  "routes": {
+    "/**": "index.html"
+  }
 }
