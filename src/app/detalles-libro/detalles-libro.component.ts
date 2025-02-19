@@ -17,7 +17,7 @@ import {ChatService} from "../services/ChatService";
   templateUrl: './detalles-libro.component.html',
   styleUrls: ['./detalles-libro.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterLink, FormsModule, NavbarComponent],
+  imports: [IonicModule, CommonModule, FormsModule, NavbarComponent],
   providers: [LibroService, ComentariosService],
 })
 export class DetallesLibroComponent implements OnInit {

@@ -11,7 +11,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule, CommonModule, RouterLink, NavbarComponent],
+  imports: [IonicModule, CommonModule, NavbarComponent],
   standalone: true,
   providers: [LibroService],
 })
