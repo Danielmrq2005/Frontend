@@ -3,6 +3,18 @@
 
 <ion-content id="main-content" class="custom-background">
   <div class="estilo_cartas">
+
+    <ion-searchbar
+      [(ngModel)]="buscador"
+      (ionInput)="filtrarLibros($event)"
+      placeholder="Buscar libros"
+      debounce="500">
+    </ion-searchbar>
+
+
+    <ion-select-option *ngFor="let genero of generosArray" [value]="genero">
+      {{ genero }}
+    </ion-select-option>
     <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let libro of libros">
       <img  [src]="libro.imagen" alt="{{ libro.nombre }}" style="width: 100%;height: 70% " (click)="verDetallesLibro(libro.id)" />
       <ion-card-header>

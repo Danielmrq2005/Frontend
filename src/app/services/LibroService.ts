@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Libro} from "../Models/Libro";
+import {Genero} from "../Models/Genero";
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +59,11 @@ export class LibroService {
   crearChat(chatData: any): Observable<number> {
     return this.http.post<number>(`${this.apiUrl2}/crear`, chatData);
   }
+
+  obtenerLibrosPorGenero(genero: Genero): Observable<Libro[]> {
+    return this.http.get<Libro[]>(`${this.apiUrl}/genero/${genero}`);
+  }
+
 
 
 }

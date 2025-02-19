@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { add } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
-import { Libro } from '../Models/Libro';
-import { LibroService } from '../services/LibroService';
-import {Router, RouterLink} from "@angular/router";
-import { finalize } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {IonicModule} from '@ionic/angular';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {CommonModule} from '@angular/common';
+import {add} from 'ionicons/icons';
+import {addIcons} from 'ionicons';
+import {Libro} from '../Models/Libro';
+import {LibroService} from '../services/LibroService';
+import {Router, RouterLink, RouterModule} from "@angular/router";
+import {finalize} from 'rxjs/operators';
 import {NavbarComponent} from "../navbar/navbar.component";
 import {jwtDecode} from "jwt-decode";
-import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import {ComentariosService} from "../services/ComentarioService";
+import {Genero} from "../Models/Genero";
+import {FormsModule} from "@angular/forms";
 
 
 @Component({
@@ -26,7 +26,8 @@ import {ComentariosService} from "../services/ComentarioService";
     CommonModule,
     RouterModule,
     RouterLink,
-    NavbarComponent
+    NavbarComponent,
+    FormsModule
   ],
   providers: [LibroService],
 })
@@ -34,6 +35,11 @@ import {ComentariosService} from "../services/ComentarioService";
 export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
   totalComentarios: number = 0;
+  generos: Genero = Genero.BIOGRAFICO;
+  generosArray = Object.values(Genero)
+  buscador: string = '';
+  librosFiltrados: Libro[] = [];
+
 
   constructor(private libroService: LibroService, private router: Router, private http: HttpClient, private comentariosService: ComentariosService) {
     addIcons({add});
@@ -129,4 +135,40 @@ export class PublicacionesComponent implements OnInit {
       }
     });
   }
+  onGeneroChange() {
+    this.listarLibrosPorGenero();
+  }
+
+  listarLibrosPorGenero() {
+    if (!this.generos) {
+      this.listarLibros();
+      return;
+    }
+
+    this.libroService.obtenerLibrosPorGenero(this.generos).subscribe({
+      next: (libros: Libro[]) => {
+        this.libros = libros;
+      },
+      error: (error) => {
+        console.error('Error al obtener libros por género', error);
+      }
+    });
+  }
+  filtrarLibros(event: any) {
+    const texto = event.target.value.toLowerCase();
+
+    if (!texto) {
+      this.librosFiltrados = this.libros;
+      return;
+    }
+
+    this.librosFiltrados = this.libros.filter(libro =>
+      libro.nombre.toLowerCase().includes(texto) ||
+      libro.username.toLowerCase().includes(texto) ||
+      libro.generos.toLowerCase().includes(texto)
+    );
+  }
+
+
+
 }
