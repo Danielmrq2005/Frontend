@@ -10,7 +10,7 @@ import {ComunService} from "./comun.service";
 })
 
 export class ComentariosService {
-  private apiUrl = environment.apiUrl + '/comentario';
+  private apiUrl = environment.apiUrl + '/comentarios';
 
   constructor(private http: HttpClient, private comunService: ComunService) {
   }
