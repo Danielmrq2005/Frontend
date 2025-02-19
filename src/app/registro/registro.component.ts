@@ -70,6 +70,7 @@ export class RegistroComponent implements OnInit {
           if (e.status === 409) {
             this.showAlert('Error', 'El email o username ya existe.');
             this.router.navigate(['login']);
+            this.showAlert('Exito', 'Usuario creado con exito.');
           } else {
             this.showAlert('Error', 'Ocurrió un error durante el registro.');
           }
