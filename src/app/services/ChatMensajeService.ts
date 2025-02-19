@@ -29,8 +29,7 @@ export class ChatMensajeService implements OnDestroy {
 
   private startMessageReload() {
     this.intervalId = setInterval(() => {
-      // Replace `chatId` with the actual chat ID you want to reload messages for
-      const chatId = 1; // Example chat ID
+      const chatId = 1;
       this.obtenerMensajesDeChat(chatId).subscribe({
         next: (mensajes) => {
           console.log('Mensajes recargados:', mensajes);
@@ -39,7 +38,7 @@ export class ChatMensajeService implements OnDestroy {
           console.error('Error al recargar mensajes', error);
         }
       });
-    }, 60000); // Reloads messages every 60 seconds
+    }, 30000);
   }
 
   ngOnDestroy() {
