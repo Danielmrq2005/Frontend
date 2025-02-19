@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://frontend-zich.onrender.com",
+    "target": "https://wattbook.onrender.com",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/api": ""},
