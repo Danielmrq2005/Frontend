@@ -27,7 +27,7 @@ export class HasSidoBaneadoComponent implements OnInit {
   }
 
   getUsuarioBaneado(): void {
-    this.http.get<any>(`http://localhost:8080/baneados/getUsuarioBaneado/${this.userId}`)
+    this.http.get<any>(`https://wattbook.onrender.com/baneados/getUsuarioBaneado/${this.userId}`)
       .subscribe({
         next: response => {
           this.usuarioId = response.usuarioId;

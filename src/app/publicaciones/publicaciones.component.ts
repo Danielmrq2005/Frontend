@@ -105,7 +105,7 @@ export class PublicacionesComponent implements OnInit {
   }
 
   anyadirLibroFavorito(userId: number, libroId: number) {
-    const url = 'http://localhost:8080/libros-favoritos/anyadirLibroFavorito';
+    const url = 'https://wattbook.onrender.com/libros-favoritos/anyadirLibroFavorito';
     const body = {userId, libroId};
     this.http.post(url, body).subscribe({
       next: (response) => {
@@ -118,7 +118,7 @@ export class PublicacionesComponent implements OnInit {
   }
 
   eliminarLibroFavorito(userId: number, libroId: number) {
-    const url = 'http://localhost:8080/libros-favoritos/eliminarLibroFav';
+    const url = 'https://wattbook.onrender.com/libros-favoritos/eliminarLibroFav';
     const body = {userId, libroId};
     this.http.request('delete', url, {body}).subscribe({
       next: (response) => {

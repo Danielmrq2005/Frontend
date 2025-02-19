@@ -112,7 +112,7 @@ export class PerfilComponent implements OnInit {
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`api/seguidores/tusSeguidos/${this.idactual}`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/tusSeguidos/${this.idactual}`, { observe: 'response' })
       .subscribe({
         next: response => {
           if (response.headers.get('content-type')?.includes('application/json')) {
@@ -139,7 +139,7 @@ export class PerfilComponent implements OnInit {
 
   getAutoresFavoritos(): void {
     this.autoresIds.forEach(id => {
-      this.http.get<any>(`/api/usuario/${id}/perfil`)
+      this.http.get<any>(`https://wattbook.onrender.com/usuario/${id}/perfil`)
         .subscribe({
           next: user => {
             console.log('Fetched autor favorito:', user);
@@ -160,7 +160,7 @@ export class PerfilComponent implements OnInit {
   }
 
   getSeguidoresId(): void {
-    this.http.get<any[]>(`api/seguidores/listaSeguidores/${this.idactual}`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/listaSeguidores/${this.idactual}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /seguidores/listaSeguidores/2:', response);
@@ -190,7 +190,7 @@ export class PerfilComponent implements OnInit {
   getSeguidores(): void {
     this.seguidoresId.forEach(id => {
       if (id !== undefined) {
-        this.http.get<any>(`/api/usuario/${id}/perfil`)
+        this.http.get<any>(`https://wattbook.onrender.com/usuario/${id}/perfil`)
           .subscribe({
             next: response => {
               console.log(`Response from /usuario/${id}/perfil:`, response);
@@ -225,7 +225,7 @@ export class PerfilComponent implements OnInit {
 
   seguirUsuario(): void {
     const followData = { userId: this.usuarioId, seguidorId: this.idactual };
-    const url = `http://localhost:8080/seguidores/anyadirSeguidor`;
+    const url = `https://wattbook.onrender.com/seguidores/anyadirSeguidor`;
 
     this.http.post(url, followData)
       .subscribe({
@@ -240,7 +240,7 @@ export class PerfilComponent implements OnInit {
 
   dejarSeguirUsuario(): void {
     const unfollowData = { userId: this.usuarioId, seguidorId: this.idactual };
-    const url = `api/seguidores/eliminarSeguidor`;
+    const url = `https://wattbook.onrender.com/seguidores/eliminarSeguidor`;
 
     const headers = {
       'Content-Type': 'application/json',

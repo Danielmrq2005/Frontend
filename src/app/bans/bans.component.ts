@@ -24,7 +24,7 @@ export class BansComponent implements OnInit {
   }
 
   getUsuarios(): void {
-    this.http.get<any[]>('/api/usuario/allPerfiles')
+    this.http.get<any[]>('https://wattbook.onrender.com/usuario/allPerfiles')
       .subscribe({
         next: response => {
           console.log('Response from /usuario/allPerfiles:', response);
@@ -47,7 +47,7 @@ export class BansComponent implements OnInit {
   getPerfiles(ids: number[]): void {
     ids.forEach(id => {
       if (id !== undefined) {
-        this.http.get<any>(`/api/usuario/${id}/perfil`)
+        this.http.get<any>(`https://wattbook.onrender.com/usuario/${id}/perfil`)
           .subscribe({
             next: response => {
               console.log(`Response from /usuario/${id}/perfil:`, response);
@@ -65,7 +65,7 @@ export class BansComponent implements OnInit {
   }
 
   getUsuariosBaneados(): void {
-    this.http.get<any[]>('/api/baneados/getUsuariosBaneados')
+    this.http.get<any[]>('https://wattbook.onrender.com/baneados/getUsuariosBaneados')
       .subscribe({
         next: response => {
           console.log('Response from /baneados/getUsuariosBaneados:', response);
@@ -115,7 +115,7 @@ export class BansComponent implements OnInit {
 
   banearUsuario(usuarioId: number, motivoBan: string): void {
     const banData = { usuarioId, motivoBan };
-    this.http.post('/api/baneados/banearUsuario', banData)
+    this.http.post('https://wattbook.onrender.com/baneados/banearUsuario', banData)
       .subscribe({
         next: response => {
           console.log('User banned successfully:', response);
@@ -131,7 +131,7 @@ export class BansComponent implements OnInit {
   }
 
   desbanearUsuario(usuarioId: number): void {
-    this.http.delete(`/api/baneados/eliminarBaneo/${usuarioId}`)
+    this.http.delete(`https://wattbook.onrender.com/baneados/eliminarBaneo/${usuarioId}`)
       .subscribe({
         next: response => {
           console.log('User unbanned successfully:', response);
