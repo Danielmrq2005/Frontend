@@ -2,6 +2,11 @@
   "root": "www/browser",
   "clean_urls": true,
   "routes": {
-    "/**": "index.html"
+    "/**": "/index.html"
+  },
+  "headers": {
+    "/**": {
+      "Access-Control-Allow-Origin": "*"
+    }
   }
 }
