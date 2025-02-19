@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://wattbook.onrender.com/api'
+  apiUrl: 'https://wattbook.onrender.com'
 };
