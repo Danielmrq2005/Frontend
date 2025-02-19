@@ -7,11 +7,12 @@ import { CommonModule } from "@angular/common";
 import { Comentario } from "../Models/Comentario";
 import { ComentariosService } from "../services/ComentarioService";
 import { home } from "ionicons/icons";
-import {jwtDecode} from 'jwt-decode';
-import {FormsModule} from "@angular/forms";
-import {UsuarioService} from "../services/UsuarioService";
-import {NavbarComponent} from "../navbar/navbar.component";
-import {ChatService} from "../services/ChatService";
+import { jwtDecode } from 'jwt-decode';
+import { FormsModule } from "@angular/forms";
+import { UsuarioService } from "../services/UsuarioService";
+import { NavbarComponent } from "../navbar/navbar.component";
+import { ChatService } from "../services/ChatService";
+
 @Component({
   selector: 'app-detalles-libro',
   templateUrl: './detalles-libro.component.html',
@@ -30,7 +31,7 @@ export class DetallesLibroComponent implements OnInit {
   esAdmin: boolean = false;
   chats: any[] = [];
 
-  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService:UsuarioService, private Chat: ChatService) { }
+  constructor(private route: ActivatedRoute, private libroService: LibroService, private comentariosService: ComentariosService, private usuarioService: UsuarioService, private Chat: ChatService) { }
 
   ngOnInit() {
     this.usuarioService.obtenerRolUsuario(this.usuId).subscribe({
@@ -156,7 +157,6 @@ export class DetallesLibroComponent implements OnInit {
     });
   }
 
-
   agregarUsuarioschat() {
     const usuarioId = this.obtenerUsuarioId();
     const chatId = this.route.snapshot.params['id'];
@@ -177,7 +177,6 @@ export class DetallesLibroComponent implements OnInit {
 
     this.obtenerChats();
 
-
     const chatUsuariosDTO = {
       chatId: chatId,
       usuarioId: usuarioId
@@ -194,7 +193,6 @@ export class DetallesLibroComponent implements OnInit {
       }
     );
   }
-
 
   obtenerChats() {
     const usuarioId = this.obtenerUsuarioId();
