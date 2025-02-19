@@ -8,9 +8,9 @@ import {Libro} from "../Models/Libro";
 })
 
 export class LibroService {
-  private apiUrl = 'http://localhost:8080/libros';
-  private apiUrl2 = 'http://localhost:8080/chat';
-  private apiUrl3 = 'http://localhost:8080/chatusuario';
+  private apiUrl = 'https://wattbook.onrender.com/libros';
+  private apiUrl2 = 'https://wattbook.onrender.com/chat';
+  private apiUrl3 = 'https://wattbook.onrender.com/chatusuario';
 
 
 
@@ -41,7 +41,7 @@ export class LibroService {
     return this.http.get<Libro>(`${this.apiUrl}/${libroId}`);
   }
   obtenerTop4Libros(): Observable<Libro[]> {
-    return this.http.get<Libro[]>('http://localhost:8080/votos/top4');
+    return this.http.get<Libro[]>('https://wattbook.onrender.com/votos/top4');
   }
   eliminarLibro(libroId: number) {
     return this.http.delete(`${this.apiUrl}/elim/${libroId}`, {responseType: 'text'});

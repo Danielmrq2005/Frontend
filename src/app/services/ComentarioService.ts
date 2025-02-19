@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Comentario} from "../Models/Comentario";
-import {ComunService} from "./comun.service";
 import {environment} from "../../environments/environment";
+import {ComunService} from "./comun.service";
 
 @Injectable({
   providedIn: 'root',
