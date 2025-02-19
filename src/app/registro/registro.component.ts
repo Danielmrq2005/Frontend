@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, IonicModule } from "@ionic/angular";
+import { AlertController, IonicModule } from "@ionic/angular";
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegistroService } from "../services/registro.service";
-import { CommonModule, KeyValuePipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Registro } from "../Models/Registro";
 import { Router } from "@angular/router";
 import { Genero } from "../Models/Genero";
-
 
 @Component({
   selector: 'app-registro',
@@ -31,7 +30,7 @@ export class RegistroComponent implements OnInit {
 
   generosArray = Object.values(Genero);
 
-  constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router,private alertController: AlertController) {
+  constructor(private registroService: RegistroService, private fb: FormBuilder, private router: Router, private alertController: AlertController) {
     this.registroForm = this.fb.group({
       nombre: [this.registro.nombre, Validators.required],
       apellidos: [this.registro.apellidos, Validators.required],
@@ -46,20 +45,38 @@ export class RegistroComponent implements OnInit {
 
   ngOnInit() {}
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
   doRegister() {
     if (this.registroForm.valid) {
       this.registro = { ...this.registro, ...this.registroForm.value };
-
       this.registro.generos = this.registroForm.value.genero;
 
       console.log("Datos enviados:", this.registro);
 
       this.registroService.registrar(this.registro).subscribe({
-        next: () => console.info("Registro exitoso"),
-        error: (e: any) => this.router.navigate(['login']),
+        next: () => {
+          console.info("Registro exitoso");
+          this.router.navigate(['login']);
+        },
+        error: (e: any) => {
+          if (e.status === 409) {
+            this.showAlert('Error', 'El email o username ya existe.');
+            this.router.navigate(['login']);
+          } else {
+            this.showAlert('Error', 'Ocurrió un error durante el registro.');
+          }
+        },
       });
     } else {
-      console.log('Formulario inválido. Por favor, verifica los datos.');
+      this.showAlert('Formulario inválido', 'Por favor, verifica los datos.');
     }
   }
 }
