@@ -35,8 +35,8 @@ import {FormsModule} from "@angular/forms";
 export class PublicacionesComponent implements OnInit {
   libros: Libro[] = [];
   totalComentarios: number = 0;
-  generos: Genero = Genero.BIOGRAFICO;
-  generosArray = Object.values(Genero)
+  generos: string | Genero = "Todos";
+  generosArray = ["Todos", ...Object.values(Genero)];
   buscador: string = '';
   librosFiltrados: Libro[] = [];
 
@@ -140,12 +140,12 @@ export class PublicacionesComponent implements OnInit {
   }
 
   listarLibrosPorGenero() {
-    if (!this.generos) {
+    if (this.generos === "Todos") {
       this.listarLibros();
       return;
     }
 
-    this.libroService.obtenerLibrosPorGenero(this.generos).subscribe({
+    this.libroService.obtenerLibrosPorGenero(this.generos as Genero).subscribe({
       next: (libros: Libro[]) => {
         this.libros = libros;
       },
@@ -154,6 +154,7 @@ export class PublicacionesComponent implements OnInit {
       }
     });
   }
+
   filtrarLibros(event: any) {
     const texto = event.target.value.toLowerCase();
 
