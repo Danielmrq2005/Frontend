@@ -1,6 +1,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://frontend-932v.onrender.com/api',
+  apiUrl: 'https://wattbook.onrender.com/api',
 };
 
