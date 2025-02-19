@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { Libro } from "../Models/Libro";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { LibroService } from "../services/LibroService";
 import { CommonModule } from "@angular/common";
 import { Comentario } from "../Models/Comentario";
