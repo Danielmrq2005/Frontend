@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Comentario} from "../Models/Comentario";
 import {ComunService} from "./comun.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class ComentariosService {
-  private apiUrl = 'http://localhost:8080/comentarios';
+  private apiUrl = environment.apiUrl + '/comentario';
 
   constructor(private http: HttpClient, private comunService: ComunService) {
   }
