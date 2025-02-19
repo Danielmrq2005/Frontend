@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { DetallesLibroComponent } from "./detalles-libro/detalles-libro.component";
 import { HomePage } from './home/home.page';
 import { CrearLibroComponent } from './crear-libro/crear-libro.component';
@@ -6,7 +7,7 @@ import { PublicacionesComponent } from './publicaciones/publicaciones.component'
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { AuthGuard } from "./guards/auth.guard";
 import { BanGuard } from './auth/ban.guard';
-import {VerificarCodigoComponent} from "./verificar-codigo/verificar-codigo.component";
+import { VerificarCodigoComponent } from "./verificar-codigo/verificar-codigo.component";
 
 export const routes: Routes = [
   {
@@ -43,8 +44,6 @@ export const routes: Routes = [
     path: 'baneos',
     loadComponent: () => import('./bans/bans.component').then((m) => m.BansComponent),
   },
-
-
   {
     path: 'verificar-codigo',
     loadComponent: () => import('./verificar-codigo/verificar-codigo.component').then((m) => m.VerificarCodigoComponent),
@@ -80,17 +79,19 @@ export const routes: Routes = [
     path: 'chats',
     loadComponent: () => import('./chatsgrupales/chatsgrupales.component').then((m) => m.ChatsgrupalesComponent),
   },
-
   {
     path: 'grupo/:id',
     loadComponent: () => import('./chats/chats.component').then((m) => m.ChatsComponent),
   },
-
   {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
   }
-
-
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
