@@ -2,6 +2,6 @@
   "root": "www",
   "clean_urls": true,
   "routes": {
-    "/**": "home"
+    "/**": "index.html"
   }
 }
