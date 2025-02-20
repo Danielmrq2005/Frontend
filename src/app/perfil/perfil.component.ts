@@ -79,6 +79,11 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.cargarPerfil();
+  }
+
+
   cargarPerfil() {
     if (this.usuarioId) {
       forkJoin([
