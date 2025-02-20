@@ -53,9 +53,9 @@
               <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(publicacion.id,false)" >
               <p style="color: white">{{publicacion.dislikes}}</p>
             </div>
-            <div class="reaction">
+            <div class="reaction" *ngFor="let libro of Publicaciones">
               <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
-              <p style="color: white">23</p>
+              <p style="color: white">{{ libro.totalComentarios || 0 }}</p>
             </div>
           </div>
         </ion-card-content>

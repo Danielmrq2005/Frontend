@@ -14,6 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
 import { forkJoin } from 'rxjs';
 import { NavbarComponent } from "../navbar/navbar.component";
+import {ComentariosService} from "../Services/ComentarioService";
 
 @Component({
   selector: 'app-perfil',
@@ -55,7 +56,8 @@ export class PerfilComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
     private libroService: LibroService,
-    private http: HttpClient
+    private http: HttpClient,
+    private comentariosService: ComentariosService
   ) { }
 
   ngOnInit() {
@@ -93,8 +95,17 @@ export class PerfilComponent implements OnInit {
         next: ([perfilObtenido, publicaciones]) => {
           this.perfil = perfilObtenido;
           this.Publicaciones = publicaciones;
-          console.log("Perfil cargado:", this.perfil);
-          console.log("Publicaciones cargadas:", this.Publicaciones);
+
+          let peticiones = publicaciones.map(libro =>
+            this.comentariosService.contarComentarios(libro.id).pipe(
+              finalize(() => this.Publicaciones = [...this.Publicaciones]) // ✅ Corrección aquí
+            ).subscribe(
+              (total: number) => libro.totalComentarios = total,
+              (error) => console.error('Error al obtener total de comentarios', error)
+            )
+          );
+
+          Promise.all(peticiones).then(() => this.Publicaciones = [...this.Publicaciones]);
         },
         error: error => console.error("Error al obtener datos del perfil:", error)
       });
@@ -102,6 +113,7 @@ export class PerfilComponent implements OnInit {
       console.error("No se pudo obtener el ID del usuario.");
     }
   }
+
 
   obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');
