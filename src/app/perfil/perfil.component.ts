@@ -67,6 +67,7 @@ export class PerfilComponent implements OnInit {
       console.log('Perfil (ID):', id);
 
 
+
       const followState = localStorage.getItem(`followState_${this.usuarioId}`);
       if (followState === 'true') {
         this.followText = "Dejar de seguir";
