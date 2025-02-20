@@ -14,7 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
 import { forkJoin } from 'rxjs';
 import { NavbarComponent } from "../navbar/navbar.component";
-import {ComentariosService} from "../Services/ComentarioService";
+import {ComentariosService} from "../services/ComentarioService";
 
 @Component({
   selector: 'app-perfil',
