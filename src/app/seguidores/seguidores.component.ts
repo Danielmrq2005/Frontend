@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { NgForOf } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-seguidores',
@@ -16,6 +17,8 @@ import { HttpClient } from "@angular/common/http";
 export class SeguidoresComponent implements OnInit {
   seguidores: any[] = [];
   seguidoresId: number[] = [];
+  usuId = this.obtenerUsuarioId();
+
 
   constructor(private http: HttpClient) {}
 
@@ -23,8 +26,10 @@ export class SeguidoresComponent implements OnInit {
     this.getSeguidoresId();
   }
 
+
+
   getSeguidoresId(): void {
-    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/listaSeguidores/2`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/listaSeguidores/${this.usuId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /seguidores/listaSeguidores/2:', response);
@@ -50,6 +55,26 @@ export class SeguidoresComponent implements OnInit {
         }
       });
   }
+
+  obtenerUsuarioId(): number {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.tokenDataDTO?.id;
+        if (userId !== undefined && userId !== null) {
+          return userId;
+        } else {
+          throw new Error('ID de usuario no encontrado en el token');
+        }
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+        throw new Error('Token inválido');
+      }
+    }
+    throw new Error('Token no encontrado en el sessionStorage');
+  }
+
 
   getSeguidores(): void {
     this.seguidoresId.forEach(id => {
