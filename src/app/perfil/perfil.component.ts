@@ -66,8 +66,8 @@ export class PerfilComponent implements OnInit {
       console.log('Usuario logueado (ID):', this.obtenerUsuarioId());
       console.log('Perfil (ID):', id);
 
+      this.resetData();
       this.getAutoresIds();
-      this.getAutoresFavoritos();
       this.getSeguidoresId();
 
       const followState = localStorage.getItem(`followState_${this.usuarioId}`);
@@ -77,6 +77,13 @@ export class PerfilComponent implements OnInit {
         this.followText = "Seguir";
       }
     });
+  }
+
+  resetData() {
+    this.autoresIds = [];
+    this.autoresFavoritos = [];
+    this.seguidores = [];
+    this.seguidoresId = [];
   }
 
   ionViewWillEnter() {
