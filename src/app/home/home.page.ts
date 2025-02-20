@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {LibroService} from "../services/LibroService";
 import {CommonModule} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UsuarioService} from "../services/UsuarioService";
 import {jwtDecode} from "jwt-decode";
 import {NavbarComponent} from "../navbar/navbar.component";
@@ -22,7 +22,7 @@ export class HomePage {
   esAdmin: boolean = false;
 
 
-  constructor(private libroService: LibroService, public usuarioService:UsuarioService) {}
+  constructor(private libroService: LibroService, public usuarioService:UsuarioService,private router : Router) {}
 
   ngOnInit() {
     this.libroService.obtenerTop4Libros().subscribe(data => {
@@ -31,6 +31,9 @@ export class HomePage {
     this.usuarioService.obtenerRolUsuario(this.usuId).subscribe(rol => {
       this.esAdmin = rol === 'ADMIN';
     });
+  }
+  verDetallesLibro(libroId: number) {
+    this.router.navigate(['detallesLibro', libroId]);
   }
 
   obtenerUsuarioId(): number {
