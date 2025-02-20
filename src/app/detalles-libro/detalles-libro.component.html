@@ -1,6 +1,5 @@
 <app-navbar></app-navbar>
 
-
 <ion-content id="main-content" class="custom-background">
   <div class="estilo_cartas">
     <ion-card style="--background: #12294D" class="tamaño_carta">
@@ -22,19 +21,21 @@
           </div>
 
           <div class="reaction">
-            <img src="assets/icons8-comentarios-50.png"  alt="Comment Icon">
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
             <p style="color: white">{{ comentarios?.length || 0 }}</p>
           </div>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-button style="margin: auto" (click)="agregarUsuarioschat()">
-    Unirse chat
-  </ion-button>
-  <ion-button style="margin: auto" *ngIf="esAdmin" color="danger" (click)="eliminarLibro()">
-    Eliminar Libro
-  </ion-button>
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+    <ion-button (click)="agregarUsuarioschat()">
+      Unirse chat
+    </ion-button>
+    <ion-button *ngIf="esAdmin" color="danger" (click)="eliminarLibro()">
+      Eliminar Libro
+    </ion-button>
+  </div>
   <div class="comentarios-container">
     <ion-list *ngIf="comentarios.length > 0; else noComentarios">
       <ion-item *ngFor="let comentario of comentarios">
