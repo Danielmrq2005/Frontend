@@ -12,7 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
 import { Genero } from "../Models/Genero";
 import {jwtDecode} from "jwt-decode";
-import {ChatUsuarioService} from "../services/ChatUsuarioService";
+import {ChatUsuarioService} from "../Services/ChatUsuarioService";
 import {Chatusuarios} from "../Models/Chatusuarios";
 
 
@@ -56,17 +56,22 @@ export class CrearLibroComponent implements OnInit {
 
   ngOnInit() { }
 
-  comprobarimagen() {
+  async comprobarimagen(): Promise<void> {
     if (!this.imagen) {
       this.imagen = this.imagendefecto;
     } else {
-      const img = new Image();
-      img.src = this.imagen;
-      img.onerror = () => {
-        this.imagen = this.imagendefecto;
-      };
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = this.imagen;
+        img.onload = () => resolve();
+        img.onerror = () => {
+          this.imagen = this.imagendefecto;
+          resolve();
+        };
+      });
     }
   }
+
 
   obtenerUsername(autorId: number | null): void {
     this.usuarioService.obtenerUsername(autorId).pipe(
@@ -85,9 +90,9 @@ export class CrearLibroComponent implements OnInit {
     });
   }
 
-  crearLibro() {
+  async crearLibro() {
     const autorId = this.obtenerUsuarioId();
-    this.comprobarimagen();
+    await this.comprobarimagen();
 
     if (this.nombre && this.generos && this.descripcion && this.imagen) {
       this.obtenerUsername(autorId);
@@ -95,7 +100,7 @@ export class CrearLibroComponent implements OnInit {
       this.usuarioService.obtenerUsername(autorId).pipe(
         finalize(() => console.log('Operación de obtener username finalizada'))
       ).subscribe({
-        next: (nombre) => {
+        next: async (nombre) => {
           this.username = nombre.nombre;
 
           const datoslibro = {
@@ -111,12 +116,12 @@ export class CrearLibroComponent implements OnInit {
           this.libroService.publicarlibro(datoslibro).pipe(
             finalize(() => console.log('Operación de crear libro finalizada'))
           ).subscribe({
-            next: (response) => {
+            next: async (response) => {
               console.log('Libro creado exitosamente', response);
-              this.libro = response; // Asigna el libro creado a la propiedad libro
+              this.libro = response;
               this.mostrarAlerta('Éxito', 'Libro creado exitosamente');
               this.router.navigate(['/publicaciones']);
-              this.crearChat();
+              await this.crearChat();
             },
             error: (error) => {
               console.error('Error al crear el libro', error);
@@ -133,6 +138,7 @@ export class CrearLibroComponent implements OnInit {
       this.mostrarAlerta('Campos incompletos', 'Por favor, complete todos los campos');
     }
   }
+
 
   obtenerUsuarioId(): number | null {
     const token = sessionStorage.getItem('authToken');
