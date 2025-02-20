@@ -66,9 +66,6 @@ export class PerfilComponent implements OnInit {
       console.log('Usuario logueado (ID):', this.obtenerUsuarioId());
       console.log('Perfil (ID):', id);
 
-      this.getAutoresIds();
-      this.getAutoresFavoritos();
-      this.getSeguidoresId();
 
       const followState = localStorage.getItem(`followState_${this.usuarioId}`);
       if (followState === 'true') {
