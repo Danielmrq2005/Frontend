@@ -34,10 +34,11 @@
         <ion-item routerLink="/publicaciones" button>Publicaciones</ion-item>
         <ion-item routerLink="/chats" button>Chats</ion-item>
         <ion-item routerLink="/libros-favoritos" button>Libros favoritos</ion-item>
-        <ion-item [routerLink]="['/perfil', idactual]" button>Perfil</ion-item>
+        <ion-item [routerLink]="['/perfil',idactual]" button>Perfil</ion-item>
         <ion-item *ngIf="esAdmin" routerLink="/baneos" button>Admin</ion-item>
       </ion-menu-toggle>
     </ion-list>
+
   </ion-content>
 
 </ion-menu>
