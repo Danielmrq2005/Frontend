@@ -59,6 +59,7 @@ export class PublicacionesComponent implements OnInit {
     this.libroService.listarlibros().subscribe({
       next: (libros: Libro[]) => {
         this.libros = libros;
+        this.librosFiltrados = [...libros];
 
         this.libros.forEach(libro => {
           this.comentariosService.contarComentarios(libro.id).subscribe(
@@ -74,6 +75,7 @@ export class PublicacionesComponent implements OnInit {
       }
     });
   }
+
 
 
   // @ts-ignore
@@ -154,12 +156,11 @@ export class PublicacionesComponent implements OnInit {
       }
     });
   }
-
   filtrarLibros(event: any) {
     const texto = event.target.value.toLowerCase();
 
     if (!texto) {
-      this.librosFiltrados = this.libros;
+      this.librosFiltrados = [...this.libros];
       return;
     }
 
@@ -169,6 +170,7 @@ export class PublicacionesComponent implements OnInit {
       libro.generos.toLowerCase().includes(texto)
     );
   }
+
 
 
 
