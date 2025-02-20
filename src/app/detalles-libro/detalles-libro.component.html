@@ -1,46 +1,43 @@
 <app-navbar></app-navbar>
 
 <ion-content id="main-content" class="custom-background">
-  <div class="estilo_cartas">
-    <ion-card style="--background: #12294D" class="tamaño_carta">
-      <img [src]="libro?.imagen" alt="{{ libro?.nombre }}" style="width: 100%;height: 70%"/>
+  <div class="estilo_cartas" style="display: flex; justify-content: center; align-items: center;">
+    <ion-card style="--background: #12294D; width: 90%; max-width: 400px; text-align: center;">
+      <img [src]="libro?.imagen" alt="{{ libro?.nombre }}" style="width: 100%; height: 70%; object-fit: cover;"/>
       <ion-card-header>
         <ion-card-title style="color: white">{{ libro?.nombre }}</ion-card-title>
         <ion-card-subtitle style="color: white">{{ libro?.username }}</ion-card-subtitle>
         <ion-card-subtitle style="color: white">{{ libro?.descripcion }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <div class="reaction-container">
-          <div class="reaction">
-            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon">
-            <p style="color: white">{{ libro?.likes }}</p>
+        <div class="reaction-container" style="display: flex; justify-content: space-around; align-items: center;">
+          <div class="reaction" style="text-align: center;">
+            <img src="assets/icons8-me-gusta-50_-removebg-preview.png" alt="Like Icon" style="width: 30px; height: auto;">
+            <p style="color: white; margin: 5px 0;">{{ libro?.likes }}</p>
           </div>
-          <div class="reaction">
-            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon">
-            <p style="color: white">{{ libro?.dislikes }}</p>
+          <div class="reaction" style="text-align: center;">
+            <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" style="width: 30px; height: auto;">
+            <p style="color: white; margin: 5px 0;">{{ libro?.dislikes }}</p>
           </div>
-
-          <div class="reaction">
-            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
-            <p style="color: white">{{ comentarios?.length || 0 }}</p>
+          <div class="reaction" style="text-align: center;">
+            <img src="assets/icons8-comentarios-50.png" alt="Comment Icon" style="width: 30px; height: auto;">
+            <p style="color: white; margin: 5px 0;">{{ comentarios?.length || 0 }}</p>
           </div>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
-  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-    <ion-button (click)="agregarUsuarioschat()">
-      Unirse chat
-    </ion-button>
-    <ion-button *ngIf="esAdmin" color="danger" (click)="eliminarLibro()">
-      Eliminar Libro
-    </ion-button>
+
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+    <ion-button (click)="agregarUsuarioschat()">Unirse chat</ion-button>
+    <ion-button *ngIf="esAdmin" color="danger" (click)="eliminarLibro()">Eliminar Libro</ion-button>
   </div>
-  <div class="comentarios-container">
+
+  <div class="comentarios-container" style="margin-top: 20px;">
     <ion-list *ngIf="comentarios.length > 0; else noComentarios">
       <ion-item *ngFor="let comentario of comentarios">
         <ion-avatar slot="start">
-          <img [src]="comentario.imagen ? comentario.imagen : 'assets/images/usuario.png'">
+          <img [src]="comentario.imagen ? comentario.imagen : 'assets/images/usuario.png'" style="width: 40px; height: 40px; border-radius: 50%;">
         </ion-avatar>
         <ion-label>
           <h2>{{ comentario.username }}</h2>
@@ -51,7 +48,7 @@
     </ion-list>
 
     <ng-template #noComentarios>
-      <p class="no-comentarios">No hay comentarios aún. ¡Sé el primero en comentar!</p>
+      <p class="no-comentarios" style="text-align: center; color: white;">No hay comentarios aún. ¡Sé el primero en comentar!</p>
     </ng-template>
 
     <ion-item>
