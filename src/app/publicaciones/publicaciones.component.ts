@@ -60,21 +60,23 @@ export class PublicacionesComponent implements OnInit {
       next: (libros: Libro[]) => {
         this.libros = libros;
         this.librosFiltrados = [...libros];
-
-        this.libros.forEach(libro => {
-          this.comentariosService.contarComentarios(libro.id).subscribe(
-            (total: number) => {
-              libro.totalComentarios = total;
-            },
+        let peticiones = libros.map(libro =>
+          this.comentariosService.contarComentarios(libro.id).pipe(
+            finalize(() => this.aplicarFiltros())
+          ).subscribe(
+            (total: number) => libro.totalComentarios = total,
             (error) => console.error('Error al obtener total de comentarios', error)
-          );
-        });
+          )
+        );
+
+        Promise.all(peticiones).then(() => this.aplicarFiltros());
       },
       error: (error) => {
         console.error('Error al obtener libros', error);
       }
     });
   }
+
 
 
 
@@ -150,26 +152,33 @@ export class PublicacionesComponent implements OnInit {
     this.libroService.obtenerLibrosPorGenero(this.generos as Genero).subscribe({
       next: (libros: Libro[]) => {
         this.libros = libros;
+        this.aplicarFiltros();
       },
       error: (error) => {
         console.error('Error al obtener libros por género', error);
       }
     });
   }
-  filtrarLibros(event: any) {
-    const texto = event.target.value.toLowerCase();
 
-    if (!texto) {
-      this.librosFiltrados = [...this.libros];
-      return;
+  filtrarLibros(event: any) {
+    this.buscador = event.target.value.toLowerCase();
+    this.aplicarFiltros();
+  }
+
+  aplicarFiltros() {
+    let librosFiltrados = [...this.libros];
+
+    if (this.buscador) {
+      librosFiltrados = librosFiltrados.filter(libro =>
+        libro.nombre.toLowerCase().includes(this.buscador) ||
+        libro.username.toLowerCase().includes(this.buscador) ||
+        libro.generos.toLowerCase().includes(this.buscador)
+      );
     }
 
-    this.librosFiltrados = this.libros.filter(libro =>
-      libro.nombre.toLowerCase().includes(texto) ||
-      libro.username.toLowerCase().includes(texto) ||
-      libro.generos.toLowerCase().includes(texto)
-    );
+    this.librosFiltrados = librosFiltrados;
   }
+
 
 
 
