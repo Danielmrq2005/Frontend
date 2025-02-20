@@ -38,7 +38,7 @@
       </p>
 
       <ion-card style="--background: #12294D" class="tamaño_carta" *ngFor="let publicacion of Publicaciones">
-        <img  [src]="publicacion.imagen" alt="{{ publicacion.nombre }}" style="width: 100%;height: 70% "  />
+        <img  [src]="publicacion.imagen" alt="{{ publicacion.nombre }}" style="width: 100%;height: 70% " (click)="verDetallesLibro(publicacion.id)" />
         <ion-card-header>
           <ion-card-title style="color: white">{{publicacion.nombre}}</ion-card-title>
           <ion-card-subtitle>{{publicacion.generos}}</ion-card-subtitle>
@@ -53,10 +53,11 @@
               <img src="assets/icons8-pulgar-hacia-abajo-24-removebg-preview.png" alt="Dislike Icon" (click)="votar(publicacion.id,false)" >
               <p style="color: white">{{publicacion.dislikes}}</p>
             </div>
-            <div class="reaction" *ngFor="let libro of Publicaciones">
+            <div class="reaction">
               <img src="assets/icons8-comentarios-50.png" alt="Comment Icon">
-              <p style="color: white">{{ libro.totalComentarios || 0 }}</p>
+              <p style="color: white">{{ publicacion.totalComentarios || 0 }}</p>
             </div>
+
           </div>
         </ion-card-content>
       </ion-card>

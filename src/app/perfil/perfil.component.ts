@@ -8,7 +8,7 @@ import { Rol } from "../Models/Rol";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Libro } from "../Models/Libro";
 import { finalize } from "rxjs/operators";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { Genero } from "../registro/genero.enum";
@@ -57,7 +57,8 @@ export class PerfilComponent implements OnInit {
     private usuarioService: UsuarioService,
     private libroService: LibroService,
     private http: HttpClient,
-    private comentariosService: ComentariosService
+    private comentariosService: ComentariosService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -79,6 +80,10 @@ export class PerfilComponent implements OnInit {
         this.followText = "Seguir";
       }
     });
+  }
+
+  verDetallesLibro(libroId: number) {
+    this.router.navigate(['detallesLibro', libroId]);
   }
 
   resetData() {
