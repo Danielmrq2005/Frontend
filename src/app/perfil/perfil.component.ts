@@ -103,6 +103,7 @@ export class PerfilComponent implements OnInit {
           this.perfil = perfilObtenido;
           this.Publicaciones = publicaciones;
 
+
           let peticiones = publicaciones.map(libro =>
             this.comentariosService.contarComentarios(libro.id).pipe(
               finalize(() => this.Publicaciones = [...this.Publicaciones]) // ✅ Corrección aquí
