@@ -9,9 +9,9 @@ import {Genero} from "../Models/Genero";
 })
 
 export class LibroService {
-  private apiUrl = 'https://wattbook.onrender.com/libros';
-  private apiUrl2 = 'https://wattbook.onrender.com/chat';
-  private apiUrl3 = 'https://wattbook.onrender.com/chatusuario';
+  private apiUrl = 'https://wattbook-9uo8.onrender.com/libros';
+  private apiUrl2 = 'https://wattbook-9uo8.onrender.com/chat';
+  private apiUrl3 = 'https://wattbook-9uo8.onrender.com/chatusuario';
 
 
 
@@ -42,7 +42,7 @@ export class LibroService {
     return this.http.get<Libro>(`${this.apiUrl}/${libroId}`);
   }
   obtenerTop4Libros(): Observable<Libro[]> {
-    return this.http.get<Libro[]>('https://wattbook.onrender.com/votos/top4');
+    return this.http.get<Libro[]>('https://wattbook-9uo8.onrender.com/votos/top4');
   }
   eliminarLibro(libroId: number) {
     return this.http.delete(`${this.apiUrl}/elim/${libroId}`, {responseType: 'text'});

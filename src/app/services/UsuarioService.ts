@@ -10,13 +10,13 @@ import {Verificacion} from "../Models/Verificacion";
   providedIn: 'root',
 })
 export class UsuarioService {
-  private apiUrl = 'https://wattbook.onrender.com/usuario';
-  private apiUrlLibros = 'https://wattbook.onrender.com/libros';
+  private apiUrl = 'https://wattbook-9uo8.onrender.com/usuario';
+  private apiUrlLibros = 'https://wattbook-9uo8.onrender.com/libros';
   constructor(private http: HttpClient) {
   }
 
   obtenerUsername(autorId: number | null): Observable<Perfil> {
-    return this.http.get<Perfil>(`https://wattbook.onrender.com/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
+    return this.http.get<Perfil>(`https://wattbook-9uo8.onrender.com/usuario/${autorId}/username`, { responseType: 'text' as 'json' });
   }
 
   obetenerPerfil(id: number | null): Observable<Perfil> {
@@ -25,7 +25,7 @@ export class UsuarioService {
 
 
   obtenerUsernameMensaje(id: number | null): Observable<string> {
-    return this.http.get(`https://wattbook.onrender.com/usuario/${id}/mensaje`, { responseType: 'text' });
+    return this.http.get(`https://wattbook-9uo8.onrender.com/usuario/${id}/mensaje`, { responseType: 'text' });
   }
 
   comprobarverificado(id: number | null): Observable<boolean> {
