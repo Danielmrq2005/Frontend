@@ -29,7 +29,7 @@ export class SeguidoresComponent implements OnInit {
 
 
   getSeguidoresId(): void {
-    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/listaSeguidores/${this.usuId}`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook-5pt2.onrender.com/seguidores/listaSeguidores/${this.usuId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /seguidores/listaSeguidores/2:', response);
@@ -79,7 +79,7 @@ export class SeguidoresComponent implements OnInit {
   getSeguidores(): void {
     this.seguidoresId.forEach(id => {
       if (id !== undefined) {
-        this.http.get<any>(`https://wattbook.onrender.com/usuario/${id}/perfil`)
+        this.http.get<any>(`https://wattbook-5pt2.onrender.com/usuario/${id}/perfil`)
           .subscribe({
             next: response => {
               console.log(`Response from /usuario/${id}/perfil:`, response);
