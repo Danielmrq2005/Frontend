@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://wattbook.onrender.com",
+    "target": "https://wattbook-9uo8.onrender.com",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {"^/api": ""},
