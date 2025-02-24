@@ -15,7 +15,7 @@ export class BanGuard implements CanActivate {
     const userId = this.obtenerUsuarioId();
     console.log('BanGuard: Checking ban status for user ID:', userId);
     if (userId) {
-      return this.http.get<any>(`https://wattbook.onrender.com/baneados/getUsuarioBaneado/${userId}`).pipe(
+      return this.http.get<any>(`https://wattbook-9uo8.onrender.com/baneados/getUsuarioBaneado/${userId}`).pipe(
         map(response => {
           console.log('BanGuard: Response from ban check:', response);
           if (response && response.usuarioId && response.usuarioId.id === userId) {

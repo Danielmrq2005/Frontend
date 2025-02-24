@@ -28,7 +28,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getLibrosIds(): void {
-    this.http.get<any[]>(`https://wattbook.onrender.com/libros-favoritos/yourFaves/${this.userId}`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook-9uo8.onrender.com/libros-favoritos/yourFaves/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           if (response.headers.get('content-type')?.includes('application/json')) {
@@ -55,7 +55,7 @@ export class FavoritosComponent implements OnInit {
   }
 
   getAutoresIds(): void {
-    this.http.get<any[]>(`https://wattbook.onrender.com/seguidores/tusSeguidos/${this.userId}`, { observe: 'response' })
+    this.http.get<any[]>(`https://wattbook-9uo8.onrender.com/seguidores/tusSeguidos/${this.userId}`, { observe: 'response' })
       .subscribe({
         next: response => {
           console.log('Response from /seguidores/tusSeguidos:', response);
@@ -89,7 +89,7 @@ export class FavoritosComponent implements OnInit {
 
   getLibrosFavoritos(): void {
     this.librosIds.forEach(id => {
-      this.http.get<any>(`https://wattbook.onrender.com/libros/${id}`)
+      this.http.get<any>(`https://wattbook-9uo8.onrender.com/libros/${id}`)
         .subscribe({
           next: libro => {
             console.log('Fetched libro favorito:', libro);
@@ -104,7 +104,7 @@ export class FavoritosComponent implements OnInit {
             this.librosFavoritos.push(libroFavorito);
 
             const autorId = libro.autorId;
-            this.http.get<any>(`https://wattbook.onrender.com/usuario/${autorId}/perfil`)
+            this.http.get<any>(`https://wattbook-9uo8.onrender.com/usuario/${autorId}/perfil`)
               .subscribe({
                 next: autor => {
                   const index = this.librosFavoritos.findIndex(l => l.id === libro.id);
@@ -134,7 +134,7 @@ export class FavoritosComponent implements OnInit {
     this.autoresIds
       .filter(id => id !== undefined && id !== null)
       .forEach(id => {
-        this.http.get<any>(`https://wattbook.onrender.com/usuario/${id}/perfil`)
+        this.http.get<any>(`https://wattbook-9uo8.onrender.com/usuario/${id}/perfil`)
           .subscribe({
             next: user => {
               this.autoresFavoritos.push({
