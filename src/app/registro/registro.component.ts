@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, IonicModule } from "@ionic/angular";
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegistroService } from "../Services/registro.service";
+import { RegistroService } from "../services/registro.service";
 import { CommonModule } from "@angular/common";
 import { Registro } from "../Models/Registro";
 import { Router } from "@angular/router";
